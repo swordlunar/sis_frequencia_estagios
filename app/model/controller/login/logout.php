@@ -5,4 +5,4 @@ session_start();
 // (remove do ambiente local que está sendo executado (Navegador))
 session_destroy();
 
-header(('Location: https://localhost/sis_ouvidoria/'));
+header(('Location: https://localhost/sis_frequencia/'));

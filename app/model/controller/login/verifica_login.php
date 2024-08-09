@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_SESSION["NOME"])){
     
-    header(('Location: https://localhost/sis_ouvidoria/'));
+    header(('Location: https://localhost/sis_frequencia/'));
     // exit;
 }
 ?>
