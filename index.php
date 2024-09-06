@@ -7,9 +7,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-<style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./app/style/main.css"/>
+<!-- <style>
     html {
         position: relative;
         height: 100%;
@@ -18,12 +18,55 @@
     body {
         height: 100%;
         margin-bottom: 30px;
-
     }
-</style>
+</style> -->
 
-<body style="background-image: linear-gradient(45deg,#1A237E, #1E40AF);">
-    <div class="container mt-5">
+<body>
+    <section class="vh-100" style="background-color: #055160;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+
+                                <div class="d-flex align-items-center mb-3 pb-1">
+                                    <span class="h1 fw-bold mb-0" style="color: #055160;">Bem-vindo</span>
+                                </div>
+
+                                <h6 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #666768;">Entre na sua conta para acessar o sistema</h6>
+
+                                <form>
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form2Example11">Email</label>
+                                        <input type="email" id="form2Example11" class="form-control"placeholder="usuario@leaosampaio.edu.br" />
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form2Example22">Senha</label>
+                                        <input type="password" id="form2Example22" class="form-control" placeholder="Digite sua senha"/>
+                                    </div>
+
+                                    <div class="text-center pt-1 mb-5 pb-1">
+                                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-botao btn-block fa-lg gradient-custom-2" style = 'padding: 0.7rem; border-radius: 1rem; width: 100%;' type="button">Entrar</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                            <div class="col-md-6 col-lg-5 d-md-flex" style = 'background-image: url(./assets/imagens/loginimagem.png); background-size: cover;background-position: 40%;background-repeat: no-repeat; border-radius: 1rem;'>
+                            <!-- <img src='./assets/imagens/loginimagem.png' alt="login form" class="img-fluid" style="width: 100%;"/> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -48,9 +91,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Importando a biblioteca do sweealert para auxilio no retorno ao usuário -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- importando os scripts que irão atuar no nosso index.php -->
