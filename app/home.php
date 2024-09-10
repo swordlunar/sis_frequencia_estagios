@@ -1,7 +1,7 @@
 <?php
 // Sempre que precisarmos validar acesso para uma página devemos incluir o arquivo
 // "verifica_login.php" para verificarmos se há uma sessão ativa ou não
-include __DIR__ . "/model/controller/login/verifica_login.php";
+//include __DIR__ . "/model/controller/login/verifica_login.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,78 +16,73 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
 
     <title>Frequência - Unileão</title>
     <link rel="shortcut icon" href="https://unileao.edu.br/wp-content/themes/portalv2.0/img/favicon.ico">
+    <link href="./style/sidebar.css" rel="stylesheet" />
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
 </head>
 
-<body>
+<body id="body-pd">
+<header class="header shadow rounded" id="header">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-2">
 
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-primary">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-5 d-none d-sm-inline">Frequência</span>
-                    </a>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0" style="color:white;">
-                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Cadastrar Frequência</span>
-                            </a>
-                        </li>
-                        <!-- Podemos abrir "IFs e ELSEs" do php para controlar o que será exibido com base na sessão -->
-                        <?php if ($_SESSION["TIPO_USUARIO"] == 2) { ?>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0" style="color:white;">
-                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Visualizar Frequências</span>
-                            </a>
-                        </li>
-                        <?php } ?>
-                    </ul>
-                    <hr>
-                    <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION["NOME"]; ?></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="model/controller/login/logout.php">Sair</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col py-3">
-                <!-- Podemos abrir "IFs e ELSEs" do php para controlar o que será exibido com base na sessão -->
-                <?php if ($_SESSION["TIPO_USUARIO"] == 1) { ?>
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-header">
-                            Tipo usuário 01
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Aqui temos as informações pertinentes ao usuário do tipo 01.</li>
-                            <li class="list-group-item">Verifiquem a mudança nas opções do menu lateral.</li>
-                            <li class="list-group-item">Podemos usar as sessões dessa maneira.</li>
-                        </ul>
-                    </div>
-                <?php } else if ($_SESSION["TIPO_USUARIO"] == 2) { ?>
-                    <div class="card">
-                        <h5 class="card-header">Tipo Usuário 02</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">Conteúdo</h5>
-                            <p class="card-text">Como podem ver o conteúdo pode ser dividido usando as variaveis de sessão.</p>
-                            <a href="#" class="btn btn-primary">Enviar</a>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
+        <div class="header_toggle"> 
+            <i class='bx bx-menu' id="header-toggle"></i> 
+        </div>
+       
+        <div class="d-flex align-items-center">
+            
+            <select class="form-select form-select-sm me-2" style="width: auto;">
+                <option selected>Nome do Curso</option>
+                <option value="1">Curso 1</option>
+                <option value="2">Curso 2</option>
+            </select>
+            
+            <select class="form-select form-select-sm" style="width: auto;">
+                <option selected>20242</option>
+                <option value="1">20241</option>
+                <option value="2">20231</option>
+            </select>
         </div>
     </div>
+</header>
+    
+    <div class="l-navbar shadow rounded" id="nav-bar">
+        <nav class="nav">
+            <div> <a href="#" class="nav_logo"> <img src="./../assets/imagens/logo2.png" alt="Logo Unileão"
+                        style="background-size: cover;width: 20px;height: 20px;"> <span
+                        class="nav_logo-name">UNILEÃO</span> </a>
+                <div class="nav_list"> <a href="#" class="nav_link active-side"> <i class='bx bx-grid-alt nav_icon'></i>
+                        <span class="nav_name">Dashboard</span> </a> <a href="#" class="nav_link"> <i
+                            class='bx bx-user nav_icon'></i> <span class="nav_name">Usuários</span> </a> <a href="#"
+                        class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span
+                            class="nav_name">Mensagens</span> </a> <a href="#" class="nav_link"> <i
+                            class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Favoritos</span> </a> <a
+                        href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span
+                            class="nav_name">Arquivos</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
+                            class="nav_name">Estatisticas</span> </a>
+                </div>
+            </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
+                    class="nav_name">Logout</span> </a>
+        </nav>
+    </div>
 
+    <!--Container Principal-->
+    <div class="mt-5 height-100 bg-light" id="corpo_principal">
+    
+    </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script src="./scripts/sidebar.js"></script>
+
+
+
 
 </html>

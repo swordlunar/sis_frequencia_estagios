@@ -33,15 +33,15 @@
                             <div class="card-body p-4 p-lg-5 text-black">
 
                                 <div class="d-flex align-items-center mb-3 pb-1">
-                                    <span class="h1 fw-bold mb-0" style="color: #055160;">Bem-vindo</span>
+                                    <span class="h1 fw-bold mb-0" style="color: #055160;">Frequência Estágio</span>
                                 </div>
 
                                 <h6 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #666768;">Entre na sua conta para acessar o sistema</h6>
 
                                 <form>
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="form2Example11">Email</label>
-                                        <input type="email" id="form2Example11" class="form-control"placeholder="usuario@leaosampaio.edu.br" />
+                                        <label class="form-label" for="form2Example11">Usuário</label>
+                                        <input id="form2Example11" class="form-control"placeholder="Digite seu usuário" />
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
@@ -49,6 +49,13 @@
                                         <input type="password" id="form2Example22" class="form-control" placeholder="Digite sua senha"/>
                                     </div>
 
+                                    <div class="form-outline mb-4">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1">Aluno</option>
+                                            <option value="2">Coordenador</option>
+                                            <option value="3">Supervisor</option>
+                                        </select>
+                                    </div>
                                     <div class="text-center pt-1 mb-5 pb-1">
                                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-botao btn-block fa-lg gradient-custom-2" style = 'padding: 0.7rem; border-radius: 1rem; width: 100%;' type="button">Entrar</button>
                                     </div>
