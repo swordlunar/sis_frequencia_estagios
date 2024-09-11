@@ -30,7 +30,7 @@ function realiza_login() {
         jQuery.ajax({
             type: "POST",
             url: "./app/model/controller/login/login",
-            data: { 'usuario': usuario, 'senha': senha },
+            data: { 'usuario': usuario, 'senha': senha, 'tipo_usuario':'aluno' },
             dataType: 'json',
             beforeSend: function () {
                 Swal.fire({
@@ -71,6 +71,17 @@ function realiza_login() {
                         //     confirmButtonText: 'Ok',
                         //     allowOutsideClick: false,
                         // })
+                        break;
+                    case 3:
+                        swal.close();
+                        Swal.fire({
+                            confirmButtonColor: '#4e73df',
+                            title: 'Falhou!',
+                            text: response["informacao_adicional"],
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                            allowOutsideClick: false,
+                        })
                         break;
                     default:
                         Swal.fire({

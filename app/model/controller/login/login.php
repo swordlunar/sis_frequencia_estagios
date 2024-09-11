@@ -1,6 +1,9 @@
 <?php
 
 include_once "../../database/conexao_local.php";
+include_once __DIR__ . "/../../env/env.php";
+include_once __DIR__ . "/../../soap/conexao_soap.php";
+include_once __DIR__ . "/../controle e notificacoes/funcoes.php";
 
 //Array de retorno exemplo
 $retorno = array(
@@ -8,70 +11,114 @@ $retorno = array(
     'informacao_adicional' => ''
 );
 
-sleep(2);
+$periodo_letivo = periodo_letivo_atual();
 
 //Verifica se as variáves foram passadas pela requisição
-if (isset($_POST['usuario'], $_POST['senha'])) {
+if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
 
     //Pega os valores das variáveis passadas pelo metodo "POST"
-    $usuario = $_POST['usuario'];
-    $senha = md5($_POST['senha']);
+    $usuario = $_POST["usuario"];
+    $senha = $_POST["senha"];
 
-    // Aqui fariamos alguma coisa com esses dados Ex:
+    if (!isset($_POST['cursos'])) {
+        $auth = base64_encode($usuario . ':' . $senha);
 
-    //Exemplo do OPIS
-    // try {
-    //     $resultado = $db->from('usuarios')
-    //         ->where('senha')->is($senha)
-    //         ->andWhere('id_usuario')->is($usuario)
-    //         ->select()
-    //         ->all();
+        $curl = curl_init();
 
-    //     if ($resultado) {
-    //         $retorno['status'] = 1;
-    //         $retorno['informacao_adicional'] = "O login do usuário <b>" . $usuario . "</b> foi realizado com sucesso!";
-            
-    //         session_start();
+        // Api responsável por validar o acesso do usuário
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://tbc.unileao.edu.br:8051/RMSRestDataServer/getAvailableServices',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Basic ' . $auth . ''
+            ),
+        ));
 
-    //         $_SESSION["NOME"] = $resultado[0]->{'nome_usuario'};
-    //         $_SESSION["TIPO_USUARIO"] =  $resultado[0]->{'tipo_usuario'};
-    //     } else {
-    //         $retorno['status'] = 0;
-    //         $retorno['informacao_adicional'] = "Não foi possivel realizar o login do usuário <b>" . $usuario . "</b>!";
-    //     }
-    // } catch (\Throwable $th) {
-    //     throw $th;
-    // }
+        $response = curl_exec($curl);
 
-    // PDO do PHP
-    $conn = inicia_conexao();
+        $info = curl_getinfo($curl);
 
-    $query_login = "SELECT *
-    FROM usuarios
-    WHERE id_usuario=? AND senha = ?";
-    $resultado_usuario = $conn->prepare($query_login);
-    $resultado_usuario->bind_param('ss', $usuario, $senha);
-    $resultado_usuario->execute();
-    $resultado = $resultado_usuario->get_result();
-
-    if (($resultado) && ($resultado->num_rows != 0)) {
-        // Configurando o array de retorno no caso do sucesso (Ex: Status = 1)
-        $retorno['status'] = 1;
-        $retorno['informacao_adicional'] = "O login do usuário <b>" . $usuario . "</b> foi realizado com sucesso!";
-
-        $resultado = $resultado->fetch_assoc();
-
-        session_start();
-        $_SESSION["NOME"] = $resultado['nome_usuario'];
-        $_SESSION["TIPO_USUARIO"] = $resultado['tipo_usuario'];
+        curl_close($curl);
     } else {
-        // Configurando o array de retorno no caso da falha (Ex: Status = 0)
-        $retorno['status'] = 0;
-        $retorno['informacao_adicional'] = "Não foi possivel realizar o login do usuário <b>" . $usuario . "</b>!";
+        $info["http_code"] == 401;
     }
 
-    // Retornamos o array de retorno como um 'json' para que o ajax entenda a resposta bem sucedida
-    echo json_encode($retorno);
+    //$info["http_code"] = 200;
+
+    if ($info["http_code"] == 200) {
+
+        if ($_POST['tipo_usuario'] == 'aluno') {
+
+            try {
+
+                $conexao = inicia_Conexao_Soap('conexaoSql');
+
+
+                $sentenca = 'FREQEST.001';
+
+                $parametros = array(
+                    'codSentenca' => $sentenca,
+                    'codColigada' => 1,
+                    'codSistema' => 'G',
+                    'Usuario' => $_ENV['usuario_tbc'],
+                    'Senha' => $_ENV['senha_tbc'],
+                    'parameters' => 'COLIGADA=' . $_ENV['COD_COLIGADA'] . ';IDPERLET=' . $periodo_letivo . ';USUARIO=' . $usuario . ''
+                );
+
+
+                $resultado = $conexao->RealizarConsultaSQL($parametros);
+
+                $response = json_decode(json_encode(simplexml_load_string($resultado->RealizarConsultaSQLResult)), FALSE);
+
+                $result = isset($response->Resultado) == false ? null : $response->Resultado;
+
+            } catch (SoapFault $exception) {
+                echo json_encode($exception->getMessage());
+            }
+
+            if ($result == null) {
+                $retorno['status'] = 0;
+                $retorno['informacao_adicional'] = "Sem permissão para acessar o sistema no tipo de login selecionado!";
+                echo json_encode($retorno);
+
+            } else {
+                // Configurando o array de retorno no caso do sucesso (Ex: Status = 1)
+                $retorno['status'] = 1;
+                $retorno['informacao_adicional'] = "O login do usuário <b>" . $usuario . "</b> foi realizado com sucesso!";
+                echo json_encode($retorno);
+            }
+
+
+
+        } else if ($_POST['tipo_usuario'] == 'supervisor') {
+            echo json_encode($retorno);
+        } else if ($_POST['tipo_usuario'] == 'coordenador') {
+            echo json_encode($retorno);
+        } else {
+            // Configurando o array de retorno no caso do erro (Ex: Status = 0)
+            $retorno['status'] = 0;
+            $retorno['informacao_adicional'] = "Selecione um tipo de usuário para prosseguir com o login!";
+        }
+
+        
+
+    } else {
+        // Obtendo o retorno do erro da api de validação
+        $erro_msg = json_decode($response);
+
+        $erro = array(
+            'status' => 3,
+            'informacao_adicional' => $erro_msg->message
+        );
+
+        echo json_encode($erro);
+    }
 } else {
     // Configurando o array de retorno no caso do erro (Ex: Status = 0)
     $retorno['informacao_adicional'] = "Os valores do POST não chegaram do lado do servidor";
