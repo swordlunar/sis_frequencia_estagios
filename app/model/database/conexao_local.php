@@ -12,7 +12,7 @@ use Opis\Database\Connection;
 
 // Configuração da conexão com o OPIS
 $connection = new Connection(
-    'mysql:host=localhost;dbname=banco_exemplo',
+    'mysql:host=localhost;dbname=sis_frequencia_estagio',
     'root',
     ''
 );
@@ -25,12 +25,7 @@ $db = new Database($connection);
 function inicia_conexao()
 {
 
-    define('HOST', 'localhost');
-    define('USER', 'root');
-    define('PASS', '');
-    define('BASE', 'banco_exemplo');
-
-    $conn = new MySQLi(HOST, USER, PASS, BASE);
+    $conn = new PDO('mysql:host=localhost;dbname=sis_frequencia_estagio', 'root', '');
 
     return $conn;
 }

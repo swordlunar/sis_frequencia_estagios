@@ -9,6 +9,7 @@ function realiza_login() {
     // Pegando os valores dos campos do html e atribuindo a variaveis do javascript
     var usuario = $('#usuario').val();
     var senha = $('#senha').val();
+    var tipo_usuario = $('#tipo_usuario').val();
 
     // O que foi feito acima é o equivalente a isso no javascript puro:
     // var usuario = document.getElementById("usuario").value;

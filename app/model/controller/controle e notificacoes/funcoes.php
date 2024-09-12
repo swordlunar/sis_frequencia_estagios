@@ -13,3 +13,9 @@ function periodo_letivo_atual()
     }
     return $periodo_letivo;
 }
+
+function hoje(){
+    date_default_timezone_set('America/Fortaleza');
+    $hoje = date("Y-m-d H:i:s");
+    return $hoje;
+}

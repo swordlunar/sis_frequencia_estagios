@@ -1,7 +1,7 @@
 <?php
 // Sempre que precisarmos validar acesso para uma página devemos incluir o arquivo
 // "verifica_login.php" para verificarmos se há uma sessão ativa ou não
-//include __DIR__ . "/model/controller/login/verifica_login.php";
+include __DIR__ . "/model/controller/login/verifica_login.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,14 +66,29 @@
                     <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
                             class="nav_name">Estatisticas</span> </a>
                 </div>
-            </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
+            </div> <a onclick='realizar_logout()' class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
                     class="nav_name">Logout</span> </a>
         </nav>
     </div>
 
     <!--Container Principal-->
     <div class="mt-5 height-100 bg-light" id="corpo_principal">
-    
+        <div class='col'>
+            <div class="row mt-5">
+                <?php if($_SESSION['TIPO_USUARIO'] == 1){ ?>
+                <span>
+                    <?php
+                        echo 'É aluno';
+                    ?>
+                </span>
+                <?php }else{?>
+                <span>
+                    <?php
+                        echo 'Não é aluno!!!';
+                    ?>
+                </span>
+            <?php } ?></div>
+        </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -81,8 +96,5 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script src="./scripts/sidebar.js"></script>
-
-
-
-
+<script src="./scripts/home.js"></script>
 </html>
