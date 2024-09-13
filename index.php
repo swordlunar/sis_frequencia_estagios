@@ -39,9 +39,9 @@
 
                                         <div class="form-outline mb-4">
                                             <select id='tipo_usuario'class="form-select" aria-label="Default select example">
-                                                <option value="Aluno">Aluno</option>
-                                                <option value="Coordenador">Coordenador</option>
-                                                <option value="Supervisor">Supervisor</option>
+                                                <option value="aluno">Aluno</option>
+                                                <option value="coordenador">Coordenador</option>
+                                                <option value="supervisor">Supervisor</option>
                                             </select>
                                         </div>
                                         

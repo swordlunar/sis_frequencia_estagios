@@ -206,3 +206,8 @@ a {
   --bs-btn-disabled-bg: var(--cor-principal) !important;
   --bs-btn-disabled-border-color: var(--cor-principal) !important;
 }
+
+:root{
+  --bs-primary-rgb: 5, 81, 96 !important;
+  --bs-primary: var(--cor-principal) !important;
+}

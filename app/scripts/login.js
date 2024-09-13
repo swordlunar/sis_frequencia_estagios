@@ -31,7 +31,7 @@ function realiza_login() {
         jQuery.ajax({
             type: "POST",
             url: "./app/model/controller/login/login",
-            data: { 'usuario': usuario, 'senha': senha, 'tipo_usuario':'aluno' },
+            data: { 'usuario': usuario, 'senha': senha, 'tipo_usuario': tipo_usuario },
             dataType: 'json',
             beforeSend: function () {
                 Swal.fire({

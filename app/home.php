@@ -1,7 +1,7 @@
 <?php
 // Sempre que precisarmos validar acesso para uma página devemos incluir o arquivo
 // "verifica_login.php" para verificarmos se há uma sessão ativa ou não
-//include __DIR__ . "/model/controller/login/verifica_login.php";
+include __DIR__ . "/model/controller/login/verifica_login.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,40 +55,30 @@
             <div> <a href="#" class="nav_logo"> <img src="./../assets/imagens/logo2.png" alt="Logo Unileão"
                         style="background-size: cover;width: 20px;height: 20px;"> <span
                         class="nav_logo-name">UNILEÃO</span> </a>
-                <div class="nav_list"> <a href="#" class="nav_link active-side"> <i class='bx bx-grid-alt nav_icon'></i>
-                        <span class="nav_name">Dashboard</span> </a> <a href="#" class="nav_link"> <i
-                            class='bx bx-user nav_icon'></i> <span class="nav_name">Usuários</span> </a> <a href="#"
-                        class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span
-                            class="nav_name">Mensagens</span> </a> <a href="#" class="nav_link"> <i
-                            class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Favoritos</span> </a> <a
-                        href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span
-                            class="nav_name">Arquivos</span> </a>
-                    <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
-                            class="nav_name">Estatisticas</span> </a>
+                <div class="nav_list">
+                    <a href="#" class="nav_link active-side"> <i class='bx bx-calendar-check nav_icon'></i> <span class="nav_name">FREQUÊNCIA</FRame></span></a>
+                    <?php if($_SESSION['TIPO_USUARIO'] == 2){?>
+                    <a href="#" class="nav_link"> <i class='bx bx-qr nav_icon'></i> <span class="nav_name">GERAR QRCODE</span></a>
+                        
+                    <?php } if($_SESSION['TIPO_USUARIO'] == 3){?>
+                    <a href="#" class="nav_link"> <i class='bx bx-filter-alt nav_icon'></i> <span class="nav_name">SETORES</span></a>
+                    <a href="#" class="nav_link"> <i class='bx bx-group nav_icon'></i> <span class="nav_name">SUPERVISORES</span></a>
+                    <a href="#" class="nav_link"> <i class='bx bx-time-five nav_icon'></i> <span class="nav_name">RELATÓRIO</span></a>
+                    <?php } if($_SESSION['TIPO_USUARIO'] == 2 || ($_SESSION['TIPO_USUARIO'] == 3)){ ?>
+                    <a href="#" class="nav_link"> <i class='bx bx-calendar-event nav_icon' ></i> <span class="nav_name">HORÁRIO</span></a>
+                    
+                    <?php }?>
                 </div>
-            </div> <a onclick='realizar_logout()' class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
-                    class="nav_name">Logout</span> </a>
+            </div>
+            <a onclick='realizar_logout()' class="nav_link"> <i class='bx bx-log-out nav_icon'></i>
+                <span class="nav_name">Sair</span>
+            </a>
         </nav>
     </div>
 
     <!--Container Principal-->
-    <div class="mt-5 height-100 bg-light" id="corpo_principal">
-        <div class='col'>
-            <div class="row mt-5">
-                <?php session_start(); $_SESSION['TIPO_USUARIO'] = 1; if($_SESSION['TIPO_USUARIO'] == 1){ ?>
-                <span class="mt-5">
-                    <?php
-                        echo 'É aluno';
-                    ?>
-                </span>
-                <?php }else{?>
-                <span class="mt-5">
-                    <?php
-                        echo 'Não é aluno!!!';
-                    ?>
-                </span>
-            <?php } ?></div>
-        </div>
+    <div class="container-fluid mt-5 bg-light" id="corpo_principal">
+        <?php include_once __DIR__ . "/view/frequencia.php" ?>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
