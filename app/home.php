@@ -1,7 +1,7 @@
 <?php
 // Sempre que precisarmos validar acesso para uma página devemos incluir o arquivo
 // "verifica_login.php" para verificarmos se há uma sessão ativa ou não
-include __DIR__ . "/model/controller/login/verifica_login.php";
+//include __DIR__ . "/model/controller/login/verifica_login.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,14 +75,14 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
     <div class="mt-5 height-100 bg-light" id="corpo_principal">
         <div class='col'>
             <div class="row mt-5">
-                <?php if($_SESSION['TIPO_USUARIO'] == 1){ ?>
-                <span>
+                <?php session_start(); $_SESSION['TIPO_USUARIO'] = 1; if($_SESSION['TIPO_USUARIO'] == 1){ ?>
+                <span class="mt-5">
                     <?php
                         echo 'É aluno';
                     ?>
                 </span>
                 <?php }else{?>
-                <span>
+                <span class="mt-5">
                     <?php
                         echo 'Não é aluno!!!';
                     ?>
