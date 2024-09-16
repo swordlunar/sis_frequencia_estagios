@@ -1,6 +1,6 @@
 <?php
 
-include_once "../../database/conexao_local.php";
+include_once __DIR__ . "/../../../database/conexao_local.php";
 
 function cadastrar_aluno($array_info_aluno, $periodo_letivo, $hoje){
     $retorno = array(

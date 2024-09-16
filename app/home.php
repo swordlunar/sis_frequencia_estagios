@@ -87,4 +87,7 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
 
 <script src="./scripts/sidebar.js"></script>
 <script src="./scripts/home.js"></script>
+<?php if($_SESSION['TIPO_USUARIO'] == 1){ ?>
+<script src="./scripts/aluno.js"></script>
+<?php } ?>
 </html>
