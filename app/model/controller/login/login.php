@@ -103,6 +103,8 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                     $_SESSION['COD_TURMA'] = $result->{'CODTURMA'};
                     $_SESSION['PERIODO_LETIVO'] = $periodo_letivo;
 
+                    // $_SESSION['ID_SETOR'] = 1;
+
                     $_SESSION['TIPO_USUARIO'] = 1;
 
 

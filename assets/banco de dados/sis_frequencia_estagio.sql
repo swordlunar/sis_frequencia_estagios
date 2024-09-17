@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/09/2024 às 20:40
+-- Tempo de geração: 17/09/2024 às 21:57
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.1.25
 
@@ -51,7 +51,7 @@ CREATE TABLE `aluno` (
 --
 
 INSERT INTO `aluno` (`id_aluno`, `nome_aluno`, `matricula_aluno`, `telefone_aluno`, `cod_curso`, `nome_curso`, `periodo_letivo`, `email_aluno`, `turma`, `turno`, `status_estagio`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_setor`) VALUES
-(17, 'DARIO HUGO BALBINO DA CRUZ', '2016105444', 'Não cadastrado', 1016, 'MEDICINA VETERINÁRIA', '20242', 'dariohugo0897@gmail.com', 'VET108-10', NULL, 0, '2024-09-16 13:22:14', '2016105444', '2024-09-16 13:22:14', '2016105444', NULL);
+(17, 'DARIO HUGO BALBINO DA CRUZ', '2016105444', 'Não cadastrado', 1016, 'MEDICINA VETERINÁRIA', '20242', 'dariohugo0897@gmail.com', 'VET108-10', NULL, 0, '2024-09-16 13:22:14', '2016105444', '2024-09-16 13:22:14', '2016105444', 1);
 
 -- --------------------------------------------------------
 
@@ -79,8 +79,8 @@ CREATE TABLE `coordenador` (
 
 CREATE TABLE `registro_frequencia` (
   `id_registro` int(11) NOT NULL,
-  `status_registro` varchar(255) NOT NULL,
-  `data_referencia` datetime NOT NULL,
+  `status_registro` int(11) NOT NULL,
+  `data_referencia` date NOT NULL,
   `aprovado_por` varchar(255) DEFAULT NULL,
   `entrada_1` datetime DEFAULT NULL,
   `intervalo` datetime DEFAULT NULL,
@@ -95,6 +95,13 @@ CREATE TABLE `registro_frequencia` (
   `id_aluno` int(11) NOT NULL,
   `id_setor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `registro_frequencia`
+--
+
+INSERT INTO `registro_frequencia` (`id_registro`, `status_registro`, `data_referencia`, `aprovado_por`, `entrada_1`, `intervalo`, `volta_intervalo`, `saida_1`, `entrada_2`, `saida_2`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_aluno`, `id_setor`) VALUES
+(2, 0, '2024-09-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-09-17 16:56:36', '2016105444', '2024-09-17 16:56:36', '2016105444', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +156,8 @@ CREATE TABLE `supervisor` (
 -- Índices de tabela `aluno`
 --
 ALTER TABLE `aluno`
-  ADD PRIMARY KEY (`id_aluno`);
+  ADD PRIMARY KEY (`id_aluno`),
+  ADD UNIQUE KEY `matricula_aluno` (`matricula_aluno`,`cod_curso`,`periodo_letivo`);
 
 --
 -- Índices de tabela `coordenador`
@@ -161,7 +169,8 @@ ALTER TABLE `coordenador`
 -- Índices de tabela `registro_frequencia`
 --
 ALTER TABLE `registro_frequencia`
-  ADD PRIMARY KEY (`id_registro`);
+  ADD PRIMARY KEY (`id_registro`),
+  ADD UNIQUE KEY `data_referencia` (`data_referencia`,`id_aluno`,`id_setor`);
 
 --
 -- Índices de tabela `setor`
@@ -196,7 +205,7 @@ ALTER TABLE `coordenador`
 -- AUTO_INCREMENT de tabela `registro_frequencia`
 --
 ALTER TABLE `registro_frequencia`
-  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `setor`

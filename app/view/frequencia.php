@@ -1,6 +1,3 @@
-<?php
-?>
-
 <?php if($_SESSION['TIPO_USUARIO'] == 1){?>
     <div class="row mt-5">
         
@@ -93,44 +90,16 @@
                         <!-- Formulário de cadastro de estagiário.-->
                         <form id='cad-estagiario-form'>
                             <div class="mb-3">
-                                <p>Tipo de Presença:</p>
-                                <div class="">
-                                    <div class="input-group">
-                                        <div class="input-group-text" style="background-color: white; border: 0px !important;" >
-                                            <input id="primeira_entrada" class="form-check-input mt-0" type="radio" name="tipo_entrada" value="entrada" aria-label="">
-                                            <label for="primeira_entrada" class="">Primeira entrada:</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-text" style="background-color: white; border: 0px !important;" >
-                                            <input id="intervalo" class="form-check-input mt-0" type="radio" name="tipo_entrada" value="intervalo" aria-label="">
-                                            <label for="intervalo" class="">Intervalo:</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-text" style="background-color: white; border: 0px !important;" >
-                                            <input id="volta_intervalo" class="form-check-input mt-0" type="radio" name="tipo_entrada" value="volta_intervalo" aria-label="">
-                                            <label for="volta_intervalo" class="">Volta do Intervalo:</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-text" style="background-color: white; border: 0px !important;" >
-                                            <input id="primeira_saida" class="form-check-input mt-0" type="radio" name="tipo_entrada" value="saida" aria-label="">
-                                            <label for="primeira_saida" class="">Primeira Saída</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-text" style="background-color: white; border: 0px !important;" >
-                                            <input id="segunda_entrada" class="form-check-input mt-0" type="radio" name="tipo_entrada" value="segunda_entrada" aria-label="">
-                                            <label for="segunda_entrada" class="">Segunda Entrada:</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-text" style="background-color: white; border: 0px !important;" >
-                                            <input id="segunda_saida" class="form-check-input mt-0" type="radio" name="tipo_entrada" value="segunda_saida" aria-label="">
-                                            <label for="segunda_saida" class="">Segunda Saída:</label>
-                                        </div>
-                                    </div>                           
+                                <div class="mb-3">
+                                    <label for="tipo_presença" class="col-form-label">Tipo de Presença:</label>
+                                    <select id="tipo_presença" class="form-select" name='tipo_presença'>
+                                        <option value='Primeira entrada'>Primeira entrada</option>
+                                        <option value="Intervalo">Intervalo</option>
+                                        <option value="Volta do intervalo">Volta do intervalo</option>
+                                        <option value="Saída">Saída</option>
+                                        <option value="Segunda Entrada">Segunda Entrada</option>
+                                        <option value="Segunda Saída">Segunda Saída</option>
+                                    </select>
                                 </div>
                             </div>
 
