@@ -24,50 +24,50 @@
             <div class="mt-5">
                 <div class='row'>
                     <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card text-center bg-primary text-white">
+                        <div class="card text-center" id = "card_visu_entrada_1">
                             <div class="card-header">Entrada</div>
                             <div class="card-body">
-                                <p>16:15</p>
+                                <p id="visu_entrada_1" >Não registrado</p>
                             </div>
                         </div>
                     </div> 
                     <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card text-center">
+                        <div class="card text-center" id = "card_visu_intervalo">
                             <div class="card-header">Intervalo</div>
                             <div class="card-body">
-                                <p>Não registrado</p>
+                                <p id="visu_intervalo" >Não registrado</p>
                             </div>
                         </div>
                     </div>          
                     <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card text-center">
+                        <div class="card text-center" id = "card_visu_volta_intervalo">
                             <div class="card-header">Volta do Intervalo</div>
                             <div class="card-body">
-                                <p>Não registrado</p>
+                                <p id="visu_volta_intervalo" >Não registrado</p>
                             </div>
                         </div>
                     </div>   
                     <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card text-center">
+                        <div class="card text-center" id = "card_visu_saida_1">
                             <div class="card-header">Saída</div>
                             <div class="card-body">
-                               <p>Não registrado</p>
+                               <p id="visu_saida_1" >Não registrado</p>
                             </div>
                         </div>
                     </div>   
                     <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card text-center">
+                        <div class="card text-center" id = "card_visu_entrada_2">
                             <div class="card-header">2° Entrada</div>
                             <div class="card-body">
-                                <p>Não registrado</p>
+                                <p id="visu_entrada_2" >Não registrado</p>
                             </div>
                         </div>
                     </div>   
                     <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card text-center">
+                        <div class="card text-center" id = "card_visu_saida_2">
                             <div class="card-header">2° Saída</div>
                             <div class="card-body">
-                                <p>Não registrado</p>
+                                <p id="visu_saida_2" >Não registrado</p>
                             </div>
                         </div>
                     </div>   

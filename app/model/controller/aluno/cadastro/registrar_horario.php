@@ -12,6 +12,7 @@ $retorno = array(
 $data_hora = hoje();
 $data = date("Y-m-d");
 $status_inicial = 0;
+$verifica_registro_anterior = 0;
 
 $RA = $_SESSION['MATRICULA'];
 $CODCURSO = $_SESSION['COD_CURSO'];
@@ -76,7 +77,7 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
 
         $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
-        if (!empty($verificacao_validade)){
+        if (!empty($verificacao_validade)){ // Se existe o registro
             //consulta registro
 
             $verifica_registro = "SELECT * FROM registro_frequencia WHERE data_referencia = :data_referencia AND id_setor = :id_setor AND id_aluno = :id_aluno";
@@ -92,51 +93,104 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
                     echo 'Já existe esse registro';
 
                 }else{ //"UPDATE estagio SET nome_estagiario = :nome_estagiario, dia = :dia, turno = :turno, modo =:modo WHERE id_estagiario = :id";
-                    $atualizar_registro = "UPDATE registro_frequencia SET $tipo_entrada = :data_hora WHERE id_registro = :id_registro";
-                    $mudar_registro = $conn->prepare($atualizar_registro);
-                    $mudar_registro->bindParam(':id_registro', $verificacao_registro['id_registro']);
-                    $mudar_registro->execute();
-                    $mudanca_registro = $mudar_registro->fetch(PDO::FETCH_ASSOC);
 
-                    echo 'Update';
+                    switch ($tipo_entrada) {
+                        case 'intervalo':
+                            if ($verificacao_registro['entrada_1']!=NULL){
+                                $verifica_registro_anterior = 1;
+                            };
+                            break;
+                        case 'volta_intervalo':
+                            if ($verificacao_registro['intervalo']!=NULL){
+                                $verifica_registro_anterior = 1;
+                            };
+                            break;
+                        case 'saida_1':
+                            if (($verificacao_registro['entrada_1']!=NULL && $verificacao_registro['intervalo']==NULL) || ($verificacao_registro['entrada_1']!=NULL && $verificacao_registro['volta_intervalo']==NULL)){
+                                $verifica_registro_anterior = 1;
+                            };
+                            break;
+                        case 'entrada_2':
+                            if ($verificacao_registro['saida_1']!=NULL){
+                                $verifica_registro_anterior = 1;
+                            };
+                            break;
+                        case 'saida_2':
+                            if ($verificacao_registro['entrada_2']!=NULL){
+                                $verifica_registro_anterior = 1;
+                            };
+                            break;
+                        default:
+                            $verifica_registro_anterior = 0;
+                            break;
+                    }
+
+
+                    if ($verifica_registro_anterior == 1){
+                        $atualizar_registro = "UPDATE registro_frequencia SET $tipo_entrada = :data_hora WHERE id_registro = :id_registro";
+                        $mudar_registro = $conn->prepare($atualizar_registro);
+                        $mudar_registro->bindParam(':data_hora', $data_hora);
+                        $mudar_registro->bindParam(':id_registro', $verificacao_registro['id_registro']);
+                        $mudar_registro->execute();
+                        $mudanca_registro = $mudar_registro->fetch(PDO::FETCH_ASSOC);
+
+                        $retorno['status'] = 1;
+                        $retorno['retorno'] = 'Registro alterado!';      
+
+                    }else{
+                        $retorno['status'] = 2;
+                        $retorno['retorno'] = 'Voce esta tentando inserir um registro do tipo ' . $_POST['tipo_entrada'] . ' sem registrar o anterior.';      
+                    }
                 }
             } else { // Se não existe o registro
 
                 if($tipo_entrada = 'entrada_1'){
-                    $verifica_validade = "INSERT INTO registro_frequencia (status_registro, data_referencia, criado_em, criado_por, editado_em, editado_por, id_aluno, id_setor) VALUES (:status_registro, :data_referencia, :criado_em, :criado_por, :editado_em, :editado_por, :id_aluno, :id_setor)";
+                    $verifica_validade = "INSERT INTO registro_frequencia (status_registro, data_referencia, entrada_1, criado_em, criado_por, editado_em, editado_por, id_aluno, id_setor) VALUES (:status_registro, :data_referencia, :entrada_1, :criado_em, :criado_por, :editado_em, :editado_por, :id_aluno, :id_setor)";
                     $ver_validade = $conn->prepare($verifica_validade);
                     $ver_validade->bindParam(':status_registro', $status_inicial);
                     $ver_validade->bindParam(':data_referencia', $data);
+                    $ver_validade->bindParam(':entrada_1', $data_hora);
                     $ver_validade->bindParam(':criado_em', $data_hora);
                     $ver_validade->bindParam(':criado_por', $RA);
                     $ver_validade->bindParam(':editado_em', $data_hora);
                     $ver_validade->bindParam(':editado_por', $RA);
-                    $ver_validade->bindParam(':id_aluno', $verificacao_aluno['id_setor']);
+                    $ver_validade->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
                     $ver_validade->bindParam(':id_setor', $verificacao_aluno['id_setor']);
                     
                     $ver_validade->execute();
 
                     $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
-                    echo 'Insert';
+                    // echo 'Insert';
 
                     if (!empty($verificacao_validade)){
                         $retorno['status'] = 1;
-                        $retorno['retorno'] = 'Registro válido!';
-                    
-                        return $retorno;
+                        $retorno['retorno'] = 'Registro válido!';                
                     }else{
-                        $retorno['status'] = 2;
-                        $retorno['retorno'] = 'QR Code inválido e/ou data já expirada!';
-                
-                        return $retorno;
+                        $retorno['status'] = 6;
+                        $retorno['retorno'] = 'Erro ao inserir o registro';
                     };
+                    echo json_encode($retorno);
                 } else{
-                    echo 'tipo de entrada inválido';
+                    $retorno['status'] = 5;
+                    $retorno['retorno'] = 'Tipo de entrada inválido';
+                    echo json_encode($retorno);
                 }
-            };
+                echo json_encode($retorno);
+            }
         }else{
-        
-        };
-    };
-};
+            $retorno['status'] = 4;
+            $retorno['retorno'] = 'QR Code inválido e/ou data já expirada!';
+            echo json_encode($retorno);
+        }
+        echo json_encode($retorno);
+    }else{
+        $retorno['status'] = 3;
+        $retorno['retorno'] = 'Aluno não identificado';
+        echo json_encode($retorno);
+    }
+}else{
+    $retorno['status'] = 2;
+    $retorno['retorno'] = 'Qr code ou tipo de entrada não informados.';
+    echo json_encode($retorno);
+}
