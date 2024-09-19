@@ -6,7 +6,7 @@
             <div class="mt-5">
                 <div class='row align-items-end'>
                     <div class="col-lg-3 col-md-6 mb-2">
-                        <button class='col-12 btn btn-primary btn-block fa-lg gradient-custom-2' onclick="registrar_horario_visu()" >Registrar horário</button>
+                        <button class='col-12 btn btn-primary btn-block fa-lg gradient-custom-2' onclick="registrar_horario_modal()" >Registrar horário</button>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-2">
                         <button class='col-12 btn btn-primary btn-block fa-lg gradient-custom-2'>Histórico de horários</button>
@@ -72,17 +72,15 @@
                         </div>
                     </div>   
                 </div>
-                  
             </div>
         </div>
-
     </div>
 
-    <div class="modal fade" id="registrarhorario_visu" tabindex="-1" aria-labelledby="registrarhorario_visu" aria-hidden="true">
+    <div class="modal fade" id="registrar_horario_modal" tabindex="-1" aria-labelledby="registrar_horario_modal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="registrarhorario_visu">Registrar Presença</h1>
+                        <h1 class="modal-title fs-5" id="registrar_horario_modal">Registrar Presença</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -93,12 +91,16 @@
                                 <div class="mb-3">
                                     <label for="tipo_presença" class="col-form-label">Tipo de Presença:</label>
                                     <select id="tipo_presença" class="form-select" name='tipo_presença'>
+                                        
                                         <option value='Primeira entrada'>Primeira entrada</option>
+                                        
+                                        
                                         <option value="Intervalo">Intervalo</option>
                                         <option value="Volta do intervalo">Volta do intervalo</option>
                                         <option value="Saída">Saída</option>
                                         <option value="Segunda Entrada">Segunda Entrada</option>
                                         <option value="Segunda Saída">Segunda Saída</option>
+                                        
                                     </select>
                                 </div>
                             </div>

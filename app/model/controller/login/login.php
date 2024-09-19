@@ -127,7 +127,6 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
             $retorno['status'] = 0;
             $retorno['informacao_adicional'] = "Selecione um tipo de usuário para prosseguir com o login!";
         }
-
     
     } else {
         // Obtendo o retorno do erro da api de validação

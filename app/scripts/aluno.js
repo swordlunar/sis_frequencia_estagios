@@ -49,8 +49,8 @@ $( document ).ready(function() {
     carregar_registro_diario_aluno();
 });
 
-async function registrar_horario_visu(){
-    $('#registrarhorario_visu').modal('show');
+async function registrar_horario_modal(){
+    $('#registrar_horario_modal').modal('show');
 
 }
 
@@ -70,11 +70,36 @@ async function registrar_horario(){
         success: function (response) {
 
             switch (response['status']) {
+                case 0:
+                    Swal.fire({
+                    confirmButtonColor: '#4e73df',
+                    title: 'Falhou',
+                    html: response['retorno'],
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                    allowOutsideClick: false,
+                    })
+                    break;
                 case 1:
-                    alert(response['retorno'])
+                    Swal.fire({
+                    confirmButtonColor: '#4e73df',
+                    title: 'Sucesso',
+                    html: response['retorno'],
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    allowOutsideClick: false,
+                    })
                     carregar_registro_diario_aluno()
                     break;
                 default:
+                    Swal.fire({
+                    confirmButtonColor: '#4e73df',
+                    title: 'Falhou',
+                    html: response['retorno'],
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                    allowOutsideClick: false,
+                    })
                     break;
             }
         }

@@ -76,4 +76,5 @@ function cadastrar_aluno($array_info_aluno, $periodo_letivo, $hoje){
     }else{
         return $retorno;
     };
+
 };

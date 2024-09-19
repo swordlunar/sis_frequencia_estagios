@@ -84,6 +84,7 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="./scripts/sidebar.js"></script>
 <script src="./scripts/home.js"></script>
