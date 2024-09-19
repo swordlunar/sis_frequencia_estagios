@@ -13,11 +13,11 @@
                     </div>
                     <div class="col-lg-3 col-md-6 mb-2">
                         <label for="relacao_setor" class="form-label">Setor:</label>
-                        <div id='relacao_setor' class="border border-success p-2">Clínica Cirúrgica</div>
+                        <div id='relacao_setor' class="border border-success p-2"></div>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-2">
                         <label for="dia_atual" class="form-label">Dia:</label>
-                        <div id='dia_atual' class="border border-success p-2">13/09/2024</div>
+                        <div id='dia_atual' class="border border-success p-2"></div>
                     </div>
                 </div>        
             </div>
@@ -89,17 +89,16 @@
                         <form id='cad-estagiario-form'>
                             <div class="mb-3">
                                 <div class="mb-3">
-                                    <label for="tipo_presença" class="col-form-label">Tipo de Presença:</label>
-                                    <select id="tipo_presença" class="form-select" name='tipo_presença'>
-                                        
+                                    <label for="tipo_presenca" class="col-form-label">Tipo de Presença:</label>
+                                    <select id="tipo_presenca" class="form-select" name='tipo_presenca'>
+                                    <option value='Primeira entrada'>Primeira entrada</option>
+<!--                                         
                                         <option value='Primeira entrada'>Primeira entrada</option>
-                                        
-                                        
                                         <option value="Intervalo">Intervalo</option>
                                         <option value="Volta do intervalo">Volta do intervalo</option>
                                         <option value="Saída">Saída</option>
                                         <option value="Segunda Entrada">Segunda Entrada</option>
-                                        <option value="Segunda Saída">Segunda Saída</option>
+                                        <option value="Segunda Saída">Segunda Saída</option> -->
                                         
                                     </select>
                                 </div>
@@ -110,7 +109,7 @@
                                 <input type="text" name="nome" class="form-control" id="codigo" placeholder='Código' value="66e85ee05e4e8">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="registrar_horario()">Ler QR Code</button>
+                                <button id = "botao_registro"type="button" class="btn btn-primary" onclick="registrar_horario()">Ler QR Code</button>
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Voltar</button>
                             </div>
                         </form>

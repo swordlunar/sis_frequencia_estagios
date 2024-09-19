@@ -66,7 +66,7 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
 
     // var_dump($verificacao_aluno);
 
-    if(!empty($verificacao_aluno)){
+    if(!empty($verificacao_aluno) && ($tipo_entrada != 'erro!') && ($codigo != '')){
         $verifica_validade = "SELECT * FROM setor WHERE token_qrcode = :token AND data_expiracao_token >= :hoje AND id_setor = :setor";
         $ver_validade = $conn->prepare($verifica_validade);
         $ver_validade->bindParam(':token', $codigo);
@@ -92,7 +92,7 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
                 if ($verificacao_registro[$tipo_entrada]!=NULL){
                     $retorno['status'] = 8;
                     $retorno['retorno'] = 'Tipo de presença já registrada!';  
-                }else{ //"UPDATE estagio SET nome_estagiario = :nome_estagiario, dia = :dia, turno = :turno, modo =:modo WHERE id_estagiario = :id";
+                }else{
 
                     switch ($tipo_entrada) {
                         case 'intervalo':

@@ -59,9 +59,11 @@ if(!empty($verificacao_aluno)){
         $verificacao_registro = $ver_registro->fetch(PDO::FETCH_ASSOC);
 
         if(!empty($verificacao_registro)){
+            $verificacao_registro['nome_setor'] = $verificacao_validade["nome_setor"];
             // var_dump($retorno);
             $retorno['status'] = 1;
             $retorno['retorno'] = $verificacao_registro;
+
             // var_dump($retorno);
         }else{
             $retorno['status'] = 2;
