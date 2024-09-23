@@ -13,7 +13,6 @@ $retorno = array(
 
 $data_hora = hoje();
 $data = date("Y-m-d");
-$status_inicial = 0;
 
 $RA = $_SESSION['MATRICULA'];
 $CODCURSO = $_SESSION['COD_CURSO'];

@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <!-- Modal do registro de horário -->
+    <!-- Modal do histórico de horário -->
     <div class="modal fade" id="historico_de_horarios_modal" tabindex="-1" aria-labelledby="historico_de_horarios_modal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -120,13 +120,15 @@
                     <p id='periodo_letivo_h' class="h3"></p>
                 </div>
 
-                <div id="historico_de_horarios_calendar">
+                <div class="container">
+                    <div id="historico_de_horarios_calendar">
 
+                    </div>
                 </div>
 
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="frequencia_de_horarios_modal()">Calendário</button> <!-- temporario -->
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
+                    <button type="button" class="btn btn-primary" onclick="">Sair</button>
                 </div>
             </div>
         </div>
@@ -157,38 +159,38 @@
                     <div class='row'>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="13:00" id="">
+                                <input type="text" class="form-control" value="" id="valor_entrada" disabled>
                                 <label for="floatingInput">Entrada</label>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="13:00" id="">
-                                <label for="floatingInput">Entrada</label>
+                                <input type="text" class="form-control" value="" id="valor_intervalo" disabled>
+                                <label for="floatingInput">Intervalo</label>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="13:00" id="">
-                                <label for="floatingInput">Entrada</label>
+                                <input type="text" class="form-control" value="" id="valor_volta_intervalo" disabled>
+                                <label for="floatingInput">Volta do intervalo</label>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="13:00" id="">
-                                <label for="floatingInput">Entrada</label>
+                                <input type="text" class="form-control" value="" id="valor_saida" disabled>
+                                <label for="floatingInput">Saída</label>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="13:00" id="">
-                                <label for="floatingInput">Entrada</label>
+                                <input type="text" class="form-control" value="" id="valor_entrada_2" disabled>
+                                <label for="floatingInput">Segunda entrada</label>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="13:00" id="">
-                                <label for="floatingInput">Entrada</label>
+                                <input type="text" class="form-control" value="" id="valor_saida_2" disabled>
+                                <label for="floatingInput">Segunda saida</label>
                             </div>
                         </div>
                     </div>

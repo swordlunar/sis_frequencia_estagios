@@ -86,6 +86,9 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.5/locales-all.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.15/index.global.min.js"></script>
 <script src="./scripts/sidebar.js"></script>
 <script src="./scripts/home.js"></script>
 <?php if($_SESSION['TIPO_USUARIO'] == 1){ ?>
