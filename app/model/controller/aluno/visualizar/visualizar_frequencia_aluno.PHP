@@ -27,10 +27,34 @@ if (isset($_POST['id_registro'])) {
 
     if (!empty($verificacao_registro)) {
 
-        
-        $retorno['status'] = 1;
-        $retorno['dados'] = $verificacao_registro;
+        $verifica_aluno = "SELECT * FROM aluno WHERE id_aluno = :id_aluno ";
+        $ver_aluno = $conn->prepare($verifica_aluno);
+        $ver_aluno->bindParam(':id_aluno', $verificacao_registro['id_aluno']);
+        $ver_aluno->execute();
 
+        $verificacao_aluno = $ver_aluno->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($verificacao_aluno)) {
+
+            $verifica_setor = "SELECT * FROM setor WHERE id_setor = :setor";
+            $ver_setor = $conn->prepare($verifica_setor);
+            $ver_setor->bindParam(':setor', $verificacao_aluno['id_setor']);
+
+            $ver_setor->execute();
+
+            $verificacao_setor = $ver_setor->fetch(PDO::FETCH_ASSOC);
+
+            if (!empty($verificacao_setor)) {
+                $retorno['status'] = 1;
+                $retorno['dados'] = $verificacao_registro;
+                $retorno['nome_aluno'] = $verificacao_aluno['nome_aluno'];
+                $retorno['nome_setor'] = $verificacao_setor['nome_setor'];
+            } else {
+                $retorno['status'] = 2;
+            }
+        } else {
+            $retorno['status'] = 3;
+        }
         echo json_encode($retorno);
     } else {
         echo json_encode($retorno);

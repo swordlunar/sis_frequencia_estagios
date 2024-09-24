@@ -17,6 +17,7 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
     <title>Frequência - Unileão</title>
     <link rel="shortcut icon" href="https://unileao.edu.br/wp-content/themes/portalv2.0/img/favicon.ico">
     <link href="./style/sidebar.css" rel="stylesheet" />
+    <link href="./style/calendario.css" rel="stylesheet" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 

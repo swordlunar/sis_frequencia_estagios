@@ -188,9 +188,7 @@ function calendario_historico_frequencia() {
 
     });
 
-
 }
-
 
 async function visualizar_frequencia_aluno(infoeventid) {
 
@@ -212,6 +210,8 @@ async function visualizar_frequencia_aluno(infoeventid) {
                         // sweetalert2('Sucesso', response['retorno'], 'success');
                         $('#historico_de_horarios_modal').modal('hide');
 
+                        document.getElementById('nome_aluno_f').innerHTML = response['nome_aluno'];
+                        document.getElementById('setor_aluno_f').innerHTML = response['nome_setor'];
                         document.getElementById('dia_atual_f').innerHTML = response['dados']['data_referencia'];
 
                         document.getElementById('valor_entrada').value = response['dados']['entrada_1'] != null ? new Date(response['dados']['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
@@ -222,7 +222,6 @@ async function visualizar_frequencia_aluno(infoeventid) {
                         document.getElementById('valor_saida_2').value = response['dados']['saida_2'] != null ? new Date(response['dados']['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
 
                         $('#frequencia_de_horarios_modal').modal('show');
-
                         break;
                     default:
                         sweetalert2('Falhou', response['retorno'], 'warning');
@@ -301,7 +300,9 @@ function historico_de_horarios_modal() {
                 document.getElementById('setor_aluno').innerHTML = setor_aluno;
                 document.getElementById('periodo_letivo_h').innerHTML = 'Horário ' + periodo_letivo;
 
+                horas_estagio();
                 calendario_historico_frequencia();
+
                 $('#historico_de_horarios_modal').modal('show');
             } else {
                 sweetalert2('Falhou', 'Erro ao exibir o histórico.', 'warning', 'Ok', false);
@@ -310,32 +311,18 @@ function historico_de_horarios_modal() {
     })
 }
 
-function frequencia_de_horarios_modal() {
-
-    // let id_registro = id_registro
-    let nome_aluno = 'não definido'
-    let setor_aluno = 'não definido'
-
+function horas_estagio() {
     jQuery.ajax({
         type: "POST",
-        url: "./model/controller/aluno/visualizar/carregar_setor_e_dia_atual",
+        url: "./model/controller/aluno/visualizar/carregar_horas_estagio",
         // data: {'codigo': codigo, 'tipo_entrada': tipo_entrada},
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
-                nome_aluno = response['nome_aluno']
-                setor_aluno = response['retorno']['nome_setor']
-
-                document.getElementById('nome_aluno_f').innerHTML = nome_aluno;
-                document.getElementById('setor_aluno_f').innerHTML = setor_aluno;
-
-                // document.getElementById('dia_atual_f').innerHTML = 'data atual'; mandei pra outra função
-
-                $('#frequencia_de_horarios_modal').modal('show');
+                document.getElementById('tempo_estagio').innerHTML = '10'+'/400 horas estagiadas';
             } else {
                 sweetalert2('Falhou', 'Erro ao exibir o histórico.', 'warning', 'Ok', false);
             }
         }
     })
 }
-

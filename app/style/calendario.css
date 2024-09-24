@@ -1,0 +1,24 @@
+.fc-header-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+ 
+  .fc-header-toolbar .fc-toolbar-chunk {
+    margin-bottom: 10px;
+  }
+ 
+ 
+  @media (max-width: 768px) {
+    .fc-header-toolbar {
+        flex-direction: column;
+    }
+    .fc-header-toolbar .fc-toolbar-chunk {
+        width: 100%;
+        text-align: center;
+    }
+    .fc-toolbar-title {
+        font-size: 1.5rem;
+    }
+  }

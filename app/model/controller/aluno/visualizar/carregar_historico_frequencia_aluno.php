@@ -82,14 +82,14 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
                             'title' => 'Intervalo',
                             'start' => $linha['intervalo'],
                             'end' => $linha['intervalo'],
-                            'color' => '#24a424',
+                            'color' => '#ec5353',
                             'id' => $linha['id_registro'],
                             'tipo' => 'intervalo'
                         ];
                     }
                     if ($linha['volta_intervalo']) {
                         $evento[] = [
-                            'title' => 'Volda do intervalo',
+                            'title' => 'Volta do intervalo',
                             'start' => $linha['volta_intervalo'],
                             'end' => $linha['volta_intervalo'],
                             'color' => '#24a424',
@@ -102,7 +102,7 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
                             'title' => 'Saída',
                             'start' => $linha['saida_1'],
                             'end' => $linha['saida_1'],
-                            'color' => '#24a424',
+                            'color' => '#ec5353',
                             'id' => $linha['id_registro'],
                             'tipo' => 'saida_1'
                         ];
@@ -122,7 +122,7 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
                             'title' => 'Segunda saída',
                             'start' => $linha['saida_2'],
                             'end' => $linha['saida_2'],
-                            'color' => '#24a424',
+                            'color' => '#ec5353',
                             'id' => $linha['id_registro'],
                             'tipo' => 'saida_2'
                         ];
