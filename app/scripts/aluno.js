@@ -319,9 +319,11 @@ function horas_estagio() {
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
-                document.getElementById('tempo_estagio').innerHTML = '10'+'/400 horas estagiadas';
+                document.getElementById('tempo_estagio').innerHTML = response['horas_estagiadas'] + '/' + response['hora_total'] + ' horas registradas.';
+                document.getElementById('progresso_estagio').innerHTML = '<div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="width: ' + response['porcentagem'] +'%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="480"></div>'
+                
             } else {
-                sweetalert2('Falhou', 'Erro ao exibir o histórico.', 'warning', 'Ok', false);
+                sweetalert2('Falhou', 'Erro ao contabilizar horas registradas.', 'error', 'Ok', false);
             }
         }
     })

@@ -112,10 +112,14 @@
                     </div>
                     <div class='modal-body'>
                         <div class="d-flex justify-content-between">
-                            <p id='setor_aluno'></p>
-                            <p id='tempo_estagio'>300/450 horas estagiadas</p>
+                            <p id='setor_aluno'></p> <!-- setor do aluno -->
+                            <p id='tempo_estagio'></p> <!-- horas estagiadas -->
+                            
                         </div>
-                        <p id='periodo_letivo_h' class="h3"></p>
+                        <div id='progresso_estagio' class="progress"> 
+                                
+                            </div>
+                        <p id='periodo_letivo_h' class="h3 mt-3"></p>
 
                     </div>
 
