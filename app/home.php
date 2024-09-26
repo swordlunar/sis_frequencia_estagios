@@ -1,13 +1,11 @@
 <?php
 // Sempre que precisarmos validar acesso para uma página devemos incluir o arquivo
 // "verifica_login.php" para verificarmos se há uma sessão ativa ou não
-include __DIR__ . "/model/controller/login/verifica_login.php";
-?>
+include __DIR__ . "/model/controller/login/verifica_login.php"; ?>
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-br">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,16 +25,20 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
 </head>
 
 <body id="body-pd">
-<header class="header shadow rounded" id="header">
-    <div class="container-fluid d-flex justify-content-between align-items-center p-2">
+    <header class="header shadow rounded" id="header">
+        <div class="container-fluid d-flex justify-content-between align-items-center p-2">
 
-        <div class="header_toggle"> 
-            <i class='bx bx-menu' id="header-toggle"></i> 
-        </div>
-       
-        <div class="d-flex align-items-center">
-            
-            <select class="form-select form-select-sm me-2" style="width: auto;">
+            <div class="header_toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <?php if ($_SESSION['TIPO_USUARIO'] == 1) { ?>
+                    <div>
+                        <span><strong> <?php echo $_SESSION['NOME_CURSO'] . ' - ' . $_SESSION['PERIODO_LETIVO']; ?> </strong></span>
+                    </div>
+                <?php } ?>
+                <!-- <select class="form-select form-select-sm me-2" style="width: auto;">
                 <option selected>Nome do Curso</option>
                 <option value="1">Curso 1</option>
                 <option value="2">Curso 2</option>
@@ -46,11 +48,11 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
                 <option selected>20242</option>
                 <option value="1">20241</option>
                 <option value="2">20231</option>
-            </select>
+            </select> -->
+            </div>
         </div>
-    </div>
-</header>
-    
+    </header>
+
     <div class="l-navbar shadow rounded" id="nav-bar">
         <nav class="nav">
             <div> <a href="#" class="nav_logo"> <img src="./../assets/imagens/logo2.png" alt="Logo Unileão"
@@ -58,17 +60,19 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
                         class="nav_logo-name">UNILEÃO</span> </a>
                 <div class="nav_list">
                     <a href="#" class="nav_link active-side"> <i class='bx bx-calendar-check nav_icon'></i> <span class="nav_name">FREQUÊNCIA</FRame></span></a>
-                    <?php if($_SESSION['TIPO_USUARIO'] == 2){?>
-                    <a href="#" class="nav_link"> <i class='bx bx-qr nav_icon'></i> <span class="nav_name">GERAR QRCODE</span></a>
-                        
-                    <?php } if($_SESSION['TIPO_USUARIO'] == 3){?>
-                    <a href="#" class="nav_link"> <i class='bx bx-filter-alt nav_icon'></i> <span class="nav_name">SETORES</span></a>
-                    <a href="#" class="nav_link"> <i class='bx bx-group nav_icon'></i> <span class="nav_name">SUPERVISORES</span></a>
-                    <a href="#" class="nav_link"> <i class='bx bx-time-five nav_icon'></i> <span class="nav_name">RELATÓRIO</span></a>
-                    <?php } if($_SESSION['TIPO_USUARIO'] == 2 || ($_SESSION['TIPO_USUARIO'] == 3)){ ?>
-                    <a href="#" class="nav_link"> <i class='bx bx-calendar-event nav_icon' ></i> <span class="nav_name">HORÁRIO</span></a>
-                    
-                    <?php }?>
+                    <?php if ($_SESSION['TIPO_USUARIO'] == 2) { ?>
+                        <a href="#" class="nav_link"> <i class='bx bx-qr nav_icon'></i> <span class="nav_name">GERAR QRCODE</span></a>
+
+                    <?php }
+                    if ($_SESSION['TIPO_USUARIO'] == 3) { ?>
+                        <a href="#" class="nav_link"> <i class='bx bx-filter-alt nav_icon'></i> <span class="nav_name">SETORES</span></a>
+                        <a href="#" class="nav_link"> <i class='bx bx-group nav_icon'></i> <span class="nav_name">SUPERVISORES</span></a>
+                        <a href="#" class="nav_link"> <i class='bx bx-time-five nav_icon'></i> <span class="nav_name">RELATÓRIO</span></a>
+                    <?php }
+                    if ($_SESSION['TIPO_USUARIO'] == 2 || ($_SESSION['TIPO_USUARIO'] == 3)) { ?>
+                        <a href="#" class="nav_link"> <i class='bx bx-calendar-event nav_icon'></i> <span class="nav_name">HORÁRIO</span></a>
+
+                    <?php } ?>
                 </div>
             </div>
             <a onclick='realizar_logout()' class="nav_link"> <i class='bx bx-log-out nav_icon'></i>
@@ -82,6 +86,7 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
         <?php include_once __DIR__ . "/view/frequencia.php" ?>
     </div>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
 
@@ -97,7 +102,8 @@ include __DIR__ . "/model/controller/login/verifica_login.php";
 <script src="./scripts/home.js"></script>
 <script src="./scripts/qrcode.min.js"></script>
 
-<?php if($_SESSION['TIPO_USUARIO'] == 1){ ?>
-<script src="./scripts/aluno.js"></script>
+<?php if ($_SESSION['TIPO_USUARIO'] == 1) { ?>
+    <script src="./scripts/aluno.js"></script>
 <?php } ?>
+
 </html>

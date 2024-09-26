@@ -1,9 +1,9 @@
-var html5QrcodeScanner = new Html5QrcodeScanner(
+var html5QrcodeScanner = new Html5QrcodeScanner( //função do que determina onde vai ser o qr code e algumas propriedades do mesmo.
     "leitor_qrcode",
     { fps: 10, qrbox: { width: 250, height: 250 } },
     /* verbose= */ false);
 
-function carregar_setor_e_dia_atual() {
+function carregar_setor_e_dia_atual() { // função que alimenta as informações que não precisam de possuir registro
     let dia_atual = new Date().toLocaleDateString('pt-br')
     let setor_aluno = 'Não definido'
 
@@ -21,14 +21,14 @@ function carregar_setor_e_dia_atual() {
             } else {
                 document.getElementById('relacao_setor').innerHTML = setor_aluno;
                 document.getElementById('dia_atual').innerHTML = dia_atual;
+                $("#botao_registro").prop("disabled", true);
             }
         }
     })
 }
 
-function carregar_registro_diario_aluno() {
-    // $('#tipo_presenca').empty();
-
+function carregar_registro_diario_aluno() { // função que alimenta as informações que precisam de possuir registro
+    
     let visu_entrada_1 = 'não definido';
     let visu_intervalo = 'não definido';
     let visu_volta_intervalo = 'não definido';
@@ -264,8 +264,6 @@ async function registrar_horario_modal() {
 async function registrar_horario(codigo) {
     let tipo_entrada = document.getElementById('tipo_presenca').value;
 
-    // console.log(tipo_entrada);
-
     if (codigo != '' && tipo_entrada != '') {
         jQuery.ajax({
             type: "POST",
@@ -296,7 +294,6 @@ async function registrar_horario(codigo) {
 }
 
 function historico_de_horarios_modal() {
-
     let nome_aluno = 'não definido'
     let setor_aluno = 'não definido'
     let periodo_letivo = 'não definido'
@@ -346,7 +343,6 @@ function horas_estagio() {
 }
 
 function qrcode_no_formato_valido(texto_decodificado, array_resultado) {
-    // console.log(`Code matched = ${texto_decodificado}`, array_resultado);
     registrar_horario(texto_decodificado);
     $('#modal_qrcode').modal('hide');
     html5QrcodeScanner.clear().then(() => {
@@ -354,11 +350,9 @@ function qrcode_no_formato_valido(texto_decodificado, array_resultado) {
     }).catch((error) => {
         console.error("Não parou", error);
     });
-
 }
 
 function qrcode_no_formato_invalido(error) {
-    // sweetalert2('Falhou', 'QrCode no formato inválido', 'error', 'Ok', false);
     console.log(error);
 }
 
