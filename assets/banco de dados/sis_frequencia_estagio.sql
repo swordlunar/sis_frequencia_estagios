@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/09/2024 às 21:57
+-- Tempo de geração: 25/09/2024 às 21:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.1.25
 
@@ -39,6 +39,7 @@ CREATE TABLE `aluno` (
   `turma` varchar(11) NOT NULL,
   `turno` varchar(20) DEFAULT NULL,
   `status_estagio` int(11) NOT NULL,
+  `horas_necessarias` int(11) NOT NULL,
   `criado_em` datetime NOT NULL,
   `criado_por` varchar(255) NOT NULL,
   `editado_em` datetime NOT NULL,
@@ -50,8 +51,8 @@ CREATE TABLE `aluno` (
 -- Despejando dados para a tabela `aluno`
 --
 
-INSERT INTO `aluno` (`id_aluno`, `nome_aluno`, `matricula_aluno`, `telefone_aluno`, `cod_curso`, `nome_curso`, `periodo_letivo`, `email_aluno`, `turma`, `turno`, `status_estagio`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_setor`) VALUES
-(17, 'DARIO HUGO BALBINO DA CRUZ', '2016105444', 'Não cadastrado', 1016, 'MEDICINA VETERINÁRIA', '20242', 'dariohugo0897@gmail.com', 'VET108-10', NULL, 0, '2024-09-16 13:22:14', '2016105444', '2024-09-16 13:22:14', '2016105444', 1);
+INSERT INTO `aluno` (`id_aluno`, `nome_aluno`, `matricula_aluno`, `telefone_aluno`, `cod_curso`, `nome_curso`, `periodo_letivo`, `email_aluno`, `turma`, `turno`, `status_estagio`, `horas_necessarias`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_setor`) VALUES
+(17, 'DARIO HUGO BALBINO DA CRUZ', '2016105444', 'Não cadastrado', 1016, 'MEDICINA VETERINÁRIA', '20242', 'dariohugo0897@gmail.com', 'VET108-10', NULL, 0, 480, '2024-09-25 15:21:12', '2016105444', '2024-09-25 15:21:12', '2016105444', 1);
 
 -- --------------------------------------------------------
 
@@ -101,7 +102,9 @@ CREATE TABLE `registro_frequencia` (
 --
 
 INSERT INTO `registro_frequencia` (`id_registro`, `status_registro`, `data_referencia`, `aprovado_por`, `entrada_1`, `intervalo`, `volta_intervalo`, `saida_1`, `entrada_2`, `saida_2`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_aluno`, `id_setor`) VALUES
-(2, 0, '2024-09-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-09-17 16:56:36', '2016105444', '2024-09-17 16:56:36', '2016105444', 1, 1);
+(54, 0, '2024-09-25', NULL, '2024-09-25 01:00:00', NULL, NULL, '2024-09-25 23:00:00', NULL, NULL, '2024-09-25 15:30:17', '2016105444', '2024-09-25 15:30:17', '2016105444', 17, 1),
+(55, 0, '2024-09-24', NULL, '2024-09-24 01:00:00', NULL, NULL, '2024-09-24 02:00:00', NULL, NULL, '2024-09-24 15:30:17', '2016105444', '2024-09-24 15:30:17', '2016105444', 17, 1),
+(56, 0, '2024-09-23', NULL, '2024-09-23 01:00:00', NULL, NULL, '2024-09-23 23:00:00', NULL, NULL, '2024-09-23 15:30:17', '2016105444', '2024-09-23 15:30:17', '2016105444', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -128,7 +131,7 @@ CREATE TABLE `setor` (
 --
 
 INSERT INTO `setor` (`id_setor`, `nome_setor`, `nome_curso`, `cod_curso`, `token_qrcode`, `data_expiracao_token`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_supervisor`) VALUES
-(1, 'Clínica Cirúrgica', 'Medicina Veterinária', 1016, '66e85ee05e4e8', '2024-09-23 13:42:37', '2024-09-16 18:42:37', 'Teste', '2024-09-16 18:42:37', 'Teste', 0);
+(1, 'Clínica Cirúrgica', 'Medicina Veterinária', 1016, '66e85ee05e4e8', '2024-09-30 14:02:00', '2024-09-16 18:42:37', 'Teste', '2024-09-16 18:42:37', 'Teste', 0);
 
 -- --------------------------------------------------------
 
@@ -193,7 +196,7 @@ ALTER TABLE `supervisor`
 -- AUTO_INCREMENT de tabela `aluno`
 --
 ALTER TABLE `aluno`
-  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `coordenador`
@@ -205,7 +208,7 @@ ALTER TABLE `coordenador`
 -- AUTO_INCREMENT de tabela `registro_frequencia`
 --
 ALTER TABLE `registro_frequencia`
-  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de tabela `setor`
