@@ -67,6 +67,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div id="reader" width="600px"></div> -->
             </div>
         </div>
 
@@ -88,15 +89,27 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="nome" class="col-form-label">Código:</label>
-                                <input type="text" name="nome" class="form-control" id="codigo" placeholder='Código' value="66e85ee05e4e8">
-                            </div>
+
                             <div class="modal-footer">
-                                <button id="botao_registro" type="button" class="btn btn-primary" onclick="registrar_horario()">Ler QR Code</button>
+                                <button id="botao_registro" type="button" class="btn btn-primary" onclick="scanear_qrcode_modal()">Ler QR Code</button>
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Voltar</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para scanear o QRCODE -->
+        <div class="modal fade" id="modal_qrcode" tabindex="-1" aria-labelledby="modal_qrcode" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="titulo_modal_qrcode">Ler QR Code</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="leitor_qrcode" width="600px"></div>
                     </div>
                 </div>
             </div>
@@ -114,16 +127,14 @@
                         <div class="d-flex justify-content-between">
                             <p id='setor_aluno'></p> <!-- setor do aluno -->
                             <p id='tempo_estagio'></p> <!-- horas estagiadas -->
-                            
+
                         </div>
-                        <div id='progresso_estagio' class="progress"> 
-                                
-                            </div>
+                        <div id='progresso_estagio' class="progress">
+
+                        </div>
                         <p id='periodo_letivo_h' class="h3 mt-3"></p>
 
                     </div>
-
-
 
                     <div class="container">
                         <div id="historico_de_horarios_calendar">
@@ -156,8 +167,8 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-12">
-                                <span class="badge text-bg-success">Aprovado</span>
+                            <div class="col-12" id='status_badge'>
+                                
                             </div>
                         </div>
 

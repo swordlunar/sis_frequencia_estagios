@@ -1,3 +1,8 @@
+var html5QrcodeScanner = new Html5QrcodeScanner(
+    "leitor_qrcode",
+    { fps: 10, qrbox: { width: 250, height: 250 } },
+    /* verbose= */ false);
+
 function carregar_setor_e_dia_atual() {
     let dia_atual = new Date().toLocaleDateString('pt-br')
     let setor_aluno = 'Não definido'
@@ -102,6 +107,10 @@ $(document).ready(function () {
     carregar_registro_diario_aluno();
     carregar_setor_e_dia_atual();
 
+    $('#modal_qrcode').on('shown.bs.modal', function () {
+        html5QrcodeScanner.render(qrcode_no_formato_valido, qrcode_no_formato_invalido);
+
+    });
 });
 
 function calendario_historico_frequencia() {
@@ -207,12 +216,20 @@ async function visualizar_frequencia_aluno(infoeventid) {
                         sweetalert2('Falhou', response['retorno'], 'warning');
                         break;
                     case 1:
-                        // sweetalert2('Sucesso', response['retorno'], 'success');
                         $('#historico_de_horarios_modal').modal('hide');
+
+                        let data_referencia = new Date(response['dados']['data_referencia']);
 
                         document.getElementById('nome_aluno_f').innerHTML = response['nome_aluno'];
                         document.getElementById('setor_aluno_f').innerHTML = response['nome_setor'];
-                        document.getElementById('dia_atual_f').innerHTML = response['dados']['data_referencia'];
+                        document.getElementById('dia_atual_f').innerHTML = data_referencia.toLocaleDateString("pt-BR", { timeZone: 'UTC' })
+
+                        if (response['dados']['status_registro'] == 1) {
+                            document.getElementById('status_badge').innerHTML = '<span class="badge text-bg-success">Aprovado</span>';
+
+                        } else {
+                            document.getElementById('status_badge').innerHTML = '<span class="badge text-bg-info text-white">Pendente</span>';
+                        }
 
                         document.getElementById('valor_entrada').value = response['dados']['entrada_1'] != null ? new Date(response['dados']['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
                         document.getElementById('valor_intervalo').value = response['dados']['intervalo'] != null ? new Date(response['dados']['intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
@@ -244,10 +261,7 @@ async function registrar_horario_modal() {
     }
 }
 
-async function registrar_horario() {
-    let codigo = document.getElementById('codigo').value;
-    // console.log(codigo);
-
+async function registrar_horario(codigo) {
     let tipo_entrada = document.getElementById('tipo_presenca').value;
 
     // console.log(tipo_entrada);
@@ -263,6 +277,7 @@ async function registrar_horario() {
                 switch (response['status']) {
                     case 0:
                         sweetalert2('Falhou', response['retorno'], 'warning');
+                        $('#registrar_horario_modal').modal('show');
                         break;
                     case 1:
                         sweetalert2('Sucesso', response['retorno'], 'success');
@@ -270,6 +285,7 @@ async function registrar_horario() {
                         break;
                     default:
                         sweetalert2('Falhou', response['retorno'], 'warning');
+                        $('#registrar_horario_modal').modal('show');
                         break;
                 }
             }
@@ -320,11 +336,33 @@ function horas_estagio() {
         success: function (response) {
             if (response['status'] == 1) {
                 document.getElementById('tempo_estagio').innerHTML = response['horas_estagiadas'] + '/' + response['hora_total'] + ' horas registradas.';
-                document.getElementById('progresso_estagio').innerHTML = '<div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="width: ' + response['porcentagem'] +'%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="480"></div>'
-                
+                document.getElementById('progresso_estagio').innerHTML = '<div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="width: ' + response['porcentagem'] + '%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="480"></div>'
+
             } else {
                 sweetalert2('Falhou', 'Erro ao contabilizar horas registradas.', 'error', 'Ok', false);
             }
         }
     })
+}
+
+function qrcode_no_formato_valido(texto_decodificado, array_resultado) {
+    // console.log(`Code matched = ${texto_decodificado}`, array_resultado);
+    registrar_horario(texto_decodificado);
+    $('#modal_qrcode').modal('hide');
+    html5QrcodeScanner.clear().then(() => {
+        console.log("parou");
+    }).catch((error) => {
+        console.error("Não parou", error);
+    });
+
+}
+
+function qrcode_no_formato_invalido(error) {
+    // sweetalert2('Falhou', 'QrCode no formato inválido', 'error', 'Ok', false);
+    console.log(error);
+}
+
+async function scanear_qrcode_modal() {
+    $('#registrar_horario_modal').modal('hide');
+    $('#modal_qrcode').modal('show');
 }

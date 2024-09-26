@@ -23,7 +23,7 @@ $periodo_letivo = $_SESSION['PERIODO_LETIVO'];
 // echo $tipo_entrada;
 // echo $tipo_entrada;
 
-if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
+if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
     $codigo = $_POST['codigo'];
     $tipo_entrada = $_POST['tipo_entrada'];
 
@@ -50,7 +50,7 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
             echo 'erro!';
             break;
     }
-    
+
     $conn = inicia_conexao();
 
     $verifica_aluno = "SELECT * FROM aluno WHERE matricula_aluno = :matricula_aluno AND cod_curso = :cod_curso AND turma = :cod_turma AND periodo_letivo = :periodo ";
@@ -66,18 +66,18 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
 
     // var_dump($verificacao_aluno);
 
-    if(!empty($verificacao_aluno) && ($tipo_entrada != 'erro!') && ($codigo != '')){
+    if (!empty($verificacao_aluno) && ($tipo_entrada != 'erro!') && ($codigo != '')) {
         $verifica_validade = "SELECT * FROM setor WHERE token_qrcode = :token AND data_expiracao_token >= :hoje AND id_setor = :setor";
         $ver_validade = $conn->prepare($verifica_validade);
         $ver_validade->bindParam(':token', $codigo);
         $ver_validade->bindParam(':hoje', $data_hora);
         $ver_validade->bindParam(':setor', $verificacao_aluno['id_setor']);
-        
+
         $ver_validade->execute();
 
         $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
-        if (!empty($verificacao_validade)){ // Se existe o registro
+        if (!empty($verificacao_validade)) { // Se existe o registro
             //consulta registro
 
             $verifica_registro = "SELECT * FROM registro_frequencia WHERE data_referencia = :data_referencia AND id_setor = :id_setor AND id_aluno = :id_aluno";
@@ -88,35 +88,35 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
             $ver_registro->execute();
             $verificacao_registro = $ver_registro->fetch(PDO::FETCH_ASSOC);
 
-            if (!empty($verificacao_registro)){
-                if ($verificacao_registro[$tipo_entrada]!=NULL){
+            if (!empty($verificacao_registro)) {
+                if ($verificacao_registro[$tipo_entrada] != NULL) {
                     $retorno['status'] = 8;
-                    $retorno['retorno'] = 'Tipo de presença já registrada!';  
-                }else{
+                    $retorno['retorno'] = 'Tipo de presença já registrada!';
+                } else {
 
                     switch ($tipo_entrada) {
                         case 'intervalo':
-                            if (($verificacao_registro['entrada_1']!=NULL) && ($verificacao_registro['saida_1']==NULL)){
+                            if (($verificacao_registro['entrada_1'] != NULL) && ($verificacao_registro['saida_1'] == NULL)) {
                                 $verifica_registro_anterior = 1;
                             };
                             break;
                         case 'volta_intervalo':
-                            if ($verificacao_registro['intervalo']!=NULL){
+                            if ($verificacao_registro['intervalo'] != NULL) {
                                 $verifica_registro_anterior = 1;
                             };
                             break;
                         case 'saida_1':
-                            if (($verificacao_registro['entrada_1']!=NULL && $verificacao_registro['intervalo']==NULL) || ($verificacao_registro['entrada_1']!=NULL && ($verificacao_registro['intervalo']!=NULL) && ($verificacao_registro['volta_intervalo']!=NULL))  ){
+                            if (($verificacao_registro['entrada_1'] != NULL && $verificacao_registro['intervalo'] == NULL) || ($verificacao_registro['entrada_1'] != NULL && ($verificacao_registro['intervalo'] != NULL) && ($verificacao_registro['volta_intervalo'] != NULL))) {
                                 $verifica_registro_anterior = 1;
                             };
                             break;
                         case 'entrada_2':
-                            if ($verificacao_registro['saida_1']!=NULL){
+                            if ($verificacao_registro['saida_1'] != NULL) {
                                 $verifica_registro_anterior = 1;
                             };
                             break;
                         case 'saida_2':
-                            if ($verificacao_registro['entrada_2']!=NULL){
+                            if ($verificacao_registro['entrada_2'] != NULL) {
                                 $verifica_registro_anterior = 1;
                             };
                             break;
@@ -125,39 +125,38 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
                             break;
                     }
 
-                    if ($verifica_registro_anterior == 1){
+                    if ($verifica_registro_anterior == 1) {
 
                         try {
                             $atualizar_registro = "UPDATE registro_frequencia SET $tipo_entrada = :data_hora WHERE id_registro = :id_registro";
                             $mudar_registro = $conn->prepare($atualizar_registro);
                             $mudar_registro->bindParam(':data_hora', $data_hora);
                             $mudar_registro->bindParam(':id_registro', $verificacao_registro['id_registro']);
-                            
-                            if($mudar_registro->execute()){
-                                if($mudar_registro->rowCount()>0){
+
+                            if ($mudar_registro->execute()) {
+                                if ($mudar_registro->rowCount() > 0) {
                                     $retorno['status'] = 1;
-                                 $retorno['retorno'] = 'Registro alterado!';
-                                }else{
+                                    $retorno['retorno'] = '<p>Presença registrada com sucesso! </p> <p ><strong>Tipo:</strong> ' . $_POST['tipo_entrada'] . '</p> <p><strong>Hora cadastrada:</strong> ' . $data_hora . '</p>';
+                                } else {
                                     $retorno['status'] = 11;
-                                    $retorno['retorno'] = 'Erro ao tentar alterar o registro'; 
+                                    $retorno['retorno'] = 'Erro ao tentar alterar o registro';
                                 }
-                            }else{
+                            } else {
                                 $retorno['status'] = 11;
-                                $retorno['retorno'] = 'Erro ao tentar alterar o registro'; 
+                                $retorno['retorno'] = 'Erro ao tentar alterar o registro';
                             }
                         } catch (\Throwable $th) {
                             $retorno['status'] = 11;
-                            $retorno['retorno'] = 'Erro ao tentar alterar o registro'; 
+                            $retorno['retorno'] = 'Erro ao tentar alterar o registro';
                         }
-                    }else{
+                    } else {
                         $retorno['status'] = 7;
-                        $retorno['retorno'] = 'Voce esta tentando inserir um registro do tipo ' . $_POST['tipo_entrada'] . ' sem registrar o anterior.';      
+                        $retorno['retorno'] = 'Voce esta tentando inserir um registro do tipo ' . $_POST['tipo_entrada'] . ' sem registrar o anterior.';
                     }
                 }
-                
             } else { // Se não existe o registro
 
-                if($tipo_entrada == 'entrada_1'){
+                if ($tipo_entrada == 'entrada_1') {
 
                     try {
                         $inserir_registro = "INSERT INTO registro_frequencia (status_registro, data_referencia, entrada_1, criado_em, criado_por, editado_em, editado_por, id_aluno, id_setor) VALUES (:status_registro, :data_referencia, :entrada_1, :criado_em, :criado_por, :editado_em, :editado_por, :id_aluno, :id_setor)";
@@ -171,42 +170,41 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])){
                         $novo_registro->bindParam(':editado_por', $RA);
                         $novo_registro->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
                         $novo_registro->bindParam(':id_setor', $verificacao_aluno['id_setor']);
-                        
+
                         // echo 'Insert';
 
-                        if ($novo_registro->execute()){
-                            if ($novo_registro->rowCount()>0){
+                        if ($novo_registro->execute()) {
+                            if ($novo_registro->rowCount() > 0) {
                                 $retorno['status'] = 1;
-                                $retorno['retorno'] = 'Registro inserido';                                
-                            }
-                            else{
+                                $retorno['retorno'] = '<p>Presença registrada com sucesso! </p> <p ><strong>Tipo:</strong> ' . $_POST['tipo_entrada'] . '</p> <p><strong>Hora cadastrada:</strong> ' . $data_hora . '</p>';
+                            } else {
                                 $retorno['status'] = 2;
-                                $retorno['retorno'] = 'Erro ao inserir o registro';  
+                                $retorno['retorno'] = 'Erro ao inserir o registro';
                             }
-                        }else{
+                        } else {
                             $retorno['status'] = 2;
-                            $retorno['retorno'] = 'Erro ao inserir o registro';  
+                            $retorno['retorno'] = 'Erro ao inserir o registro';
                         }
                     } catch (\Throwable $th) {
                         $retorno['status'] = 9;
                         $retorno['retorno'] = "Ocorreu um erro inesperado ao tentar inserir o registro";
                     }
-                } else{
+                } else {
                     $retorno['status'] = 3;
                     $retorno['retorno'] = 'Tipo de presença inválido';
                 }
             }
-        }else{
+        } else {
             $retorno['status'] = 4;
             $retorno['retorno'] = 'QR Code inválido e/ou data já expirada!';
         }
         echo json_encode($retorno);
-    }else{
+    } else {
         $retorno['status'] = 5;
         $retorno['retorno'] = 'Aluno não identificado';
         echo json_encode($retorno);
     }
-}else{
+} else {
     $retorno['status'] = 6;
     $retorno['retorno'] = 'Qr code ou tipo de entrada não informados.';
     echo json_encode($retorno);
