@@ -12,8 +12,6 @@ $retorno = array(
 if (isset($_POST['id_registro'])) {
     $id_registro = $_POST['id_registro'];
 
-    // consulta aqui:
-
     $conn = inicia_conexao();
     $verifica_registro = "SELECT * FROM registro_frequencia WHERE id_registro = :id_registro";
     $ver_registro = $conn->prepare($verifica_registro);
@@ -22,8 +20,6 @@ if (isset($_POST['id_registro'])) {
     $ver_registro->execute();
 
     $verificacao_registro = $ver_registro->fetch(PDO::FETCH_ASSOC);
-
-    // var_dump($verificacao_registro);
 
     if (!empty($verificacao_registro)) {
 
@@ -38,7 +34,7 @@ if (isset($_POST['id_registro'])) {
 
             $verifica_setor = "SELECT * FROM setor WHERE id_setor = :setor";
             $ver_setor = $conn->prepare($verifica_setor);
-            $ver_setor->bindParam(':setor', $verificacao_aluno['id_setor']);
+            $ver_setor->bindParam(':setor', $verificacao_registro['id_setor']);
 
             $ver_setor->execute();
 

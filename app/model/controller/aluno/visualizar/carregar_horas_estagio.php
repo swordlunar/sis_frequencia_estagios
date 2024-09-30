@@ -36,8 +36,6 @@ if (!empty($verificacao_aluno)) {
 
     $verificacao_registro = $ver_registro->fetch(PDO::FETCH_ASSOC);
 
-    // var_dump(($verificacao_registro));
-
     if (!empty($verificacao_registro)) {
 
         if ($verificacao_registro['saida_1']) {
@@ -57,20 +55,15 @@ if (!empty($verificacao_aluno)) {
 
             $tempo_registro = $contar_segundos_registro->fetchAll(PDO::FETCH_ASSOC);
 
-            // var_dump($tempo_registro);
-
             if (!empty($tempo_registro)) {
                 foreach ($tempo_registro as $dia) {
                     $segundos_estagiados += $dia['segundos_totais'];
-                    // var_dump($dia['segundos_totais']);
                 }
 
                 $horas = floor($segundos_estagiados / 3600);
-                // var_dump($horas);
                 $minutos = floor(($segundos_estagiados % 3600) / 60);
 
                 $horas_necessarias = $verificacao_aluno['horas_necessarias'];
-
 
                 $retorno['status'] = 1;
                 $retorno['horas_estagiadas'] = $horas . ',' . $minutos;

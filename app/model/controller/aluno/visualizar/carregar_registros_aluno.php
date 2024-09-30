@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include_once __DIR__ . "/../../../database/conexao_local.php";
 include_once __DIR__ . "/../../controle e notificacoes/funcoes.php";
@@ -8,8 +8,6 @@ $retorno = array(
     'status' => 0,
     'retorno' => 'Ocorreu um erro inesperado.'
 );
-
-// $codigo = '66e85ee05e4e8';
 
 $data_hora = hoje();
 $data = date("Y-m-d");
@@ -31,46 +29,34 @@ $ver_aluno->execute();
 
 $verificacao_aluno = $ver_aluno->fetch(PDO::FETCH_ASSOC);
 
-// var_dump($verificacao_aluno);
-
-if(!empty($verificacao_aluno)){
+if (!empty($verificacao_aluno)) {
     $verifica_validade = "SELECT * FROM setor WHERE id_setor = :setor";
     $ver_validade = $conn->prepare($verifica_validade);
-    // $ver_validade->bindParam(':token', $codigo);
     $ver_validade->bindParam(':setor', $verificacao_aluno['id_setor']);
-    
+
     $ver_validade->execute();
 
     $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
-    // var_dump($verificacao_validade); //bool(false)
-
-
-    if(!empty($verificacao_validade)){
-        $verifica_registro = "SELECT * FROM registro_frequencia WHERE data_referencia = :data_referencia AND id_setor = :id_setor AND id_aluno = :id_aluno";
+    if (!empty($verificacao_validade)) {
+        $verifica_registro = "SELECT * FROM registro_frequencia WHERE data_referencia = :data_referencia AND id_aluno = :id_aluno";
         $ver_registro = $conn->prepare($verifica_registro);
         $ver_registro->bindParam(':data_referencia', $data);
-        $ver_registro->bindParam(':id_setor', $verificacao_aluno['id_setor']);
         $ver_registro->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
 
         $ver_registro->execute();
 
         $verificacao_registro = $ver_registro->fetch(PDO::FETCH_ASSOC);
 
-        if(!empty($verificacao_registro)){
+        if (!empty($verificacao_registro)) {
             $verificacao_registro['nome_setor'] = $verificacao_validade["nome_setor"];
-            // var_dump($retorno);
+
             $retorno['status'] = 1;
             $retorno['retorno'] = $verificacao_registro;
-
-            // var_dump($retorno);
-        }else{
+        } else {
             $retorno['status'] = 2;
             $retorno['retorno'] = 'Erro';
         }
         echo json_encode($retorno);
-        // var_dump($retorno); não tá entrando aqui
     }
-    // var_dump($retorno);
 }
-?>

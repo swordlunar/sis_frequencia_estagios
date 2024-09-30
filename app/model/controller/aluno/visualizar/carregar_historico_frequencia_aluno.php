@@ -24,9 +24,6 @@ if ($_SESSION['TIPO_USUARIO'] == '1') {
 
 if (isset($RA, $CODCURSO, $periodo_letivo)) {
 
-
-    // consulta aqui:
-
     $conn = inicia_conexao();
 
     $verifica_aluno = "SELECT * FROM aluno WHERE matricula_aluno = :matricula_aluno AND cod_curso = :cod_curso AND periodo_letivo = :periodo ";
@@ -38,8 +35,6 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
 
     $verificacao_aluno = $ver_aluno->fetch(PDO::FETCH_ASSOC);
 
-    // var_dump($verificacao_aluno);
-
     if (!empty($verificacao_aluno)) {
         $verifica_validade = "SELECT * FROM setor WHERE id_setor = :setor";
         $ver_validade = $conn->prepare($verifica_validade);
@@ -50,23 +45,17 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
         $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($verificacao_validade)) {
-            $verifica_registro = "SELECT * FROM registro_frequencia WHERE id_setor = :id_setor AND id_aluno = :id_aluno";
+            $verifica_registro = "SELECT * FROM registro_frequencia WHERE id_aluno = :id_aluno";
             $ver_registro = $conn->prepare($verifica_registro);
-            $ver_registro->bindParam(':id_setor', $verificacao_aluno['id_setor']);
             $ver_registro->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
 
             $ver_registro->execute();
 
             $verificacao_registro = $ver_registro->fetchAll(PDO::FETCH_ASSOC);
 
-
-            // var_dump($verificacao_registro);
-
             if (!empty($verificacao_registro)) {
                 $evento = [];
                 foreach ($verificacao_registro as $linha) {
-                    # verificar se teve entrada 6 ifs
-
                     if ($linha['entrada_1']) {
                         $evento[] = [
                             'title' => 'Entrada',

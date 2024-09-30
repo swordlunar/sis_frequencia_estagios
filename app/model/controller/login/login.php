@@ -6,6 +6,12 @@ include_once __DIR__ . "/../../soap/conexao_soap.php";
 include_once __DIR__ . "/../controle e notificacoes/funcoes.php";
 include_once __DIR__ . "/../aluno/cadastro/cadastrar_aluno.php";
 
+// alunos: 
+// DARIO HUGO BALBINO DA CRUZ - 2016105444
+// NAYANA SIMIÃO FIGUEIREDO - 2013102295
+// LÚCIA MARIA LINHARES DE ARAUJO - 2020119164
+// BIANCA MARANATHÁ SANTOS ROLIM - 2020119445
+
 //Array de retorno exemplo
 $retorno = array(
     'status' => 0,
@@ -79,7 +85,6 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                 $response = json_decode(json_encode(simplexml_load_string($resultado->RealizarConsultaSQLResult)), FALSE);
 
                 $result = isset($response->Resultado) == false ? null : $response->Resultado;
-
             } catch (SoapFault $exception) {
                 echo json_encode($exception->getMessage());
             }
@@ -88,12 +93,11 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                 $retorno['status'] = 0;
                 $retorno['informacao_adicional'] = "Sem permissão para acessar o sistema no tipo de login selecionado!";
                 echo json_encode($retorno);
-
             } else {
                 // Configurando o array de retorno no caso do sucesso (Ex: Status = 1)
                 // var_dump($result);
                 $verifica_aluno = cadastrar_aluno($result, $periodo_letivo, $hoje);
-                if ($verifica_aluno['status'] == 1){
+                if ($verifica_aluno['status'] == 1) {
                     session_start();
 
                     $_SESSION['MATRICULA'] = $result->{'RA'};
@@ -102,7 +106,7 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                     $_SESSION['NOME_CURSO'] = $result->{'NOME_CURSO'};
                     $_SESSION['COD_TURMA'] = $result->{'CODTURMA'};
                     $_SESSION['PERIODO_LETIVO'] = $periodo_letivo;
-                    
+
                     // $_SESSION['ID_SETOR'] = 1;
 
                     $_SESSION['TIPO_USUARIO'] = 1;
@@ -111,13 +115,12 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                     $retorno['status'] = 1;
                     $retorno['informacao_adicional'] = "O login do usuário <b>" . $usuario . "</b> foi realizado com sucesso!";
                     echo json_encode($retorno);
-                 }else{
+                } else {
                     $retorno['status'] = 0;
                     $retorno['informacao_adicional'] = "Erro no login!";
                     echo json_encode($retorno);
-                 }                
+                }
             }
-
         } else if ($_POST['tipo_usuario'] == 'supervisor') {
             echo json_encode($retorno);
         } else if ($_POST['tipo_usuario'] == 'coordenador') {
@@ -127,7 +130,6 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
             $retorno['status'] = 0;
             $retorno['informacao_adicional'] = "Selecione um tipo de usuário para prosseguir com o login!";
         }
-    
     } else {
         // Obtendo o retorno do erro da api de validação
         $erro_msg = json_decode($response);

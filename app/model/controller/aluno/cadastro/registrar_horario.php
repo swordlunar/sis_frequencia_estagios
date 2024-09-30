@@ -19,10 +19,6 @@ $CODCURSO = $_SESSION['COD_CURSO'];
 $CODTURMA = $_SESSION['COD_TURMA'];
 $periodo_letivo = $_SESSION['PERIODO_LETIVO'];
 
-// echo $codigo;
-// echo $tipo_entrada;
-// echo $tipo_entrada;
-
 if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
     $codigo = $_POST['codigo'];
     $tipo_entrada = $_POST['tipo_entrada'];
@@ -63,9 +59,6 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
 
     $verificacao_aluno = $ver_aluno->fetch(PDO::FETCH_ASSOC);
 
-
-    // var_dump($verificacao_aluno);
-
     if (!empty($verificacao_aluno) && ($tipo_entrada != 'erro!') && ($codigo != '')) {
         $verifica_validade = "SELECT * FROM setor WHERE token_qrcode = :token AND data_expiracao_token >= :hoje AND id_setor = :setor";
         $ver_validade = $conn->prepare($verifica_validade);
@@ -78,7 +71,6 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
         $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($verificacao_validade)) { // Se existe o registro
-            //consulta registro
 
             $verifica_registro = "SELECT * FROM registro_frequencia WHERE data_referencia = :data_referencia AND id_setor = :id_setor AND id_aluno = :id_aluno";
             $ver_registro = $conn->prepare($verifica_registro);
@@ -136,7 +128,7 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
                             if ($mudar_registro->execute()) {
                                 if ($mudar_registro->rowCount() > 0) {
                                     $retorno['status'] = 1;
-                                    $retorno['retorno'] = '<p>Presença registrada com sucesso! </p> <p align="left"><strong>Tipo:</strong> ' . $_POST['tipo_entrada'] . '</p> <p align="left"><strong>Hora cadastrada:</strong> ' . date('H:i') . '</p>';                             
+                                    $retorno['retorno'] = '<p>Presença registrada com sucesso! </p> <p align="left"><strong>Tipo:</strong> ' . $_POST['tipo_entrada'] . '</p> <p align="left"><strong>Hora cadastrada:</strong> ' . date('H:i') . '</p>';
                                 } else {
                                     $retorno['status'] = 11;
                                     $retorno['retorno'] = 'Erro ao tentar alterar o registro';
@@ -170,8 +162,6 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
                         $novo_registro->bindParam(':editado_por', $RA);
                         $novo_registro->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
                         $novo_registro->bindParam(':id_setor', $verificacao_aluno['id_setor']);
-
-                        // echo 'Insert';
 
                         if ($novo_registro->execute()) {
                             if ($novo_registro->rowCount() > 0) {
