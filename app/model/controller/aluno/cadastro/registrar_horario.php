@@ -1,5 +1,4 @@
 <?php
-
 include_once __DIR__ . "/../../../database/conexao_local.php";
 include_once __DIR__ . "/../../controle e notificacoes/funcoes.php";
 include __DIR__ . "/../../login/verifica_login.php";
@@ -128,7 +127,7 @@ if (isset($_POST['codigo'], $_POST['tipo_entrada'])) {
                             if ($mudar_registro->execute()) {
                                 if ($mudar_registro->rowCount() > 0) {
                                     $retorno['status'] = 1;
-                                    $retorno['retorno'] = '<p>Presença registrada com sucesso! </p> <p align="left"><strong>Tipo:</strong> ' . $_POST['tipo_entrada'] . '</p> <p align="left"><strong>Hora cadastrada:</strong> ' . date('H:i') . '</p>';
+                                    $retorno['retorno'] = '<p>Presença registrada com sucesso! </p> <p><strong>Tipo:</strong> ' . $_POST['tipo_entrada'] . '</p> <p><strong>Hora cadastrada:</strong> ' . date('H:i') . '</p>';
                                 } else {
                                     $retorno['status'] = 11;
                                     $retorno['retorno'] = 'Erro ao tentar alterar o registro';

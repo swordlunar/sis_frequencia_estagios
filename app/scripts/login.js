@@ -1,4 +1,3 @@
-
 jQuery(document).ready(function () {
 
     //Aqui vão os scripts que serão executados quando o documento carregar

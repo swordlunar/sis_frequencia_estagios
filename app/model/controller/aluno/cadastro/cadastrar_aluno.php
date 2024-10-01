@@ -59,12 +59,10 @@ function cadastrar_aluno($array_info_aluno, $periodo_letivo, $hoje)
 
                 $cad_estagiario->execute();
 
-                //se entrou no banco de dados as informações
                 if ($cad_estagiario->rowCount()) {
                     $retorno['status'] = 1;
                     $retorno['retorno'] = 'Estagiário cadastrado com sucesso!';
                 } else {
-                    //se não
                     $retorno['status'] = 2;
                     $retorno['retorno'] = 'Estagiário não cadastrado.';
                 }

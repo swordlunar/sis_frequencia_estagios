@@ -1,5 +1,4 @@
 <?php
-
 include_once __DIR__ . "/../../../database/conexao_local.php";
 include_once __DIR__ . "/../../controle e notificacoes/funcoes.php";
 include __DIR__ . "/../../login/verifica_login.php";
@@ -8,7 +7,6 @@ $retorno = array(
     'status' => 0,
     'dados' => ''
 );
-
 
 if ($_SESSION['TIPO_USUARIO'] == '1') {
     $RA = $_SESSION['MATRICULA'];

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include_once __DIR__ . "/../../../database/conexao_local.php";
 include_once __DIR__ . "/../../controle e notificacoes/funcoes.php";
@@ -29,29 +29,25 @@ $ver_aluno->execute();
 
 $verificacao_aluno = $ver_aluno->fetch(PDO::FETCH_ASSOC);
 
-if(!empty($verificacao_aluno)){
+if (!empty($verificacao_aluno)) {
     $verifica_validade = "SELECT * FROM setor WHERE id_setor = :setor";
     $ver_validade = $conn->prepare($verifica_validade);
-    
+
     $ver_validade->bindParam(':setor', $verificacao_aluno['id_setor']);
-    
+
     $ver_validade->execute();
 
     $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
-    if(!empty($verificacao_validade)){
-        
+    if (!empty($verificacao_validade)) {
+
         $retorno['status'] = 1;
         $retorno['retorno'] = $verificacao_validade;
         $retorno['nome_aluno'] = $_SESSION['NOME'];
         $retorno['periodo_letivo'] = $_SESSION['PERIODO_LETIVO'];
-            
-        }else{
-            $retorno['status'] = 2;
-            $retorno['retorno'] = 'Erro';
-        }
-        echo json_encode($retorno);
-        
+    } else {
+        $retorno['status'] = 2;
+        $retorno['retorno'] = 'Erro';
     }
-
-?>
+    echo json_encode($retorno);
+}

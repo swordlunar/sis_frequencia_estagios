@@ -10,7 +10,6 @@ function carregar_setor_e_dia_atual() { // função que alimenta as informaçõe
     jQuery.ajax({
         type: "POST",
         url: "./model/controller/aluno/visualizar/carregar_setor_e_dia_atual",
-        // data: {'codigo': codigo, 'tipo_entrada': tipo_entrada},
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
@@ -28,7 +27,7 @@ function carregar_setor_e_dia_atual() { // função que alimenta as informaçõe
 }
 
 function carregar_registro_diario_aluno() { // função que alimenta as informações que precisam de possuir registro
-    
+
     let visu_entrada_1 = 'não definido';
     let visu_intervalo = 'não definido';
     let visu_volta_intervalo = 'não definido';
@@ -39,7 +38,6 @@ function carregar_registro_diario_aluno() { // função que alimenta as informa�
     jQuery.ajax({
         type: "POST",
         url: "./model/controller/aluno/visualizar/carregar_registros_aluno",
-        // data: {'codigo': codigo, 'tipo_entrada': tipo_entrada},
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
@@ -301,7 +299,6 @@ function historico_de_horarios_modal() {
     jQuery.ajax({
         type: "POST",
         url: "./model/controller/aluno/visualizar/carregar_setor_e_dia_atual",
-        // data: {'codigo': codigo, 'tipo_entrada': tipo_entrada},
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
@@ -328,7 +325,6 @@ function horas_estagio() {
     jQuery.ajax({
         type: "POST",
         url: "./model/controller/aluno/visualizar/carregar_horas_estagio",
-        // data: {'codigo': codigo, 'tipo_entrada': tipo_entrada},
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {

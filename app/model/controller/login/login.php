@@ -1,16 +1,9 @@
 <?php
-
 include_once "../../database/conexao_local.php";
 include_once __DIR__ . "/../../env/env.php";
 include_once __DIR__ . "/../../soap/conexao_soap.php";
 include_once __DIR__ . "/../controle e notificacoes/funcoes.php";
 include_once __DIR__ . "/../aluno/cadastro/cadastrar_aluno.php";
-
-// alunos: 
-// DARIO HUGO BALBINO DA CRUZ - 2016105444
-// NAYANA SIMIÃO FIGUEIREDO - 2013102295
-// LÚCIA MARIA LINHARES DE ARAUJO - 2020119164
-// BIANCA MARANATHÁ SANTOS ROLIM - 2020119445
 
 //Array de retorno exemplo
 $retorno = array(
@@ -122,8 +115,10 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                 }
             }
         } else if ($_POST['tipo_usuario'] == 'supervisor') {
+            $retorno['informacao_adicional'] = "Tipo usuário não correspondente";
             echo json_encode($retorno);
         } else if ($_POST['tipo_usuario'] == 'coordenador') {
+            $retorno['informacao_adicional'] = "Tipo usuário não correspondente";
             echo json_encode($retorno);
         } else {
             // Configurando o array de retorno no caso do erro (Ex: Status = 0)

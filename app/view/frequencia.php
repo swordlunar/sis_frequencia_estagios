@@ -111,7 +111,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="leitor_qrcode" width="600px"></div> <!-- div que terá o leitor de qrcode -->
+                    <div id="leitor_qrcode" width="600px">
+                        <!-- div que terá o leitor de qrcode -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,9 +137,9 @@
                     <p id='periodo_letivo_h' class="h3 mt-3"></p> <!-- período letivo do aluno -->
                 </div>
 
-                <div class="container"> <!-- container que vai possuir o calendário da biblioteca fullcalendar -->
+                <div class="container">
                     <div id="historico_de_horarios_calendar">
-
+                        <!-- div que vai conter o calendário da biblioteca fullcalendar -->
                     </div>
                 </div>
 
