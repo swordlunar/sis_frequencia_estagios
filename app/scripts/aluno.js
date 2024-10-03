@@ -130,7 +130,7 @@ function calendario_historico_frequencia() {
 
 
         // Permite a edição do fullcalendar
-        editable: true,
+        // editable: true,
 
 
         //Quando algum local do calendário for selecionado
