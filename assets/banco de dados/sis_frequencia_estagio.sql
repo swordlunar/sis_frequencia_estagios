@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/09/2024 às 21:48
+-- Tempo de geração: 03/10/2024 às 21:46
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.1.25
 
@@ -145,7 +145,7 @@ INSERT INTO `registro_frequencia` (`id_registro`, `status_registro`, `data_refer
 (238, 1, '2024-09-25', NULL, '2024-09-25 08:00:00', '2024-09-25 10:00:00', '2024-09-25 10:30:00', '2024-09-25 12:30:00', '2024-09-25 18:00:00', '2024-09-25 20:00:00', '2024-09-30 15:12:03', 'usuario', '2024-09-30 15:12:03', 'usuario', 17, 2),
 (239, 1, '2024-09-26', NULL, '2024-09-26 08:00:00', '2024-09-26 10:00:00', '2024-09-26 10:30:00', '2024-09-26 12:30:00', '2024-09-26 18:00:00', '2024-09-26 20:00:00', '2024-09-30 15:12:03', 'usuario', '2024-09-30 15:12:03', 'usuario', 17, 2),
 (240, 1, '2024-09-27', NULL, '2024-09-27 08:00:00', '2024-09-27 10:00:00', '2024-09-27 10:30:00', '2024-09-27 12:30:00', '2024-09-27 18:00:00', '2024-09-27 20:00:00', '2024-09-30 15:12:03', 'usuario', '2024-09-30 15:12:03', 'usuario', 17, 2),
-(241, 1, '2024-09-30', NULL, '2024-09-30 08:00:00', '2024-09-30 10:00:00', '2024-09-30 10:30:00', '2024-09-30 12:30:00', '2024-09-30 18:00:00', '2024-09-30 20:00:00', '2024-09-30 15:12:03', 'usuario', '2024-09-30 15:12:03', 'usuario', 17, 2),
+(241, 0, '2024-09-30', NULL, '2024-09-30 08:00:00', '2024-09-30 10:00:00', '2024-09-30 10:30:00', '2024-09-30 12:30:00', '2024-09-30 18:00:00', '2024-09-30 20:00:00', '2024-09-30 15:12:03', 'usuario', '2024-09-30 15:12:03', 'usuario', 17, 2),
 (242, 1, '2024-09-02', NULL, '2024-09-02 08:00:00', '2024-09-02 11:00:00', '2024-09-02 11:30:00', '2024-09-02 13:30:00', NULL, NULL, '2024-09-30 15:33:55', 'usuario', '2024-09-30 15:33:55', 'usuario', 20, 3),
 (243, 1, '2024-09-03', NULL, '2024-09-03 08:00:00', '2024-09-03 11:00:00', '2024-09-03 11:30:00', '2024-09-03 13:30:00', NULL, NULL, '2024-09-30 15:33:55', 'usuario', '2024-09-30 15:33:55', 'usuario', 20, 3),
 (244, 1, '2024-09-04', NULL, '2024-09-04 08:00:00', '2024-09-04 11:00:00', '2024-09-04 11:30:00', '2024-09-04 13:30:00', NULL, NULL, '2024-09-30 15:33:55', 'usuario', '2024-09-30 15:33:55', 'usuario', 20, 3),
@@ -268,7 +268,10 @@ INSERT INTO `registro_frequencia` (`id_registro`, `status_registro`, `data_refer
 (361, 1, '2024-09-25', NULL, '2024-09-25 08:00:00', '2024-09-25 12:00:00', '2024-09-25 13:00:00', '2024-09-25 17:00:00', NULL, NULL, '2024-09-30 16:05:46', 'usuario', '2024-09-30 16:05:46', 'usuario', 21, 1),
 (362, 1, '2024-09-26', NULL, '2024-09-26 08:00:00', '2024-09-26 12:00:00', '2024-09-26 13:00:00', '2024-09-26 17:00:00', NULL, NULL, '2024-09-30 16:05:46', 'usuario', '2024-09-30 16:05:46', 'usuario', 21, 1),
 (363, 1, '2024-09-27', NULL, '2024-09-27 08:00:00', '2024-09-27 12:00:00', '2024-09-27 13:00:00', '2024-09-27 17:00:00', NULL, NULL, '2024-09-30 16:05:46', 'usuario', '2024-09-30 16:05:46', 'usuario', 21, 1),
-(364, 1, '2024-09-30', NULL, '2024-09-30 08:00:00', '2024-09-30 12:00:00', '2024-09-30 13:00:00', '2024-09-30 17:00:00', NULL, NULL, '2024-09-30 16:05:46', 'usuario', '2024-09-30 16:05:46', 'usuario', 21, 1);
+(364, 1, '2024-09-30', NULL, '2024-09-30 08:00:00', '2024-09-30 12:00:00', '2024-09-30 13:00:00', '2024-09-30 17:00:00', NULL, NULL, '2024-09-30 16:05:46', 'usuario', '2024-09-30 16:05:46', 'usuario', 21, 1),
+(369, 0, '2024-10-03', NULL, '2024-10-03 08:00:00', NULL, NULL, NULL, NULL, NULL, '2024-10-01 13:46:41', 'usuario', '2024-10-01 13:46:41', 'usuario', 17, 3),
+(373, 0, '2024-10-01', NULL, '2024-10-01 08:00:00', '2024-10-01 10:00:00', '2024-10-01 10:30:00', NULL, NULL, NULL, '2024-10-01 16:04:39', '2016105444', '2024-10-01 16:04:39', '2016105444', 17, 3),
+(374, 0, '2024-10-02', NULL, '2024-10-02 14:17:18', '2024-10-02 14:18:27', NULL, NULL, NULL, NULL, '2024-10-02 14:17:18', '2016105444', '2024-10-02 14:17:18', '2016105444', 17, 3);
 
 -- --------------------------------------------------------
 
@@ -317,6 +320,24 @@ CREATE TABLE `supervisor` (
   `id_setor` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `turno`
+--
+
+CREATE TABLE `turno` (
+  `id_turno` int(11) NOT NULL,
+  `tipo_turno` int(11) NOT NULL,
+  `data_inicio` datetime NOT NULL,
+  `data_fim` datetime NOT NULL,
+  `id_aluno` int(11) NOT NULL,
+  `criado_em` datetime NOT NULL,
+  `criado_por` varchar(255) NOT NULL,
+  `editado_em` datetime NOT NULL,
+  `editado_por` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Índices para tabelas despejadas
 --
@@ -355,6 +376,12 @@ ALTER TABLE `supervisor`
   ADD PRIMARY KEY (`id_supervisor`);
 
 --
+-- Índices de tabela `turno`
+--
+ALTER TABLE `turno`
+  ADD PRIMARY KEY (`id_turno`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -374,7 +401,7 @@ ALTER TABLE `coordenador`
 -- AUTO_INCREMENT de tabela `registro_frequencia`
 --
 ALTER TABLE `registro_frequencia`
-  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
+  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
 
 --
 -- AUTO_INCREMENT de tabela `setor`
@@ -387,6 +414,12 @@ ALTER TABLE `setor`
 --
 ALTER TABLE `supervisor`
   MODIFY `id_supervisor` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `turno`
+--
+ALTER TABLE `turno`
+  MODIFY `id_turno` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
