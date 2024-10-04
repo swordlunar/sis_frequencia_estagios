@@ -215,5 +215,28 @@
                 </div>
             </div>
         </div>
-    <?php }
+    <?php } else if (($_SESSION['TIPO_USUARIO'] == 2)) {
     ?>
+        <div class="row mt-5">
+            <div class="col-12 mt-5">
+                <div class="h1"><span>Frequência</span></div>
+                <div class="table-responsive">
+                    <table id="listar_estagiarios" class="table table-striped table-hover display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Matrícula</th>
+                                <th>E-mail</th>
+                                <th>Turma</th>
+                                <!-- <th>Turno</th>
+                                <th>Ações</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    <?php } ?>

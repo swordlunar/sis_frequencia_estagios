@@ -102,7 +102,7 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
 
                     // $_SESSION['ID_SETOR'] = 1;
 
-                    $_SESSION['TIPO_USUARIO'] = 1;
+                    $_SESSION['TIPO_USUARIO'] = 2;
 
 
                     $retorno['status'] = 1;
@@ -115,6 +115,7 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                 }
             }
         } else if ($_POST['tipo_usuario'] == 'supervisor') {
+            $_SESSION['TIPO_USUARIO'] = 2;
             $retorno['informacao_adicional'] = "Tipo usuário não correspondente";
             echo json_encode($retorno);
         } else if ($_POST['tipo_usuario'] == 'coordenador') {

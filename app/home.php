@@ -20,6 +20,9 @@ include __DIR__ . "/model/controller/login/verifica_login.php"; ?>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+
 
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
     <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
@@ -38,18 +41,29 @@ include __DIR__ . "/model/controller/login/verifica_login.php"; ?>
                     <div>
                         <span><strong> <?php echo $_SESSION['NOME_CURSO'] . ' - ' . $_SESSION['PERIODO_LETIVO']; ?> </strong></span>
                     </div>
+                <?php } else if ($_SESSION['TIPO_USUARIO'] == 2) { ?>
+                    <select class="form-select form-select-sm me-2" style="width: auto;">
+                        <option selected>Nome do Curso</option>
+                        <option value="1">Curso 1</option>
+                        <option value="2">Curso 2</option>
+                    </select>
+                    <select class="form-select form-select-sm" style="width: auto;">
+                        <option selected>20242</option>
+                        <option value="1">20241</option>
+                        <option value="2">20231</option>
+                    </select>
                 <?php } ?>
                 <!-- <select class="form-select form-select-sm me-2" style="width: auto;">
-                <option selected>Nome do Curso</option>
-                <option value="1">Curso 1</option>
-                <option value="2">Curso 2</option>
-            </select>
-            
-            <select class="form-select form-select-sm" style="width: auto;">
-                <option selected>20242</option>
-                <option value="1">20241</option>
-                <option value="2">20231</option>
-            </select> -->
+                            <option selected>Nome do Curso</option>
+                            <option value="1">Curso 1</option>
+                            <option value="2">Curso 2</option>
+                        </select>
+
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option selected>20242</option>
+                            <option value="1">20241</option>
+                            <option value="2">20231</option>
+                        </select> -->
             </div>
         </div>
     </header>
@@ -103,8 +117,14 @@ include __DIR__ . "/model/controller/login/verifica_login.php"; ?>
 <script src="./scripts/home.js"></script>
 <script src="./scripts/qrcode.min.js"></script>
 
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 <?php if ($_SESSION['TIPO_USUARIO'] == 1) { ?>
     <script src="./scripts/aluno.js"></script>
+<?php } else if ($_SESSION['TIPO_USUARIO'] == 2) { ?>
+    <script src="./scripts/supervisor.js"></script>
 <?php } ?>
 
 </html>
