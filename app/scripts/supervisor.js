@@ -7,7 +7,7 @@ function dataTableEstagiario(){
         responsive: true, // ser responsivo
         lengthChange: true, // poder pesquisar
         "ajax": { 
-            url: './model/controller/supervisor/visualizar/list',
+            url: "./model/controller/supervisor/visualizar/list",
             type: 'POST'
             },
         language: {
@@ -16,16 +16,21 @@ function dataTableEstagiario(){
         },
         "columnDefs": [
             {
-              "orderable": false, 
-              "targets": 5
+              "orderable": false,
+              "targets": 4
             }
           ]
     });
 
-    datatable_estagiarios = $('#listar_estagiario').DataTable()
+    datatable_estagiarios = $('#listar_estagiarios').DataTable()
     datatable_estagiarios.ajax.reload();
 };
 
 $(document).ready(function() {
     dataTableEstagiario();
 });
+
+async function info_aluno(){
+    $('#info_aluno').modal('show');
+
+}

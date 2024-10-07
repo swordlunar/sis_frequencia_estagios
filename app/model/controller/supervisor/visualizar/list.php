@@ -1,14 +1,17 @@
 <?php
 include_once __DIR__ . "/../../../database/conexao_local.php";
+include __DIR__ . "/../../login/verifica_login.php";
 
 $request_data = $_REQUEST;
 
 $colunas = [
-    0 => 'Nome',
-    1 => 'Matrícula',
-    2 => 'E-mail',
-    3 => 'Turma'
+    0 => 'nome_aluno',
+    1 => 'matricula_aluno',
+    2 => 'email_aluno',
+    3 => 'turma'
 ];
+
+$conn = inicia_conexao();
 
 //Consulta da quantidade de usuários para o recordsTotal e recordsFiltered
 $query_qnt_usuarios = "SELECT COUNT(id_aluno) AS qnt_usuarios FROM aluno";
@@ -31,10 +34,9 @@ if (!empty($request_data['search']['value'])) {
 
 $result_qnt_usuarios->execute();
 $row_qnt_usuarios = $result_qnt_usuarios->fetch(PDO::FETCH_ASSOC);
-// var_dump($row_qnt_usuarios);
 
 // Recuperar os registros do bando de dados
-$query_estagiarios = "SELECT nome_aluno, matricula_aluno, email_aluno, turma FROM aluno ";//ORDER BY id_estagiario DESC LIMIT :inicio, :quantidade";
+$query_estagiarios = "SELECT nome_aluno, matricula_aluno, email_aluno, turma FROM aluno ";
 
 //Pesquisar
 if (!empty($request_data['search']['value'])) {
@@ -45,7 +47,7 @@ if (!empty($request_data['search']['value'])) {
 }
 
 //Ordenar registros
-$query_estagiarios .= " ORDER BY ". $colunas[$request_data['order'][0]['column']] . " " . $request_data['order'][0]['dir'] . " LIMIT :inicio, :quantidade";
+$query_estagiarios .= " ORDER BY " . $colunas[$request_data['order'][0]['column']] . " " . $request_data['order'][0]['dir'] . " LIMIT :inicio, :quantidade";
 $result_estagiarios = $conn->prepare($query_estagiarios);
 $result_estagiarios->bindParam(':inicio', $request_data['start'], PDO::PARAM_INT);
 $result_estagiarios->bindParam(':quantidade', $request_data['length'], PDO::PARAM_INT);
@@ -61,7 +63,7 @@ if (!empty($request_data['search']['value'])) {
 
 $result_estagiarios->execute();
 
-while($row_usuario = $result_estagiarios->fetch(PDO::FETCH_ASSOC)){
+while ($row_usuario = $result_estagiarios->fetch(PDO::FETCH_ASSOC)) {
     // var_dump($row_usuario);
     extract($row_usuario); //extraindo do banco de dados o nome das colunas como variáveis
     $registro = [];
@@ -69,11 +71,18 @@ while($row_usuario = $result_estagiarios->fetch(PDO::FETCH_ASSOC)){
     $registro[] = $matricula_aluno;
     $registro[] = $email_aluno;
     $registro[] = $turma;
+    $registro[] = '<button type="button" class="btn border" onclick="info_aluno()"><i class="bx bx-pointer"></i><button type="button" class="btn border" onclick="visu_estagiario()"><i class="bx bx-time-five"></i>';
     $dados[] = $registro;
 }
-// var_dump($dados);
 
 //Cria o array de informações a serem retornadas para o JavaScript
+
+if ($row_qnt_usuarios['qnt_usuarios'] >= 1) {
+    $dados = $dados;
+} else {
+    $dados = '';
+}
+
 $resultado = [
     "draw" => intval($request_data['draw']), // para cada requisição é enviado um número como parâmetro
     "recordsTotal" => intval($row_qnt_usuarios['qnt_usuarios']), //Quantidade de registros que há no banco de dados

@@ -215,28 +215,53 @@
                 </div>
             </div>
         </div>
-    <?php } else if (($_SESSION['TIPO_USUARIO'] == 2)) {
-    ?>
-        <div class="row mt-5">
-            <div class="col-12 mt-5">
-                <div class="h1"><span>Frequência</span></div>
-                <div class="table-responsive">
-                    <table id="listar_estagiarios" class="table table-striped table-hover display nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Matrícula</th>
-                                <th>E-mail</th>
-                                <th>Turma</th>
-                                <!-- <th>Turno</th>
-                                <th>Ações</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+    </div>
+<?php } else if (($_SESSION['TIPO_USUARIO'] == 2)) {
+?>
+    <div class="row mt-5">
+        <div class="col-12 mt-5">
+            <div class="h1 mb-5"><span>Frequência</span></div>
+            <div class="table-responsive">
+                <table id="listar_estagiarios" class="table table-striped table-hover display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                            <th>E-mail</th>
+                            <th>Turma</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal das informações do aluno -->
+    <div class="modal fade" id="info_aluno" tabindex="-1" aria-labelledby="info_aluno" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="titulo_info_aluno">Danilo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class='modal-body'>
+                    <p class="h5">Informações do aluno</p>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>
-
-    <?php } ?>
+    </div>
+<?php } ?>
