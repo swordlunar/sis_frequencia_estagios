@@ -2,6 +2,8 @@
 include_once __DIR__ . "/../../../database/conexao_local.php";
 include __DIR__ . "/../../login/verifica_login.php";
 
+$NOME_SUPERVISOR = 'Jonatas Candido Rodrigues';
+
 $request_data = $_REQUEST;
 
 $colunas = [
@@ -13,10 +15,19 @@ $colunas = [
 
 $conn = inicia_conexao();
 
+$consulta_id_setor = 'SELECT * from supervisor WHERE nome_supervisor = :nome_supervisor';
+$ver_id_setor = $conn->prepare($consulta_id_setor);
+$ver_id_setor->bindParam(':nome_supervisor', $NOME_SUPERVISOR);
+
+$ver_id_setor->execute();
+
+$verificacao_id_setor = $ver_id_setor->fetch(PDO::FETCH_ASSOC);
+
+
 //Consulta da quantidade de usuários para o recordsTotal e recordsFiltered
-$query_qnt_usuarios = "SELECT COUNT(id_aluno) AS qnt_usuarios FROM aluno";
+$query_qnt_usuarios = "SELECT COUNT(id_aluno) AS qnt_usuarios FROM aluno WHERE id_setor = :id_setor";
 if (!empty($request_data['search']['value'])) {  //se tiver algo dentro da barra de pesquisa
-    $query_qnt_usuarios .= " WHERE nome_aluno LIKE :nome";
+    $query_qnt_usuarios .= " AND nome_aluno LIKE :nome";
     $query_qnt_usuarios .= " OR matricula_aluno LIKE :ra";
     $query_qnt_usuarios .= " OR email_aluno LIKE :email";
     $query_qnt_usuarios .= " OR turma LIKE :turma";
@@ -24,6 +35,7 @@ if (!empty($request_data['search']['value'])) {  //se tiver algo dentro da barra
 //Prepara a query
 $result_qnt_usuarios = $conn->prepare($query_qnt_usuarios);
 //Pesquisar
+$result_qnt_usuarios->bindParam(':id_setor', $verificacao_id_setor['id_setor']);
 if (!empty($request_data['search']['value'])) {
     $valor_pesq = "%" . $request_data['search']['value'] . "%"; //like com % antes e depois para obter consultas só de ter o valor.
     $result_qnt_usuarios->bindParam(':nome', $valor_pesq, PDO::PARAM_STR);
@@ -36,11 +48,11 @@ $result_qnt_usuarios->execute();
 $row_qnt_usuarios = $result_qnt_usuarios->fetch(PDO::FETCH_ASSOC);
 
 // Recuperar os registros do bando de dados
-$query_estagiarios = "SELECT nome_aluno, matricula_aluno, email_aluno, turma FROM aluno ";
+$query_estagiarios = "SELECT id_aluno, nome_aluno, matricula_aluno, cod_curso, email_aluno, turma FROM aluno WHERE id_setor = :id_setor";
 
 //Pesquisar
 if (!empty($request_data['search']['value'])) {
-    $query_estagiarios .= " WHERE nome_aluno LIKE :nome";
+    $query_estagiarios .= " AND nome_aluno LIKE :nome";
     $query_estagiarios .= " OR matricula_aluno LIKE :ra";
     $query_estagiarios .= " OR email_aluno LIKE :email";
     $query_estagiarios .= " OR turma LIKE :turma";
@@ -49,6 +61,7 @@ if (!empty($request_data['search']['value'])) {
 //Ordenar registros
 $query_estagiarios .= " ORDER BY " . $colunas[$request_data['order'][0]['column']] . " " . $request_data['order'][0]['dir'] . " LIMIT :inicio, :quantidade";
 $result_estagiarios = $conn->prepare($query_estagiarios);
+$result_estagiarios->bindParam(':id_setor', $verificacao_id_setor['id_setor']);
 $result_estagiarios->bindParam(':inicio', $request_data['start'], PDO::PARAM_INT);
 $result_estagiarios->bindParam(':quantidade', $request_data['length'], PDO::PARAM_INT);
 
@@ -71,7 +84,7 @@ while ($row_usuario = $result_estagiarios->fetch(PDO::FETCH_ASSOC)) {
     $registro[] = $matricula_aluno;
     $registro[] = $email_aluno;
     $registro[] = $turma;
-    $registro[] = '<button type="button" class="btn border" onclick="info_aluno()"><i class="bx bx-pointer"></i><button type="button" class="btn border" onclick="visu_estagiario()"><i class="bx bx-time-five"></i>';
+    $registro[] = '<button type="button" class="btn border" onclick="info_aluno(' . $id_aluno . ')"><i class="bx bx-pointer"></i><button type="button" class="btn border" onclick="visu_registros_aluno(' . $matricula_aluno . ',' . $cod_curso . ')"><i class="bx bx-time-five"></i>';
     $dados[] = $registro;
 }
 

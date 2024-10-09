@@ -120,14 +120,20 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
 
                 echo json_encode($retorno);
             } else {
+                $retorno['status'] = 2;
                 echo json_encode($retorno);
             }
         } else {
+            $retorno['status'] = 3;
             echo json_encode($retorno);
         }
     } else {
+        $retorno['status'] = 4;
         echo json_encode($retorno);
     }
 } else {
+    $retorno['status'] = 5;
+    $retorno['dados'] = $_POST['ra_aluno'];
+    $retorno['dados_cod_curso'] = $_POST['cod_curso'];
     echo json_encode($retorno);
 }

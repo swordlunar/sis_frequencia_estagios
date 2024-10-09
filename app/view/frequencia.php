@@ -220,7 +220,11 @@
 ?>
     <div class="row mt-5">
         <div class="col-12 mt-5">
-            <div class="h1 mb-5"><span>Frequência</span></div>
+            <div class="h1 mb-3"><span>Frequência</span></div>
+            <div class="row d-flex mb-3">
+                <div class="col-md-2 h6"><span>Animais de Grande Porte</span></div>
+                <div class="col-md-2 h6"><span>Jonatas Candido Rodrigues</span></div>
+            </div>
             <div class="table-responsive">
                 <table id="listar_estagiarios" class="table table-striped table-hover display nowrap" style="width:100%">
                     <thead>
@@ -249,13 +253,54 @@
                 </div>
                 <div class='modal-body'>
                     <p class="h5">Informações do aluno</p>
-                    <div class="row">
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
+                    <div class="row d-block">
+                        <div class="col mb-2">
+                            <label for="floatingInput">Setor:</label>
+                            <input type="text" class="form-control" value="Não registrado" id="valor_setor" disabled>
+                        </div>
+                        <div class="col mb-2">
+                            <label for="floatingInput">E-mail:</label>
+                            <input type="text" class="form-control" value="Não registrado" id="valor_email" disabled>
+                        </div>
+                        <div class="col mb-2">
+                            <label for="floatingInput">Matrícula:</label>
+                            <input type="text" class="form-control" value="Não registrado" id="valor_matricula" disabled>
+                        </div>
+                        <div class="col mb-2">
+                            <label for="floatingInput">Telefone:</label>
+                            <input type="text" class="form-control" value="Não registrado" id="valor_telefone" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do calendário de horários -->
+    <div class="modal fade" id="historico_de_horarios_modal_vs" tabindex="-1" aria-labelledby="historico_de_horarios_modal_vs" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="titulo_de_horarios_modal_vs"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class='modal-body'>
+                    <div class="d-flex justify-content-between">
+                        <p id='setor_aluno_vs'></p> <!-- setor do aluno -->
+                        <p id='tempo_estagio_vs'></p> <!-- horas estagiadas -->
                     </div>
 
+                    <div id='progresso_estagio_vs' class="progress"></div> <!-- barra de progresso do estágio -->
+                    <p id='periodo_letivo_h_vs' class="h3 mt-3"></p> <!-- período letivo do aluno -->
+                </div>
+
+                <div class="container">
+                    <div id="historico_de_horarios_calendar_vs">
+                        <!-- div que vai conter o calendário da biblioteca fullcalendar -->
+                    </div>
                 </div>
 
                 <div class="modal-footer">
