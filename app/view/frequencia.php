@@ -119,37 +119,6 @@
         </div>
     </div>
 
-    <!-- Modal do calendário de horários -->
-    <div class="modal fade" id="historico_de_horarios_modal" tabindex="-1" aria-labelledby="historico_de_horarios_modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="titulo_de_horarios_modal"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class='modal-body'>
-                    <div class="d-flex justify-content-between">
-                        <p id='setor_aluno'></p> <!-- setor do aluno -->
-                        <p id='tempo_estagio'></p> <!-- horas estagiadas -->
-                    </div>
-
-                    <div id='progresso_estagio' class="progress"></div> <!-- barra de progresso do estágio -->
-                    <p id='periodo_letivo_h' class="h3 mt-3"></p> <!-- período letivo do aluno -->
-                </div>
-
-                <div class="container">
-                    <div id="historico_de_horarios_calendar">
-                        <!-- div que vai conter o calendário da biblioteca fullcalendar -->
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal do registro da frequência-->
     <div class="modal fade" id="frequencia_de_horarios_modal" tabindex="-1" aria-labelledby="frequencia_de_horarios_modal" aria-hidden="true">
         <div class="modal-dialog">
@@ -248,7 +217,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="titulo_info_aluno">Danilo</h1>
+                    <h1 class="modal-title fs-5" id="titulo_info_aluno">Nome do aluno</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class='modal-body'>
@@ -278,35 +247,113 @@
             </div>
         </div>
     </div>
+<?php } ?>
 
-    <!-- Modal do calendário de horários -->
-    <div class="modal fade" id="historico_de_horarios_modal_vs" tabindex="-1" aria-labelledby="historico_de_horarios_modal_vs" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="titulo_de_horarios_modal_vs"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Modal do calendário de horários -->
+<div class="modal fade" id="historico_de_horarios_modal" tabindex="-1" aria-labelledby="historico_de_horarios_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="titulo_de_horarios_modal">Nome do aluno</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class='modal-body'>
+                <div class="d-flex justify-content-between">
+                    <p id='setor_aluno'>Setor do aluno</p>
+                    <p id='tempo_estagio'>Horas estagiadas</p>
                 </div>
-                <div class='modal-body'>
-                    <div class="d-flex justify-content-between">
-                        <p id='setor_aluno_vs'></p> <!-- setor do aluno -->
-                        <p id='tempo_estagio_vs'></p> <!-- horas estagiadas -->
+
+                <div id='progresso_estagio' class="progress"></div> <!-- barra de progresso do estágio -->
+                <p id='periodo_letivo_h' class="h3 mt-3">Período letivo do aluno</p>
+            </div>
+
+            <div class="container">
+                <div id="historico_de_horarios_calendar">
+                    <!-- div que vai conter o calendário da biblioteca fullcalendar -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal do registro da frequência-->
+<div class="modal fade" id="frequencia_de_horarios_modal" tabindex="-1" aria-labelledby="frequencia_de_horarios_modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="nome_aluno_f"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id='setor_aluno_f'></p> <!-- setor do aluno -->
+
+                <div class='d-flex justify-content-between'>
+                    <div class="h5">Frequência: </div>
+                    <div id='dia_atual_f'></div> <!-- data do dia da frequência -->
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12" id='status_badge'></div> <!-- status da frequência -->
+                </div>
+
+                <div class='row'> <!-- inputs das entradas e saídas -->
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" value="" id="valor_entrada">
+                            <label for="floatingInput">Entrada</label>
+                        </div>
                     </div>
-
-                    <div id='progresso_estagio_vs' class="progress"></div> <!-- barra de progresso do estágio -->
-                    <p id='periodo_letivo_h_vs' class="h3 mt-3"></p> <!-- período letivo do aluno -->
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" value="" id="valor_intervalo">
+                            <label for="floatingInput">Intervalo</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" value="" id="valor_volta_intervalo">
+                            <label for="floatingInput">Volta do intervalo</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" value="" id="valor_saida">
+                            <label for="floatingInput">Saída</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" value="" id="valor_entrada_2">
+                            <label for="floatingInput">Segunda entrada</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" value="" id="valor_saida_2">
+                            <label for="floatingInput">Segunda saida</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="container">
-                    <div id="historico_de_horarios_calendar_vs">
-                        <!-- div que vai conter o calendário da biblioteca fullcalendar -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" value="" id="">
+                            <label for="floatingInput">Observações</label>
+                        </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id='botao_aprovar_frequencia' onclick="">Aprovar frequência</button>
+                    <button type="button" class="btn btn-primary" onclick="">Salvar</button>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>
     </div>
-<?php } ?>
+</div>

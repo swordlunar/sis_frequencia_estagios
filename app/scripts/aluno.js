@@ -165,7 +165,7 @@ function calendario_historico_frequencia() {
         events:
             function (fetchInfo, successCallback, failureCallback) {
                 $.ajax({
-                    url: './model/controller/aluno/visualizar/carregar_historico_frequencia_aluno',
+                    url: './model/controller/geral/visualizar/carregar_historico_frequencia_aluno',
                     type: 'POST',
                     dataType: 'json',
                     data: { cod_aluno: '1' },
@@ -197,57 +197,57 @@ function calendario_historico_frequencia() {
 
 }
 
-async function visualizar_frequencia_aluno(infoeventid) {
+// async function visualizar_frequencia_aluno(infoeventid) {
 
-    id_registro = infoeventid
+//     id_registro = infoeventid
 
-    if (id_registro != '') {
-        jQuery.ajax({
-            type: "POST",
-            url: "./model/controller/aluno/visualizar/visualizar_frequencia_aluno",
-            data: { 'id_registro': id_registro },
-            dataType: 'json',
-            success: function (response) {
+//     if (id_registro != '') {
+//         jQuery.ajax({
+//             type: "POST",
+//             url: "./model/controller/aluno/visualizar/visualizar_frequencia_aluno",
+//             data: { 'id_registro': id_registro },
+//             dataType: 'json',
+//             success: function (response) {
 
-                switch (response['status']) {
-                    case 0:
-                        sweetalert2('Falhou', response['retorno'], 'warning');
-                        break;
-                    case 1:
-                        $('#historico_de_horarios_modal').modal('hide');
+//                 switch (response['status']) {
+//                     case 0:
+//                         sweetalert2('Falhou', response['retorno'], 'warning');
+//                         break;
+//                     case 1:
+//                         $('#historico_de_horarios_modal').modal('hide');
 
-                        let data_referencia = new Date(response['dados']['data_referencia']);
+//                         let data_referencia = new Date(response['dados']['data_referencia']);
 
-                        document.getElementById('nome_aluno_f').innerHTML = response['nome_aluno'];
-                        document.getElementById('setor_aluno_f').innerHTML = response['nome_setor'];
-                        document.getElementById('dia_atual_f').innerHTML = data_referencia.toLocaleDateString("pt-BR", { timeZone: 'UTC' })
+//                         document.getElementById('nome_aluno_f').innerHTML = response['nome_aluno'];
+//                         document.getElementById('setor_aluno_f').innerHTML = response['nome_setor'];
+//                         document.getElementById('dia_atual_f').innerHTML = data_referencia.toLocaleDateString("pt-BR", { timeZone: 'UTC' })
 
-                        if (response['dados']['status_registro'] == 1) {
-                            document.getElementById('status_badge').innerHTML = '<span class="badge text-bg-success">Aprovado</span>';
+//                         if (response['dados']['status_registro'] == 1) {
+//                             document.getElementById('status_badge').innerHTML = '<span class="badge text-bg-success">Aprovado</span>';
 
-                        } else {
-                            document.getElementById('status_badge').innerHTML = '<span class="badge text-bg-info text-white">Pendente</span>';
-                        }
+//                         } else {
+//                             document.getElementById('status_badge').innerHTML = '<span class="badge text-bg-info text-white">Pendente</span>';
+//                         }
 
-                        document.getElementById('valor_entrada').value = response['dados']['entrada_1'] != null ? new Date(response['dados']['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
-                        document.getElementById('valor_intervalo').value = response['dados']['intervalo'] != null ? new Date(response['dados']['intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
-                        document.getElementById('valor_volta_intervalo').value = response['dados']['volta_intervalo'] != null ? new Date(response['dados']['volta_intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
-                        document.getElementById('valor_saida').value = response['dados']['saida_1'] != null ? new Date(response['dados']['saida_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
-                        document.getElementById('valor_entrada_2').value = response['dados']['entrada_2'] != null ? new Date(response['dados']['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
-                        document.getElementById('valor_saida_2').value = response['dados']['saida_2'] != null ? new Date(response['dados']['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
+//                         document.getElementById('valor_entrada').value = response['dados']['entrada_1'] != null ? new Date(response['dados']['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
+//                         document.getElementById('valor_intervalo').value = response['dados']['intervalo'] != null ? new Date(response['dados']['intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
+//                         document.getElementById('valor_volta_intervalo').value = response['dados']['volta_intervalo'] != null ? new Date(response['dados']['volta_intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
+//                         document.getElementById('valor_saida').value = response['dados']['saida_1'] != null ? new Date(response['dados']['saida_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
+//                         document.getElementById('valor_entrada_2').value = response['dados']['entrada_2'] != null ? new Date(response['dados']['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
+//                         document.getElementById('valor_saida_2').value = response['dados']['saida_2'] != null ? new Date(response['dados']['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
 
-                        $('#frequencia_de_horarios_modal').modal('show');
-                        break;
-                    default:
-                        sweetalert2('Falhou', response['retorno'], 'warning');
-                        break;
-                }
-            }
-        })
-    } else {
-        sweetalert2('Campos em branco', 'Não é possível registrar uma frequência com informações em branco.', 'warning');
-    }
-}
+//                         $('#frequencia_de_horarios_modal').modal('show');
+//                         break;
+//                     default:
+//                         sweetalert2('Falhou', response['retorno'], 'warning');
+//                         break;
+//                 }
+//             }
+//         })
+//     } else {
+//         sweetalert2('Campos em branco', 'Não é possível registrar uma frequência com informações em branco.', 'warning');
+//     }
+// }
 
 async function registrar_horario_modal() {
     let tipo_entrada = document.getElementById('tipo_presenca').value;
@@ -324,7 +324,7 @@ function historico_de_horarios_modal() {
 function horas_estagio() {
     jQuery.ajax({
         type: "POST",
-        url: "./model/controller/aluno/visualizar/carregar_horas_estagio",
+        url: "./model/controller/geral/visualizar/carregar_horas_estagio",
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
@@ -342,9 +342,9 @@ function qrcode_no_formato_valido(texto_decodificado, array_resultado) {
     registrar_horario(texto_decodificado);
     $('#modal_qrcode').modal('hide');
     html5QrcodeScanner.clear().then(() => {
-        console.log("parou");
+        // console.log("parou");
     }).catch((error) => {
-        console.error("Não parou", error);
+        // console.error("Não parou", error);
     });
 }
 

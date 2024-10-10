@@ -116,6 +116,9 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
                     }
                 }
                 $retorno['status'] = 1;
+                $retorno['nome_aluno'] = $verificacao_aluno['nome_aluno'];
+                $retorno['setor_aluno'] = $verificacao_validade['nome_setor'];
+                $retorno['periodo_letivo'] = $verificacao_aluno['periodo_letivo'];
                 $retorno['dados'] = $evento;
 
                 echo json_encode($retorno);
@@ -129,11 +132,13 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
         }
     } else {
         $retorno['status'] = 4;
+        // $retorno['dados'] = $_POST['ra_aluno'];
+        // $retorno['dados_cod_curso'] = $_POST['cod_curso'];
         echo json_encode($retorno);
     }
 } else {
     $retorno['status'] = 5;
-    $retorno['dados'] = $_POST['ra_aluno'];
-    $retorno['dados_cod_curso'] = $_POST['cod_curso'];
+    // $retorno['dados'] = $_POST['ra_aluno'];
+    // $retorno['dados_cod_curso'] = $_POST['cod_curso'];
     echo json_encode($retorno);
 }

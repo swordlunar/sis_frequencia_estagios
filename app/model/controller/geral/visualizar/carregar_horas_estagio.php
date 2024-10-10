@@ -9,9 +9,17 @@ $retorno = array(
     'hora_total' => ''
 );
 
-$RA = $_SESSION['MATRICULA'];
-$CODCURSO = $_SESSION['COD_CURSO'];
-$periodo_letivo = $_SESSION['PERIODO_LETIVO'];
+if ($_SESSION['TIPO_USUARIO'] == '1') {
+    $RA = $_SESSION['MATRICULA'];
+    $CODCURSO = $_SESSION['COD_CURSO'];
+    $periodo_letivo = $_SESSION['PERIODO_LETIVO'];
+} else if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
+    if (!empty($_POST['ra_aluno']) && !empty($_POST['cod_curso'])) {
+        $RA = $_POST['ra_aluno'];
+        $CODCURSO = $_POST['cod_curso'];
+        $periodo_letivo = $_SESSION['PERIODO_LETIVO'];
+    }
+}
 
 $segundos_estagiados  = 0;
 

@@ -27,10 +27,10 @@ $verificacao_id_setor = $ver_id_setor->fetch(PDO::FETCH_ASSOC);
 //Consulta da quantidade de usuários para o recordsTotal e recordsFiltered
 $query_qnt_usuarios = "SELECT COUNT(id_aluno) AS qnt_usuarios FROM aluno WHERE id_setor = :id_setor";
 if (!empty($request_data['search']['value'])) {  //se tiver algo dentro da barra de pesquisa
-    $query_qnt_usuarios .= " AND nome_aluno LIKE :nome";
+    $query_qnt_usuarios .= " AND (nome_aluno LIKE :nome";
     $query_qnt_usuarios .= " OR matricula_aluno LIKE :ra";
     $query_qnt_usuarios .= " OR email_aluno LIKE :email";
-    $query_qnt_usuarios .= " OR turma LIKE :turma";
+    $query_qnt_usuarios .= " OR turma LIKE :turma)";
 }
 //Prepara a query
 $result_qnt_usuarios = $conn->prepare($query_qnt_usuarios);
@@ -52,10 +52,10 @@ $query_estagiarios = "SELECT id_aluno, nome_aluno, matricula_aluno, cod_curso, e
 
 //Pesquisar
 if (!empty($request_data['search']['value'])) {
-    $query_estagiarios .= " AND nome_aluno LIKE :nome";
+    $query_estagiarios .= " AND (nome_aluno LIKE :nome";
     $query_estagiarios .= " OR matricula_aluno LIKE :ra";
     $query_estagiarios .= " OR email_aluno LIKE :email";
-    $query_estagiarios .= " OR turma LIKE :turma";
+    $query_estagiarios .= " OR turma LIKE :turma)";
 }
 
 //Ordenar registros
