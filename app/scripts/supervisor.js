@@ -31,12 +31,11 @@ $(document).ready(function () {
 });
 
 async function info_aluno(id_aluno) {
-    // $('#info_aluno').modal('show');
     jQuery.ajax({
-        type: "POST", // Ou GET
-        url: "./model/controller/supervisor/visualizar/visualizar_info_aluno", // Caminho do model que será executado
-        data: { 'id_aluno': id_aluno }, //dados que serão enviados
-        dataType: 'json', // tipo do dado
+        type: "POST",
+        url: "./model/controller/supervisor/visualizar/visualizar_info_aluno",
+        data: { 'id_aluno': id_aluno },
+        dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
                 document.getElementById('titulo_info_aluno').innerHTML = response['retorno']['nome_aluno'];
@@ -186,4 +185,93 @@ async function visu_registros_aluno(ra_aluno, cod_curso) {
         }
     })
 
+}
+
+async function salvar_alteracoes(id_registro) {
+    let validade = 1
+    let data = document.getElementById('dia_atual_f').innerHTML;
+
+    let entrada_1 = document.getElementById('valor_entrada').value;
+    let intervalo = document.getElementById('valor_intervalo').value;
+    let volta_intervalo = document.getElementById('valor_volta_intervalo').value;
+    let saida_1 = document.getElementById('valor_saida').value;
+    let entrada_2 = document.getElementById('valor_entrada_2').value;
+    let saida_2 = document.getElementById('valor_saida_2').value;
+
+    if (entrada_1 != '' && saida_1 != '' && entrada_1 < saida_1) {
+        if (intervalo != '') {
+            if (intervalo < saida_1) {
+
+            }
+            else {
+                validade = 0
+                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        if (volta_intervalo != '') {
+            if (volta_intervalo < saida_1) {
+
+            }
+            else {
+                validade = 0
+                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        if (intervalo != '' && volta_intervalo != '') {
+            if (intervalo < volta_intervalo) {
+
+
+            }
+            else {
+                validade = 0
+                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        if (entrada_2 != '') {
+            if (saida_1 < entrada_2) {
+
+
+            }
+            else {
+                validade = 0
+                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        if (saida_2 != '') {
+            if (entrada_2 < saida_2) {
+
+            }
+            else {
+                validade = 0
+                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        else {
+            if (entrada_2 != '') {
+                validade = 0
+                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+    }
+    else {
+        validade = 0
+        sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+    }
+
+
+    if (validade != 0) {
+        jQuery.ajax({
+            type: "POST",
+            url: "./model/controller/supervisor/alterar/alterar_hora_estagio",
+            data: { 'id_registro': id_registro, 'entrada_1': entrada_1, 'intervalo': intervalo, 'volta_intervalo': volta_intervalo, 'saida_1': saida_1, 'entrada_2': entrada_2, 'saida_2': saida_2, 'data': data },
+            dataType: 'json',
+            success: function (response) {
+                if (response['status'] == 1) {
+                    console.log(entrada_1)
+                } else {
+                    alert(response['retorno'])
+                }
+            }
+        })
+    }
 }

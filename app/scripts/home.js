@@ -61,6 +61,8 @@ async function visualizar_frequencia_aluno(infoeventid) {
                         document.getElementById('valor_entrada_2').value = response['dados']['entrada_2'] != null ? new Date(response['dados']['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
                         document.getElementById('valor_saida_2').value = response['dados']['saida_2'] != null ? new Date(response['dados']['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
 
+                        document.getElementById('botao_salvar_frequencia').value = id_registro
+                        
                         $('#frequencia_de_horarios_modal').modal('show');
                         break;
                     default:

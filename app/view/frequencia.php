@@ -350,7 +350,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id='botao_aprovar_frequencia' onclick="">Aprovar frequência</button>
-                    <button type="button" class="btn btn-primary" onclick="">Salvar</button>
+                    <button type="button" class="btn btn-primary" id='botao_salvar_frequencia' value='' onclick="salvar_alteracoes(this.value)">Salvar</button>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
