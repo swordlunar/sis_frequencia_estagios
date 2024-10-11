@@ -102,7 +102,7 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
 
                     // $_SESSION['ID_SETOR'] = 1;
 
-                    $_SESSION['TIPO_USUARIO'] = 2;
+                    $_SESSION['TIPO_USUARIO'] = 1;
 
 
                     $retorno['status'] = 1;
