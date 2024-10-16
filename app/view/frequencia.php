@@ -1,4 +1,4 @@
-<?php if ($_SESSION['TIPO_USUARIO'] == 1) { ?>
+<?php if ($_SESSION['TIPO_USUARIO'] == 1) { ?> <!-- view do aluno -->
     <div class="row mt-5">
         <div class="col-12 mt-5">
             <div class="h1"><span>Frequência</span></div>
@@ -185,14 +185,13 @@
             </div>
         </div>
     </div>
-<?php } else if (($_SESSION['TIPO_USUARIO'] == 2)) {
-?>
+<?php } else if (($_SESSION['TIPO_USUARIO'] == 2)) { ?> <!-- view do supervisor -->
     <div class="row mt-5">
         <div class="col-12 mt-5">
             <div class="h1 mb-3"><span>Frequência</span></div>
             <div class="row d-flex mb-3">
-                <div class="col-md-2 h6"><span>Animais de Grande Porte</span></div>
-                <div class="col-md-2 h6"><span>Jonatas Candido Rodrigues</span></div>
+                <div id='relacao_setor' class="col-md-2 h6"><span>Setor</span></div>
+                <div class="col-md-2 h6"><span><?php echo $_SESSION['NOME']; ?></span></div>
             </div>
             <div class="table-responsive">
                 <table id="listar_estagiarios" class="table table-striped table-hover display nowrap" style="width:100%">

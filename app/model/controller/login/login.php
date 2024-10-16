@@ -4,6 +4,7 @@ include_once __DIR__ . "/../../env/env.php";
 include_once __DIR__ . "/../../soap/conexao_soap.php";
 include_once __DIR__ . "/../controle e notificacoes/funcoes.php";
 include_once __DIR__ . "/../aluno/cadastro/cadastrar_aluno.php";
+include_once __DIR__ . "/../supervisor/verificacao_supervisor.php";
 
 //Array de retorno exemplo
 $retorno = array(
@@ -98,11 +99,9 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                     $_SESSION['COD_CURSO'] = $result->{'CODCURSO'};
                     $_SESSION['NOME_CURSO'] = $result->{'NOME_CURSO'};
                     $_SESSION['COD_TURMA'] = $result->{'CODTURMA'};
+
                     $_SESSION['PERIODO_LETIVO'] = $periodo_letivo;
-
-                    // $_SESSION['ID_SETOR'] = 1;
-
-                    $_SESSION['TIPO_USUARIO'] = 2;
+                    $_SESSION['TIPO_USUARIO'] = 1;
 
 
                     $retorno['status'] = 1;
@@ -115,12 +114,62 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                 }
             }
         } else if ($_POST['tipo_usuario'] == 'supervisor') {
-            $_SESSION['TIPO_USUARIO'] = 2;
-            $retorno['informacao_adicional'] = "Tipo usuário não correspondente";
-            echo json_encode($retorno);
+
+            // simulação
+
+            if (isset($_POST["usuario"])) {
+
+                $conn = inicia_conexao();
+
+                $consulta_supervisor = 'SELECT * FROM supervisor WHERE usuario_supervisor = :usuario_supervisor';
+                $ver_supervisor = $conn->prepare($consulta_supervisor);
+                $ver_supervisor->bindParam(':usuario_supervisor', $usuario);
+                $ver_supervisor->execute();
+
+                $verificacao_supervisor = $ver_supervisor->fetch(PDO::FETCH_ASSOC);
+
+                if (!empty($verificacao_supervisor)) {
+                    $result = 1;
+                } else {
+                    $result = null;
+                }
+            }
+
+            if ($result == null) {
+                $retorno['status'] = 0;
+                $retorno['informacao_adicional'] = "Sem permissão para acessar o sistema no tipo de login selecionado!";
+                echo json_encode($retorno);
+            } else {
+                $verifica_supervisor = login_supervisor($verificacao_supervisor, $periodo_letivo);
+                if ($verifica_supervisor['status'] == 1) {
+                    session_start();
+
+                    $_SESSION['USUARIO_SUPERVISOR'] = $verificacao_supervisor['usuario_supervisor'];
+                    $_SESSION['NOME'] = $verificacao_supervisor['nome_supervisor'];
+                    $_SESSION['COD_CURSO'] = $verificacao_supervisor['cod_curso'];
+                    $_SESSION['NOME_CURSO'] = $verificacao_supervisor['nome_curso'];
+                    $_SESSION['ID_SETOR'] = $verificacao_supervisor['id_setor'];
+
+                    $_SESSION['PERIODO_LETIVO'] = $periodo_letivo;
+                    $_SESSION['TIPO_USUARIO'] = 2;
+
+
+                    $retorno['status'] = 1;
+                    $retorno['informacao_adicional'] = "O login do usuário <b>" . $usuario . "</b> foi realizado com sucesso!";
+                    echo json_encode($retorno);
+                } else {
+                    $retorno['status'] = 0;
+                    $retorno['informacao_adicional'] = $verifica_supervisor['retorno'];
+                    echo json_encode($retorno);
+                }
+            }
         } else if ($_POST['tipo_usuario'] == 'coordenador') {
-            $retorno['informacao_adicional'] = "Tipo usuário não correspondente";
-            echo json_encode($retorno);
+            $result = null;
+            if ($result == null) {
+                $retorno['status'] = 0;
+                $retorno['informacao_adicional'] = "Sem permissão para acessar o sistema no tipo de login selecionado!";
+                echo json_encode($retorno);
+            }
         } else {
             // Configurando o array de retorno no caso do erro (Ex: Status = 0)
             $retorno['status'] = 0;

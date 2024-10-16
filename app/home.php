@@ -43,12 +43,12 @@ include __DIR__ . "/model/controller/login/verifica_login.php"; ?>
                     </div>
                 <?php } else if ($_SESSION['TIPO_USUARIO'] == 2) { ?>
                     <select class="form-select form-select-sm me-2" style="width: auto;">
-                        <option selected>Nome do Curso</option>
+                        <option selected><?php echo $_SESSION['NOME_CURSO']; ?></option>
                         <option value="1">Curso 1</option>
                         <option value="2">Curso 2</option>
                     </select>
                     <select class="form-select form-select-sm" style="width: auto;">
-                        <option selected>20242</option>
+                        <option selected><?php echo $_SESSION['PERIODO_LETIVO']; ?></option>
                         <option value="1">20241</option>
                         <option value="2">20231</option>
                     </select>

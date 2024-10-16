@@ -36,8 +36,7 @@
                                     <form>
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="usuario">Usuário</label>
-                                            <input id="usuario" class="form-control" placeholder="Digite seu usuário"
-                                                value='2016105444' />
+                                            <input id="usuario" class="form-control" placeholder="Digite seu usuário" value='' />
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline mb-4">

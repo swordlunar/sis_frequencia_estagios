@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/10/2024 às 21:56
+-- Tempo de geração: 16/10/2024 às 20:25
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.1.25
 
@@ -292,7 +292,9 @@ INSERT INTO `registro_frequencia` (`id_registro`, `status_registro`, `data_refer
 (369, 0, '2024-10-03', NULL, '2024-10-03 08:00:00', NULL, NULL, NULL, NULL, NULL, '2024-10-01 13:46:41', 'usuario', '2024-10-01 13:46:41', 'usuario', 17, 2),
 (373, 0, '2024-10-01', NULL, '2024-10-01 08:00:00', '2024-10-01 10:00:00', '2024-10-01 10:30:00', NULL, NULL, NULL, '2024-10-01 16:04:39', '2016105444', '2024-10-01 16:04:39', '2016105444', 17, 2),
 (374, 0, '2024-10-02', NULL, '2024-10-02 08:00:00', '2024-10-02 10:00:00', NULL, NULL, NULL, NULL, '2024-10-02 14:17:18', '2016105444', '2024-10-02 14:17:18', '2016105444', 17, 2),
-(376, 0, '2024-10-04', NULL, '2024-10-04 15:10:18', '2024-10-04 15:11:37', '2024-10-04 15:11:58', '2024-10-04 15:12:08', NULL, NULL, '2024-10-04 15:10:18', '2016105444', '2024-10-04 15:10:18', '2016105444', 17, 2);
+(376, 0, '2024-10-04', NULL, '2024-10-04 15:10:18', '2024-10-04 15:11:37', '2024-10-04 15:11:58', '2024-10-04 15:12:08', NULL, NULL, '2024-10-04 15:10:18', '2016105444', '2024-10-04 15:10:18', '2016105444', 17, 2),
+(377, 0, '2024-10-10', NULL, '2024-10-10 15:56:27', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2024-10-10 16:48:07', '2016105444', '2024-10-10 16:48:07', '2016105444', 17, 2),
+(378, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-11 19:31:18', '', '0000-00-00 00:00:00', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -331,6 +333,7 @@ INSERT INTO `setor` (`id_setor`, `nome_setor`, `nome_curso`, `cod_curso`, `token
 
 CREATE TABLE `supervisor` (
   `id_supervisor` int(11) NOT NULL,
+  `usuario_supervisor` varchar(20) NOT NULL,
   `nome_supervisor` varchar(255) NOT NULL,
   `cod_curso` int(11) NOT NULL,
   `nome_curso` varchar(255) NOT NULL,
@@ -340,6 +343,16 @@ CREATE TABLE `supervisor` (
   `editado_por` varchar(255) NOT NULL,
   `id_setor` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `supervisor`
+--
+
+INSERT INTO `supervisor` (`id_supervisor`, `usuario_supervisor`, `nome_supervisor`, `cod_curso`, `nome_curso`, `criado_em`, `criado_por`, `editado_em`, `editado_por`, `id_setor`) VALUES
+(1, 'jonatas', 'Jonatas Candido Rodrigues', 1016, 'MEDICINA VETERINÁRIA', '2024-10-09 18:24:59', '', '2024-10-09 18:24:59', '', 2),
+(2, 'cristiano', 'Cristiano Táles Fonseca', 1016, 'MEDICINA VETERINÁRIA', '2024-10-09 18:24:59', '', '2024-10-09 18:24:59', '', 1),
+(3, 'emiliano', 'Emiliano Aldo de Correia Filho', 1016, 'MEDICINA VETERINÁRIA', '2024-10-09 18:24:59', '', '2024-10-09 18:24:59', '', 3),
+(4, 'artur', 'Artur Bruno de Santiago Sobrinho', 1016, 'MEDICINA VETERINÁRIA', '2024-10-09 18:24:59', '', '2024-10-09 18:24:59', '', 0);
 
 -- --------------------------------------------------------
 
@@ -408,7 +421,10 @@ ALTER TABLE `setor`
 -- Índices de tabela `supervisor`
 --
 ALTER TABLE `supervisor`
-  ADD PRIMARY KEY (`id_supervisor`);
+  ADD PRIMARY KEY (`id_supervisor`),
+  ADD UNIQUE KEY `cod_curso` (`cod_curso`,`id_setor`),
+  ADD UNIQUE KEY `cod_curso_2` (`cod_curso`,`id_setor`),
+  ADD UNIQUE KEY `usuario_supervisor` (`usuario_supervisor`,`cod_curso`,`id_setor`);
 
 --
 -- Índices de tabela `turno`
@@ -442,7 +458,7 @@ ALTER TABLE `coordenador`
 -- AUTO_INCREMENT de tabela `registro_frequencia`
 --
 ALTER TABLE `registro_frequencia`
-  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
+  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=379;
 
 --
 -- AUTO_INCREMENT de tabela `setor`
@@ -454,7 +470,7 @@ ALTER TABLE `setor`
 -- AUTO_INCREMENT de tabela `supervisor`
 --
 ALTER TABLE `supervisor`
-  MODIFY `id_supervisor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_supervisor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `turno`
