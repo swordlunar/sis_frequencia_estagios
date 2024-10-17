@@ -203,43 +203,61 @@ async function salvar_alteracoes(id_registro) {
         if (intervalo != '') {
             if (intervalo >= saida_1 || intervalo <= entrada_1) {
                 validade = 0
-                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'A relação dos registros <strong>intervalo</strong> e <strong>entrada/saída</strong> não estão coerentes', 'error', 'Ok', false);
+            }
+        } else {
+            if (volta_intervalo != '') {
+                validade = 0;
+                sweetalert2('Falhou', 'Não é possível registrar um <strong>retorno do intervalo</strong> sem um <strong>início do intervalo</strong>', 'error', 'Ok', false);
             }
         }
         if (volta_intervalo != '') {
             if (volta_intervalo >= saida_1) {
                 validade = 0
-                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'A relação dos registros <strong>volta do intervalo</strong> e <strong>saída</strong> não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        else {
+            if (intervalo != '') {
+                validade = 0;
+                sweetalert2('Falhou', 'Não é possível registrar um <strong>início do intervalo</strong> sem um <strong>retorno do intervalo</strong>', 'error', 'Ok', false);
+
             }
         }
         if (intervalo != '' && volta_intervalo != '') {
             if (intervalo >= volta_intervalo) {
                 validade = 0
-                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'A relação dos registros <strong>intervalo</strong> e <strong>volta do intervalo</strong> não estão coerentes', 'error', 'Ok', false);
             }
         }
         if (entrada_2 != '') {
             if (saida_1 >= entrada_2) {
                 validade = 0
-                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'A relação dos registros <strong>saída</strong> e <strong>segunda entrada</strong> não estão coerentes', 'error', 'Ok', false);
+            }
+        }
+        else {
+            if (saida_2 != '') {
+                validade = 0
+                sweetalert2('Falhou', 'Não é possível registrar uma <strong>segunda saída</strong> sem uma <strong>segunda entrada</strong>', 'error', 'Ok', false);
             }
         }
         if (saida_2 != '') {
             if (entrada_2 >= saida_2) {
                 validade = 0
-                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'A relação dos registros <strong>segunda entrada</strong> e <strong>segunda saída</strong> não estão coerentes', 'error', 'Ok', false);
             }
         }
         else {
             if (entrada_2 != '') {
                 validade = 0
-                sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'Não é possível registrar <strong>segunda entrada</strong> sem uma <strong>segunda saída</strong>', 'error', 'Ok', false);
             }
         }
     }
     else {
         validade = 0
-        sweetalert2('Falhou', 'Os registros não estão coerentes', 'error', 'Ok', false);
+        sweetalert2('Falhou', 'A relação dos registros <strong>entrada</strong> e <strong>saída</strong> não estão coerentes', 'error', 'Ok', false);
     }
 
 
@@ -251,13 +269,29 @@ async function salvar_alteracoes(id_registro) {
             dataType: 'json',
             success: function (response) {
                 if (response['status'] == 1) {
-                    console.log(entrada_1) //parei aqui por enquanto, irei agora no php converter essa hora para a data daquele dia e hora corrigida.
+                    sweetalert2('Sucesso', response['retorno'], 'success', 'Ok', false);
                 } else {
-                    alert(response['retorno'])
+                    sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
                 }
             }
         })
     }
+}
+
+function aprovar_frequencia(id_registro) {
+    jQuery.ajax({
+        type: "POST",
+        url: "./model/controller/supervisor/alterar/aprovar_frequencia",
+        data: { 'id_registro': id_registro },
+        dataType: 'json',
+        success: function (response) {
+            if (response['status'] == 1) {
+                sweetalert2('Sucesso', response['retorno'], 'success', 'Ok', false);
+            } else {
+                sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
+            }
+        }
+    })
 }
 
 async function carregar_setor() {

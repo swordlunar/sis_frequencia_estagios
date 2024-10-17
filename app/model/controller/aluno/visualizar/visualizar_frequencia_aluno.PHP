@@ -44,6 +44,8 @@ if (isset($_POST['id_registro'])) {
                 $retorno['dados'] = $verificacao_registro;
                 $retorno['nome_aluno'] = $verificacao_aluno['nome_aluno'];
                 $retorno['nome_setor'] = $verificacao_setor['nome_setor'];
+                $retorno['matricula_aluno'] = $verificacao_aluno['matricula_aluno'];
+                $retorno['cod_curso'] = $verificacao_aluno['cod_curso'];
             } else {
                 $retorno['status'] = 2;
             }
