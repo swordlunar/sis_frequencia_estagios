@@ -8,7 +8,7 @@ $data_hora = hoje();
 if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
 
     if ($_SESSION['TIPO_USUARIO'] == '2') {
-        $usuario = $_SESSION['USUARIO_SUPERVISOR'] == '2';
+        $usuario = $_SESSION['USUARIO_SUPERVISOR'];
     }
 
     $retorno = array(

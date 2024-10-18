@@ -199,6 +199,8 @@ async function salvar_alteracoes(id_registro) {
     let entrada_2 = document.getElementById('valor_entrada_2').value;
     let saida_2 = document.getElementById('valor_saida_2').value;
 
+    let observacao_registro = document.getElementById('observacao_frequencia').value;
+
     if (entrada_1 != '' && saida_1 != '' && entrada_1 < saida_1) {
         if (intervalo != '') {
             if (intervalo >= saida_1 || intervalo <= entrada_1) {
@@ -265,7 +267,7 @@ async function salvar_alteracoes(id_registro) {
         jQuery.ajax({
             type: "POST",
             url: "./model/controller/supervisor/alterar/alterar_hora_estagio",
-            data: { 'id_registro': id_registro, 'entrada_1': entrada_1, 'intervalo': intervalo, 'volta_intervalo': volta_intervalo, 'saida_1': saida_1, 'entrada_2': entrada_2, 'saida_2': saida_2, 'data': data },
+            data: { 'id_registro': id_registro, 'entrada_1': entrada_1, 'intervalo': intervalo, 'volta_intervalo': volta_intervalo, 'saida_1': saida_1, 'entrada_2': entrada_2, 'saida_2': saida_2, 'data': data, 'observacao_registro': observacao_registro },
             dataType: 'json',
             success: function (response) {
                 if (response['status'] == 1) {
@@ -287,6 +289,8 @@ function aprovar_frequencia(id_registro) {
         success: function (response) {
             if (response['status'] == 1) {
                 sweetalert2('Sucesso', response['retorno'], 'success', 'Ok', false);
+                $('#frequencia_de_horarios_modal').modal('show');
+                visualizar_frequencia_aluno(id_registro)
             } else {
                 sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
             }

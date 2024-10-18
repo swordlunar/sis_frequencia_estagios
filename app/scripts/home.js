@@ -20,9 +20,7 @@ function sweetalert2(title, html, icon) {
     })
 }
 
-async function visualizar_frequencia_aluno(infoeventid) {
-
-    id_registro = infoeventid
+async function visualizar_frequencia_aluno(id_registro) {
 
     if (id_registro != '') {
         jQuery.ajax({
@@ -61,10 +59,25 @@ async function visualizar_frequencia_aluno(infoeventid) {
                         document.getElementById('valor_entrada_2').value = response['dados']['entrada_2'] != null ? new Date(response['dados']['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
                         document.getElementById('valor_saida_2').value = response['dados']['saida_2'] != null ? new Date(response['dados']['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : 'Não registrado.'
 
+                        if (response['observacao_registro'] != '') {
+                            document.getElementById('observacao_frequencia').value = response['observacao_registro']
+
+                        } else {
+                            document.getElementById('observacao_frequencia').value = ''
+                        }
+
+
                         document.getElementById('botao_aprovar_frequencia').value = id_registro
                         document.getElementById('botao_salvar_frequencia').value = id_registro
-                        
+
+                        ra_aluno = response['ra_aluno']
+                        cod_curso = response['cod_curso']
+
+                        let sair_btn = document.getElementById('botao_sair_frequencia')
+                        sair_btn.setAttribute("onclick", "visu_registros_aluno(" + ra_aluno + "," + cod_curso + ");");
+
                         $('#frequencia_de_horarios_modal').modal('show');
+
                         break;
                     default:
                         sweetalert2('Falhou', response['retorno'], 'warning');

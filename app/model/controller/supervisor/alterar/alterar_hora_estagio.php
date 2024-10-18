@@ -8,7 +8,7 @@ $data_hora = hoje();
 if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
 
     if ($_SESSION['TIPO_USUARIO'] == '2') {
-        $usuario = $_SESSION['USUARIO_SUPERVISOR'] == '2';
+        $usuario = $_SESSION['USUARIO_SUPERVISOR'];
     }
 
     $retorno = array(
@@ -55,7 +55,7 @@ if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
                 $alt_saida_2 = NULL;
             }
 
-            $consulta_registro = 'UPDATE registro_frequencia SET entrada_1 = :entrada_1, intervalo = :intervalo, volta_intervalo = :volta_intervalo, saida_1 = :saida_1, entrada_2 = :entrada_2, saida_2 = :saida_2, editado_em = :editado_em, editado_por = :editado_por WHERE id_registro = :id_registro';
+            $consulta_registro = 'UPDATE registro_frequencia SET entrada_1 = :entrada_1, intervalo = :intervalo, volta_intervalo = :volta_intervalo, saida_1 = :saida_1, entrada_2 = :entrada_2, saida_2 = :saida_2, editado_em = :editado_em, editado_por = :editado_por, observacao_registro = :observacao_registro WHERE id_registro = :id_registro';
             $prepara_registro = $conn->prepare($consulta_registro);
             $prepara_registro->bindParam(':id_registro', $_POST['id_registro']);
             $prepara_registro->bindParam(':entrada_1', $alt_entrada_1);
@@ -66,6 +66,7 @@ if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
             $prepara_registro->bindParam(':saida_2', $alt_saida_2);
             $prepara_registro->bindParam(':editado_em', $data_hora);
             $prepara_registro->bindParam(':editado_por', $usuario);
+            $prepara_registro->bindParam(':observacao_registro', $_POST['observacao_registro']);
             $prepara_registro->execute();
 
             if ($prepara_registro->rowCount()) {

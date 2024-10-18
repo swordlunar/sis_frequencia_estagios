@@ -341,7 +341,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" value="" id="">
+                            <input type="text" class="form-control" value="" id="observacao_frequencia">
                             <label for="floatingInput">Observações</label>
                         </div>
                     </div>
@@ -350,7 +350,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id='botao_aprovar_frequencia' onclick="aprovar_frequencia(this.value)">Aprovar frequência</button>
                     <button type="button" class="btn btn-primary" id='botao_salvar_frequencia' value='' onclick="salvar_alteracoes(this.value)">Salvar</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
+                    <button type="button" class="btn btn-primary botao_sair" id='botao_sair_frequencia' data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>
