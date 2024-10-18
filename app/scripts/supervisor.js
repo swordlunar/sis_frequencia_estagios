@@ -141,7 +141,7 @@ function calendario_historico_frequencia(ra_aluno, cod_curso) {
 
     $('#historico_de_horarios_modal').on('shown.bs.modal', function () {
 
-        document.getElementById('historico_de_horarios_calendar').innerHTML = `<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status">
+        document.getElementById('historico_de_horarios_calendar').innerHTML = `<div class="d-flex justify-content-center mb-3 "><div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
       </div>`;
@@ -207,6 +207,33 @@ async function visu_registros_aluno(ra_aluno, cod_curso) {
 }
 
 async function salvar_alteracoes(id_registro) {
+    Swal.fire({
+        title: 'Você deseja fazer qual tipo de alteração?',
+        showDenyButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Alteração na frequência',
+        confirmButtonColor: '#055160',
+        denyButtonText: 'Comentário',
+        denyButtonColor: '#055160',
+        customClass: {
+            actions: 'my-actions',
+            cancelButton: 'order-3',
+            confirmButton: 'order-1',
+            denyButton: 'order-2',
+        },
+    }).then((result) => {
+        if (result.isConfirmed) { // alteração na frequência
+            salvar_alteracoes_hora(id_registro);
+
+        } else if (result.isDenied) { // comentário
+            salvar_comentario(id_registro);
+        }
+    })
+
+}
+
+async function salvar_alteracoes_hora(id_registro) {
     let validade = 1
     let data = document.getElementById('dia_atual_f').innerHTML;
 
@@ -216,8 +243,6 @@ async function salvar_alteracoes(id_registro) {
     let saida_1 = document.getElementById('valor_saida').value;
     let entrada_2 = document.getElementById('valor_entrada_2').value;
     let saida_2 = document.getElementById('valor_saida_2').value;
-
-    let observacao_registro = document.getElementById('observacao_frequencia').value;
 
     if (entrada_1 != '' && saida_1 != '' && entrada_1 < saida_1) {
         if (intervalo != '') {
@@ -285,7 +310,7 @@ async function salvar_alteracoes(id_registro) {
         jQuery.ajax({
             type: "POST",
             url: "./model/controller/supervisor/alterar/alterar_hora_estagio",
-            data: { 'id_registro': id_registro, 'entrada_1': entrada_1, 'intervalo': intervalo, 'volta_intervalo': volta_intervalo, 'saida_1': saida_1, 'entrada_2': entrada_2, 'saida_2': saida_2, 'data': data, 'observacao_registro': observacao_registro },
+            data: { 'id_registro': id_registro, 'entrada_1': entrada_1, 'intervalo': intervalo, 'volta_intervalo': volta_intervalo, 'saida_1': saida_1, 'entrada_2': entrada_2, 'saida_2': saida_2, 'data': data },
             dataType: 'json',
             success: function (response) {
                 if (response['status'] == 1) {
@@ -296,6 +321,26 @@ async function salvar_alteracoes(id_registro) {
             }
         })
     }
+}
+
+async function salvar_comentario(id_registro) {
+    let data = document.getElementById('dia_atual_f').innerHTML;
+
+    let observacao_registro = document.getElementById('observacao_frequencia').value;
+
+    jQuery.ajax({
+        type: "POST",
+        url: "./model/controller/supervisor/alterar/alterar_hora_estagio",
+        data: { 'id_registro': id_registro, 'data': data, 'observacao_registro': observacao_registro },
+        dataType: 'json',
+        success: function (response) {
+            if (response['status'] == 1) {
+                sweetalert2('Sucesso', response['retorno'], 'success', 'Ok', false);
+            } else {
+                sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
+            }
+        }
+    })
 }
 
 function aprovar_frequencia(id_registro) {

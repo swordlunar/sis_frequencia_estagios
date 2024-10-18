@@ -16,9 +16,9 @@ if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
         'retorno' => 'Ocorreu um erro inesperado.'
     );
 
-    if (isset($_POST['id_registro'], $_POST['entrada_1'], $_POST['saida_1'],)) {
+    $conn = inicia_conexao();
 
-        $conn = inicia_conexao();
+    if (isset($_POST['id_registro'], $_POST['entrada_1'], $_POST['saida_1'],)) {
 
         $consulta_registro = 'SELECT * FROM registro_frequencia WHERE id_registro = :id_registro';
         $prepara_registro = $conn->prepare($consulta_registro);
@@ -55,7 +55,7 @@ if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
                 $alt_saida_2 = NULL;
             }
 
-            $consulta_registro = 'UPDATE registro_frequencia SET entrada_1 = :entrada_1, intervalo = :intervalo, volta_intervalo = :volta_intervalo, saida_1 = :saida_1, entrada_2 = :entrada_2, saida_2 = :saida_2, editado_em = :editado_em, editado_por = :editado_por, observacao_registro = :observacao_registro WHERE id_registro = :id_registro';
+            $consulta_registro = 'UPDATE registro_frequencia SET entrada_1 = :entrada_1, intervalo = :intervalo, volta_intervalo = :volta_intervalo, saida_1 = :saida_1, entrada_2 = :entrada_2, saida_2 = :saida_2, editado_em = :editado_em, editado_por = :editado_por WHERE id_registro = :id_registro';
             $prepara_registro = $conn->prepare($consulta_registro);
             $prepara_registro->bindParam(':id_registro', $_POST['id_registro']);
             $prepara_registro->bindParam(':entrada_1', $alt_entrada_1);
@@ -64,6 +64,40 @@ if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
             $prepara_registro->bindParam(':saida_1', $alt_saida_1);
             $prepara_registro->bindParam(':entrada_2', $alt_entrada_2);
             $prepara_registro->bindParam(':saida_2', $alt_saida_2);
+            $prepara_registro->bindParam(':editado_em', $data_hora);
+            $prepara_registro->bindParam(':editado_por', $usuario);
+            
+            $prepara_registro->execute();
+
+            if ($prepara_registro->rowCount()) {
+                $retorno['status'] = 1;
+                $retorno['retorno'] = 'Registro alterado com sucesso!';
+                echo json_encode($retorno);
+            } else {
+                $retorno['status'] = 2;
+                $retorno['retorno'] = 'Não foi possível alterar o registro.';
+                echo json_encode($retorno);
+            }
+        } else {
+            $retorno['status'] = 3;
+            $retorno['retorno'] = 'Registro não identificado.';
+            echo json_encode($retorno);
+        }
+    } else if (isset($_POST['id_registro'], $_POST['data'], $_POST['observacao_registro'],)) {
+
+        $consulta_registro = 'SELECT * FROM registro_frequencia WHERE id_registro = :id_registro';
+        $prepara_registro = $conn->prepare($consulta_registro);
+        $prepara_registro->bindParam(':id_registro', $_POST['id_registro']);
+        $prepara_registro->execute();
+
+        $resultado_registro = $prepara_registro->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($resultado_registro)) {
+            $data = $resultado_registro['data_referencia'];
+
+            $consulta_registro = 'UPDATE registro_frequencia SET editado_em = :editado_em, editado_por = :editado_por, observacao_registro = :observacao_registro WHERE id_registro = :id_registro';
+            $prepara_registro = $conn->prepare($consulta_registro);
+            $prepara_registro->bindParam(':id_registro', $_POST['id_registro']);
             $prepara_registro->bindParam(':editado_em', $data_hora);
             $prepara_registro->bindParam(':editado_por', $usuario);
             $prepara_registro->bindParam(':observacao_registro', $_POST['observacao_registro']);
