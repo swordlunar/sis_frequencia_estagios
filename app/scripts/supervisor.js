@@ -29,6 +29,14 @@ function dataTableEstagiario() {
 $(document).ready(function () {
     carregar_setor();
     dataTableEstagiario();
+
+
+    $('#historico_de_horarios_modal').on('hide.bs.modal', function () {
+
+        document.getElementById('historico_de_horarios_calendar').innerHTML = ''
+
+    });
+
 });
 
 async function info_aluno(id_aluno) {
@@ -132,7 +140,17 @@ function calendario_historico_frequencia(ra_aluno, cod_curso) {
 
 
     $('#historico_de_horarios_modal').on('shown.bs.modal', function () {
-        calendario_frequencia.render();
+
+        document.getElementById('historico_de_horarios_calendar').innerHTML = `<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      </div>`;
+
+        setTimeout(() => {
+            document.getElementById('historico_de_horarios_calendar').innerHTML = ''
+            calendario_frequencia.render();
+
+        }, 500);
 
     });
 
