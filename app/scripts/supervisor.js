@@ -189,13 +189,28 @@ async function visu_registros_aluno(ra_aluno, cod_curso) {
                 nome_aluno = response['nome_aluno']
                 setor_aluno = response['setor_aluno']
                 periodo_letivo = response['periodo_letivo']
+                status_registros = response['registros_status']
+                id_aluno = response['id_aluno']
 
                 document.getElementById('titulo_de_horarios_modal').innerHTML = nome_aluno;
                 document.getElementById('setor_aluno').innerHTML = setor_aluno;
                 document.getElementById('periodo_letivo_h').innerHTML = 'Horário ' + periodo_letivo;
 
+                document.getElementById('botao_aprovar_em_lote_modal').value = id_aluno;
+
+                document.getElementById('titulo_de_registros_em_lote_modal').innerHTML = nome_aluno;
+                document.getElementById('setor_aluno_l').innerHTML = setor_aluno;
+                document.getElementById('periodo_letivo_l').innerHTML = 'Frequência ' + periodo_letivo;
+
                 horas_estagio(ra_aluno, cod_curso);
                 calendario_historico_frequencia(ra_aluno, cod_curso)
+
+                if (status_registros != 1) {
+                    $("#botao_aprovar_em_lote_modal").prop("disabled", false);
+                } else {
+                    $("#botao_aprovar_em_lote_modal").prop("disabled", true);
+                }
+
 
                 $('#historico_de_horarios_modal').modal('show');
             } else {
@@ -360,6 +375,59 @@ function aprovar_frequencia(id_registro) {
         }
     })
 }
+
+function aprovar_em_lote_modal(id_aluno) {
+    document.getElementById('corpo_registros_em_lote').innerHTML = ''
+
+    jQuery.ajax({
+        type: "POST",
+        url: "./model/controller/supervisor/visualizar/carregar_registros_nao_aprovados",
+        data: { 'id_aluno': id_aluno },
+        dataType: 'json',
+        success: function (response) {
+            if (response['status'] == 1) {
+                for (let n = 0; n < response['retorno'].length; n++) {
+                    dados_array = response['retorno'][n]
+
+                    data_referencia = new Date(dados_array[0]).toLocaleDateString("pt-BR", { timeZone: 'UTC' })
+                    entrada_1 = dados_array[1] != null ? new Date(dados_array[1]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    intervalo = dados_array[2] != null ? new Date(dados_array[2]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    volta_intervalo = dados_array[3] != null ? new Date(dados_array[3]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    saida_1 = dados_array[4] != null ? new Date(dados_array[4]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    entrada_2 = dados_array[5] != null ? new Date(dados_array[5]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    saida_2 = dados_array[6] != null ? new Date(dados_array[6]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    status_registro = dados_array[7] != 0 ? 'Aprovado' : 'Pendente';
+
+                    document.getElementById('corpo_registros_em_lote').innerHTML += `
+                <tr>
+                    <td>` + data_referencia + `</td>
+                    <td>` + entrada_1 + `</td>
+                    <td>` + intervalo + `</td>
+                    <td>` + volta_intervalo + `</td>
+                    <td>` + saida_1 + `</td>
+                    <td>` + entrada_2 + `</td>
+                    <td>` + saida_2 + `</td>
+                    <td>` + status_registro + `</td>
+                    <td><input type="checkbox"></td>
+                </tr>`
+                }
+
+
+
+                $('#historico_de_horarios_modal').modal('hide');
+                $('#registros_em_lote_modal').modal('show');
+            } else {
+                sweetalert2('Falhou', response['retorno'], 'warning', 'Ok', false);
+            }
+        }
+    })
+}
+
+function aprovar_frequencia_em_lote() {
+    sweetalert2('Sucesso', 'Tudo aprovado!', 'success', 'Ok', false);
+
+}
+
 
 async function carregar_setor() {
     jQuery.ajax({

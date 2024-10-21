@@ -246,6 +246,71 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal dos registros de horários em lote -->
+    <div class="modal fade" id="registros_em_lote_modal" tabindex="-1" aria-labelledby="registros_em_lote_modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="titulo_de_registros_em_lote_modal">Nome do aluno</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class='modal-body'>
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+                            <p id='setor_aluno_l'>Setor do aluno</p>
+                            <p id='periodo_letivo_l' class="h5">Frequência periodo letivo</p>
+                        </div>
+                        <div class="col-6 d-flex">
+                            <label for="mes_pendentes" class="col-6 h4 form-label">Selecione o mês:</label>
+                            <select id="mes_pendentes" class="col-6 form-select" name='mes_pendentes'>
+                                <option value='janeiro'>Janeiro</option>
+                                <option value='fevereiro'>Fevereiro</option>
+                                <option value='março'>Março</option>
+                                <option value='abril'>Abril</option>
+                                <option value='maio'>Maio</option>
+                                <option value='junho'>Junho</option>
+                                <option value='julho'>Julho</option>
+                                <option value='agosto'>Agosto</option>
+                                <option value='setembro'>Setembro</option>
+                                <option value='outubro'>Outubro</option>
+                                <option value='novembro'>Novembro</option>
+                                <option value='dezembro'>Dezembro</option>
+                            </select>
+                            <button type="button" class="btn btn-primary" onclick="filtrar_por_mes()">Filtrar</button>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="table-responsive">
+                                <table id='registros_em_lote' class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Dia</th>
+                                            <th>Entrada</th>
+                                            <th>Intervalo</th>
+                                            <th>Volta do Intervalo</th>
+                                            <th>Saída</th>
+                                            <th>Segunda Entrada</th>
+                                            <th>Segunda Saída</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='corpo_registros_em_lote'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="aprovar_frequencia_em_lote()">Aprovar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php } ?>
 
 <!-- Modal do calendário de horários -->
@@ -273,6 +338,9 @@
             </div>
 
             <div class="modal-footer">
+                <?php if (($_SESSION['TIPO_USUARIO'] != 1)) { ?>
+                    <button id="botao_aprovar_em_lote_modal" type="button" class="btn btn-primary" value='' onclick="aprovar_em_lote_modal(this.value)">Aprovar registros em lote</button>
+                <?php } ?>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
             </div>
         </div>

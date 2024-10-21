@@ -3,6 +3,8 @@ include_once __DIR__ . "/../../../database/conexao_local.php";
 include_once __DIR__ . "/../../controle e notificacoes/funcoes.php";
 include __DIR__ . "/../../login/verifica_login.php";
 
+$status_registro = 0;
+
 $retorno = array(
     'status' => 0,
     'dados' => ''
@@ -115,10 +117,25 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
                         ];
                     }
                 }
+                $verifica_status = 'SELECT * FROM registro_frequencia WHERE id_aluno = :id_aluno AND status_registro = :status_registro';
+                $ver_status = $conn->prepare($verifica_status);
+                $ver_status->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
+                $ver_status->bindParam(':status_registro', $status_registro);
+
+                $ver_status->execute();
+
+                $verificacao_status = $ver_status->fetchAll(PDO::FETCH_ASSOC);
+
+                if (empty($verificacao_status)) {
+                    $status_registro = 1;
+                }
+
                 $retorno['status'] = 1;
                 $retorno['nome_aluno'] = $verificacao_aluno['nome_aluno'];
                 $retorno['setor_aluno'] = $verificacao_validade['nome_setor'];
                 $retorno['periodo_letivo'] = $verificacao_aluno['periodo_letivo'];
+                $retorno['registros_status'] = $status_registro;
+                $retorno['id_aluno'] = $verificacao_aluno['id_aluno'];
                 $retorno['dados'] = $evento;
 
                 echo json_encode($retorno);
@@ -132,13 +149,9 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
         }
     } else {
         $retorno['status'] = 4;
-        // $retorno['dados'] = $_POST['ra_aluno'];
-        // $retorno['dados_cod_curso'] = $_POST['cod_curso'];
         echo json_encode($retorno);
     }
 } else {
     $retorno['status'] = 5;
-    // $retorno['dados'] = $_POST['ra_aluno'];
-    // $retorno['dados_cod_curso'] = $_POST['cod_curso'];
     echo json_encode($retorno);
 }
