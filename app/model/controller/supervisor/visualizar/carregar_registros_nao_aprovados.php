@@ -22,21 +22,11 @@ if ($_SESSION['TIPO_USUARIO'] == '2') {
 
     $ver_status->execute();
 
-    while ($row_registro = $ver_status->fetch(PDO::FETCH_ASSOC)) {
+    while ($row_registro = $ver_status->fetchALL(PDO::FETCH_ASSOC)) {
         $validade = 1;
-        extract($row_registro);
-
+        
         $registro = [];
-        $registro[] = $data_referencia;
-        $registro[] = $entrada_1;
-        $registro[] = $intervalo;
-        $registro[] = $volta_intervalo;
-        $registro[] = $saida_1;
-        $registro[] = $entrada_2;
-        $registro[] = $saida_2;
-        $registro[] = $status_registro;
-        $registro[] = '<td><input type="checkbox"></td>';
-        $dados[] = $registro;
+        $registro[] = $row_registro;
     }
 
     if ($validade != 1) {
@@ -45,7 +35,7 @@ if ($_SESSION['TIPO_USUARIO'] == '2') {
         echo json_encode($retorno);
     } else {
         $retorno['status'] = 1;
-        $retorno['retorno'] = $dados;
+        $retorno['retorno'] = $registro;
         echo json_encode($retorno);
     }
 }

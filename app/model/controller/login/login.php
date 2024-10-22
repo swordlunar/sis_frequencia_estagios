@@ -4,7 +4,6 @@ include_once __DIR__ . "/../../env/env.php";
 include_once __DIR__ . "/../../soap/conexao_soap.php";
 include_once __DIR__ . "/../controle e notificacoes/funcoes.php";
 include_once __DIR__ . "/../aluno/cadastro/cadastrar_aluno.php";
-include_once __DIR__ . "/../supervisor/verificacao_supervisor.php";
 
 //Array de retorno exemplo
 $retorno = array(
@@ -140,7 +139,7 @@ if (!empty($_POST["usuario"]) && !empty($_POST["senha"])) {
                 $retorno['informacao_adicional'] = "Sem permissão para acessar o sistema no tipo de login selecionado!";
                 echo json_encode($retorno);
             } else {
-                $verifica_supervisor = login_supervisor($verificacao_supervisor, $periodo_letivo);
+                $verifica_supervisor = verifica_acesso_supervisor($verificacao_supervisor, $periodo_letivo);
                 if ($verifica_supervisor['status'] == 1) {
                     session_start();
 

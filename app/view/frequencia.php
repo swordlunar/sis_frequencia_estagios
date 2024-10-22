@@ -249,21 +249,24 @@
 
     <!-- Modal dos registros de horários em lote -->
     <div class="modal fade" id="registros_em_lote_modal" tabindex="-1" aria-labelledby="registros_em_lote_modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="titulo_de_registros_em_lote_modal">Nome do aluno</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class='modal-body'>
-                    <div class="row">
-                        <div class="d-flex justify-content-between">
-                            <p id='setor_aluno_l'>Setor do aluno</p>
-                            <p id='periodo_letivo_l' class="h5">Frequência periodo letivo</p>
+                    <div class="d-flex justify-content-between">
+                        <p id='setor_aluno_l' class="h5">Setor do aluno</p>
+                        <p id='periodo_letivo_l' class="h5">Frequência periodo letivo</p>
+                    </div>
+
+                    <div class="row d-flex mt-2 text-center">
+                        <div class="col-4 d-flex justify-content-end">
+                            <label for="mes_pendentes" class="h4 form-label">Selecione o mês:</label>
                         </div>
-                        <div class="col-6 d-flex">
-                            <label for="mes_pendentes" class="col-6 h4 form-label">Selecione o mês:</label>
-                            <select id="mes_pendentes" class="col-6 form-select" name='mes_pendentes'>
+                        <div class="col-4">
+                            <select id="mes_pendentes" class="form-select" name='mes_pendentes'>
                                 <option value='janeiro'>Janeiro</option>
                                 <option value='fevereiro'>Fevereiro</option>
                                 <option value='março'>Março</option>
@@ -277,29 +280,33 @@
                                 <option value='novembro'>Novembro</option>
                                 <option value='dezembro'>Dezembro</option>
                             </select>
+
+                        </div>
+                        <div class="col-2 d-flex justify-content-start">
                             <button type="button" class="btn btn-primary" onclick="filtrar_por_mes()">Filtrar</button>
                         </div>
-                        <div class="row mt-4">
-                            <div class="table-responsive">
-                                <table id='registros_em_lote' class="table table-striped table-bordered">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Dia</th>
-                                            <th>Entrada</th>
-                                            <th>Intervalo</th>
-                                            <th>Volta do Intervalo</th>
-                                            <th>Saída</th>
-                                            <th>Segunda Entrada</th>
-                                            <th>Segunda Saída</th>
-                                            <th>Status</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id='corpo_registros_em_lote'>
+                    </div>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="row mt-4">
+                        <div class="table-responsive">
+                            <table id='registros_em_lote' class="table justify-content-center text-center table-striped table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Entrada</th>
+                                        <th>Intervalo</th>
+                                        <th>Volta do Intervalo</th>
+                                        <th>Saída</th>
+                                        <th>Segunda Entrada</th>
+                                        <th>Segunda Saída</th>
+                                        <th>Status</th>
+                                        <th><input name="all" type="checkbox"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id='corpo_registros_em_lote'>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

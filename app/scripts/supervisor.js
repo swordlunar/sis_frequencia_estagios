@@ -54,7 +54,7 @@ async function info_aluno(id_aluno) {
                 document.getElementById('valor_telefone').value = response['retorno']['telefone_aluno'];
                 $('#info_aluno').modal('show');
             } else {
-                alert(response['retorno'])
+                sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
             }
         }
     })
@@ -214,7 +214,7 @@ async function visu_registros_aluno(ra_aluno, cod_curso) {
 
                 $('#historico_de_horarios_modal').modal('show');
             } else {
-                alert(response['retorno'])
+                sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
             }
         }
     })
@@ -259,11 +259,18 @@ async function salvar_alteracoes_hora(id_registro) {
     let entrada_2 = document.getElementById('valor_entrada_2').value;
     let saida_2 = document.getElementById('valor_saida_2').value;
 
-    if (entrada_1 != '' && saida_1 != '' && entrada_1 < saida_1) {
+
+    if (entrada_1 != '' && saida_1 != '' && entrada_1 <= saida_1) {
         if (intervalo != '') {
             if (intervalo >= saida_1 || intervalo <= entrada_1) {
                 validade = 0
-                sweetalert2('Falhou', 'A relação dos registros <strong>intervalo</strong> e <strong>entrada/saída</strong> não estão coerentes', 'error', 'Ok', false);
+
+                if (intervalo >= saida_1) {
+                    sweetalert2('Falhou', 'O horário <strong>' + intervalo + '</strong> (intervalo) não pode ser superior ou igual ao horário <strong>' + saida_1 + '</strong> (saída).', 'error', 'Ok', false);
+                } else {
+                    sweetalert2('Falhou', 'O horário <strong>' + intervalo + '</strong> (intervalo) não pode ser inferior ou igual ao horário <strong>' + entrada_1 + '</strong> (entrada).', 'error', 'Ok', false);
+                }
+
             }
         } else {
             if (volta_intervalo != '') {
@@ -274,7 +281,7 @@ async function salvar_alteracoes_hora(id_registro) {
         if (volta_intervalo != '') {
             if (volta_intervalo >= saida_1) {
                 validade = 0
-                sweetalert2('Falhou', 'A relação dos registros <strong>volta do intervalo</strong> e <strong>saída</strong> não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'O horário <strong>' + volta_intervalo + '</strong> (volta do intervalo) não pode ser superior ou igual ao horário <strong>' + saida_1 + '</strong> (saída).', 'error', 'Ok', false);
             }
         }
         else {
@@ -287,13 +294,13 @@ async function salvar_alteracoes_hora(id_registro) {
         if (intervalo != '' && volta_intervalo != '') {
             if (intervalo >= volta_intervalo) {
                 validade = 0
-                sweetalert2('Falhou', 'A relação dos registros <strong>intervalo</strong> e <strong>volta do intervalo</strong> não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'O horário <strong>' + intervalo + '</strong> (intervalo) não pode ser superior ou igual ao horário <strong>' + volta_intervalo + '</strong> (volta do intervalo).', 'error', 'Ok', false);
             }
         }
         if (entrada_2 != '') {
             if (saida_1 >= entrada_2) {
                 validade = 0
-                sweetalert2('Falhou', 'A relação dos registros <strong>saída</strong> e <strong>segunda entrada</strong> não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'O horário <strong>' + saida_1 + '</strong> (saída) não pode ser superior ou igual ao horário <strong>' + entrada_2 + '</strong> (segunda entrada).', 'error', 'Ok', false);
             }
         }
         else {
@@ -305,19 +312,24 @@ async function salvar_alteracoes_hora(id_registro) {
         if (saida_2 != '') {
             if (entrada_2 >= saida_2) {
                 validade = 0
-                sweetalert2('Falhou', 'A relação dos registros <strong>segunda entrada</strong> e <strong>segunda saída</strong> não estão coerentes', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'O horário <strong>' + entrada_2 + '</strong> (segunda entrada) não pode ser superior ou igual ao horário <strong>' + saida_2 + '</strong> (segunda saída).', 'error', 'Ok', false);
             }
         }
         else {
             if (entrada_2 != '') {
                 validade = 0
-                sweetalert2('Falhou', 'Não é possível registrar <strong>segunda entrada</strong> sem uma <strong>segunda saída</strong>', 'error', 'Ok', false);
+                sweetalert2('Falhou', 'Não é possível registrar uma <strong>segunda entrada</strong> sem uma <strong>segunda saída</strong>', 'error', 'Ok', false);
             }
         }
     }
     else {
         validade = 0
-        sweetalert2('Falhou', 'A relação dos registros <strong>entrada</strong> e <strong>saída</strong> não estão coerentes', 'error', 'Ok', false);
+        if (entrada_1 <= saida_1) {
+            sweetalert2('Falhou', 'O horário <strong>' + entrada_1 + '</strong> (intervalo) não pode ser inferior ou igual ao horário <strong>' + saida_1 + '</strong> (entrada).', 'error', 'Ok', false);
+        } else {
+            sweetalert2('Falhou', 'Os horários de <strong>entrada</strong> e <strong>saída</strong> são necessários preencher!', 'error', 'Ok', false);
+        }
+
     }
 
 
@@ -386,33 +398,36 @@ function aprovar_em_lote_modal(id_aluno) {
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
-                for (let n = 0; n < response['retorno'].length; n++) {
-                    dados_array = response['retorno'][n]
+                for (let n = 0; n < response['retorno'][0].length; n++) {
+                    array_registro = response['retorno'][0][n]
 
-                    data_referencia = new Date(dados_array[0]).toLocaleDateString("pt-BR", { timeZone: 'UTC' })
-                    entrada_1 = dados_array[1] != null ? new Date(dados_array[1]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    intervalo = dados_array[2] != null ? new Date(dados_array[2]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    volta_intervalo = dados_array[3] != null ? new Date(dados_array[3]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    saida_1 = dados_array[4] != null ? new Date(dados_array[4]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    entrada_2 = dados_array[5] != null ? new Date(dados_array[5]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    saida_2 = dados_array[6] != null ? new Date(dados_array[6]).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    status_registro = dados_array[7] != 0 ? 'Aprovado' : 'Pendente';
+                    data_referencia = new Date(array_registro['data_referencia']).toLocaleDateString("pt-BR", { timeZone: 'UTC' })
+                    entrada_1 = array_registro['entrada_1'] != null ? new Date(array_registro['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    intervalo = array_registro['intervalo'] != null ? new Date(array_registro['intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    volta_intervalo = array_registro['volta_intervalo'] != null ? new Date(array_registro['volta_intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    saida_1 = array_registro['saida_1'] != null ? new Date(array_registro['saida_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    entrada_2 = array_registro['entrada_2'] != null ? new Date(array_registro['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                    saida_2 = array_registro['saida_2'] != null ? new Date(array_registro['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+
+                    if (array_registro['status_registro'] != 0) {
+                        status_registro = '<td class="badge text-bg-success">Aprovado</td>'
+                    } else {
+                        status_registro = status_registro = '<td class="badge text-bg-info text-white">Pendente</td>'
+                    }
 
                     document.getElementById('corpo_registros_em_lote').innerHTML += `
-                <tr>
-                    <td>` + data_referencia + `</td>
-                    <td>` + entrada_1 + `</td>
-                    <td>` + intervalo + `</td>
-                    <td>` + volta_intervalo + `</td>
-                    <td>` + saida_1 + `</td>
-                    <td>` + entrada_2 + `</td>
-                    <td>` + saida_2 + `</td>
-                    <td>` + status_registro + `</td>
-                    <td><input type="checkbox"></td>
-                </tr>`
+                    <tr>
+                        <td>` + data_referencia + `</td>
+                        <td>` + entrada_1 + `</td>
+                        <td>` + intervalo + `</td>
+                        <td>` + volta_intervalo + `</td>
+                        <td>` + saida_1 + `</td>
+                        <td>` + entrada_2 + `</td>
+                        <td>` + saida_2 + `</td>` +
+                        status_registro + `
+                        <td><input class='checkbox_registro' type="checkbox"></td>
+                    </tr>`
                 }
-
-
 
                 $('#historico_de_horarios_modal').modal('hide');
                 $('#registros_em_lote_modal').modal('show');
@@ -423,6 +438,11 @@ function aprovar_em_lote_modal(id_aluno) {
     })
 }
 
+document.querySelector("input[name=all]").onclick = function () {
+
+
+
+}
 function aprovar_frequencia_em_lote() {
     sweetalert2('Sucesso', 'Tudo aprovado!', 'success', 'Ok', false);
 
@@ -437,10 +457,10 @@ async function carregar_setor() {
         success: function (response) {
             if (response['status'] == 1) {
                 setor_aluno = response['retorno'];
-                document.getElementById('relacao_setor').innerHTML = setor_aluno;
             } else {
-                alert(response['retorno'])
+                setor_aluno = 'Setor'
             }
+            document.getElementById('relacao_setor').innerHTML = setor_aluno;
         }
     })
 }
