@@ -14,11 +14,13 @@ if ($_SESSION['TIPO_USUARIO'] == '1') {
     $RA = $_SESSION['MATRICULA'];
     $CODCURSO = $_SESSION['COD_CURSO'];
     $periodo_letivo = $_SESSION['PERIODO_LETIVO'];
+    $id_setor = '';
 } else if ($_SESSION['TIPO_USUARIO'] == '2' || $_SESSION['TIPO_USUARIO'] == '3') {
     if (!empty($_POST['ra_aluno']) && !empty($_POST['cod_curso'])) {
         $RA = $_POST['ra_aluno'];
         $CODCURSO = $_POST['cod_curso'];
         $periodo_letivo = $_SESSION['PERIODO_LETIVO'];
+        $id_setor = $_SESSION['ID_SETOR'];
     }
 }
 
@@ -35,6 +37,10 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
 
     $verificacao_aluno = $ver_aluno->fetch(PDO::FETCH_ASSOC);
 
+    if ($id_setor == '') {
+        $id_setor = $verificacao_aluno['id_setor'];
+    }
+
     if (!empty($verificacao_aluno)) {
         $verifica_validade = "SELECT * FROM setor WHERE id_setor = :setor";
         $ver_validade = $conn->prepare($verifica_validade);
@@ -45,9 +51,10 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
         $verificacao_validade = $ver_validade->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($verificacao_validade)) {
-            $verifica_registro = "SELECT * FROM registro_frequencia WHERE id_aluno = :id_aluno";
+            $verifica_registro = "SELECT * FROM registro_frequencia WHERE id_aluno = :id_aluno AND id_setor = :id_setor";
             $ver_registro = $conn->prepare($verifica_registro);
             $ver_registro->bindParam(':id_aluno', $verificacao_aluno['id_aluno']);
+            $ver_registro->bindParam(':id_setor', $id_setor);
 
             $ver_registro->execute();
 
@@ -141,6 +148,7 @@ if (isset($RA, $CODCURSO, $periodo_letivo)) {
                 echo json_encode($retorno);
             } else {
                 $retorno['status'] = 2;
+                $retorno['retorno'] = 'O aluno ainda não possui registros no setor';
                 echo json_encode($retorno);
             }
         } else {

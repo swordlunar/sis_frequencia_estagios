@@ -1,6 +1,5 @@
 <?php
 
-
 function periodo_letivo_atual()
 {
     $ano_atual = date('Y');
@@ -23,7 +22,7 @@ function hoje()
 
 function verifica_acesso_supervisor($array_info_supervisor, $periodo_letivo)
 {
-    include_once "../database/conexao_local.php";
+    include_once "../../database/conexao_local.php";
 
     $retorno = array(
         'status' => 0,

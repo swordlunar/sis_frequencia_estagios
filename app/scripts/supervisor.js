@@ -185,40 +185,49 @@ async function visu_registros_aluno(ra_aluno, cod_curso) {
         data: { 'ra_aluno': ra_aluno, 'cod_curso': cod_curso },
         dataType: 'json', // tipo do dado
         success: function (response) {
-            if (response['status'] == 1) {
-                nome_aluno = response['nome_aluno']
-                setor_aluno = response['setor_aluno']
-                periodo_letivo = response['periodo_letivo']
-                status_registros = response['registros_status']
-                id_aluno = response['id_aluno']
 
-                document.getElementById('titulo_de_horarios_modal').innerHTML = nome_aluno;
-                document.getElementById('setor_aluno').innerHTML = setor_aluno;
-                document.getElementById('periodo_letivo_h').innerHTML = 'Horário ' + periodo_letivo;
+            switch (response['status']) {
+                case 1:
+                    nome_aluno = response['nome_aluno']
+                    setor_aluno = response['setor_aluno']
+                    periodo_letivo = response['periodo_letivo']
+                    status_registros = response['registros_status']
+                    id_aluno = response['id_aluno']
 
-                document.getElementById('botao_aprovar_em_lote_modal').value = id_aluno;
+                    document.getElementById('titulo_de_horarios_modal').innerHTML = nome_aluno;
+                    document.getElementById('setor_aluno').innerHTML = setor_aluno;
+                    document.getElementById('periodo_letivo_h').innerHTML = 'Horário ' + periodo_letivo;
 
-                document.getElementById('titulo_de_registros_em_lote_modal').innerHTML = nome_aluno;
-                document.getElementById('setor_aluno_l').innerHTML = setor_aluno;
-                document.getElementById('periodo_letivo_l').innerHTML = 'Frequência ' + periodo_letivo;
+                    document.getElementById('botao_aprovar_em_lote_modal').value = id_aluno;
 
-                horas_estagio(ra_aluno, cod_curso);
-                calendario_historico_frequencia(ra_aluno, cod_curso)
+                    document.getElementById('titulo_de_registros_em_lote_modal').innerHTML = nome_aluno;
+                    document.getElementById('setor_aluno_l').innerHTML = setor_aluno;
+                    document.getElementById('periodo_letivo_l').innerHTML = 'Registros pendentes ' + periodo_letivo;
 
-                if (status_registros != 1) {
-                    $("#botao_aprovar_em_lote_modal").prop("disabled", false);
-                } else {
-                    $("#botao_aprovar_em_lote_modal").prop("disabled", true);
-                }
+                    horas_estagio(ra_aluno, cod_curso);
+                    calendario_historico_frequencia(ra_aluno, cod_curso)
 
+                    if (status_registros != 1) {
+                        $("#botao_aprovar_em_lote_modal").prop("disabled", false);
+                    } else {
+                        $("#botao_aprovar_em_lote_modal").prop("disabled", true);
+                    }
 
-                $('#historico_de_horarios_modal').modal('show');
-            } else {
-                sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
+                    document.getElementById('mes_pendentes').value = '';
+                    sair_btn = document.getElementById('botao_sair_frequencia_2')
+                    sair_btn.setAttribute("onclick", "visu_registros_aluno(" + ra_aluno + "," + cod_curso + ");");
+
+                    $('#historico_de_horarios_modal').modal('show');
+                    break;
+                case 2:
+                    sweetalert2('Falhou', response['retorno'], 'warning', 'Ok', false);
+                    break;
+                default:
+                    sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
+                    break;
             }
         }
     })
-
 }
 
 async function salvar_alteracoes(id_registro) {
@@ -388,49 +397,79 @@ function aprovar_frequencia(id_registro) {
     })
 }
 
+async function filtrar_por_mes() {
+    mes_filtrado = document.getElementById('mes_pendentes').value
+    if (mes_filtrado != '') {
+        aprovar_em_lote_modal(id_aluno)
+    } else {
+        sweetalert2('Falhou', 'Selecione o mês que será filtrado!', 'warning', 'Ok', false);
+    }
+}
+
 function aprovar_em_lote_modal(id_aluno) {
     document.getElementById('corpo_registros_em_lote').innerHTML = ''
+    mes_filtrado = document.getElementById('mes_pendentes').value
 
     jQuery.ajax({
         type: "POST",
         url: "./model/controller/supervisor/visualizar/carregar_registros_nao_aprovados",
-        data: { 'id_aluno': id_aluno },
+        data: { 'id_aluno': id_aluno, 'mes_filtrado': mes_filtrado },
         dataType: 'json',
         success: function (response) {
             if (response['status'] == 1) {
-                for (let n = 0; n < response['retorno'][0].length; n++) {
-                    array_registro = response['retorno'][0][n]
+                if (mes_filtrado != '') {
+                    for (let n = 0; n < response['retorno'][0].length; n++) {
+                        array_registro = response['retorno'][0][n]
 
-                    data_referencia = new Date(array_registro['data_referencia']).toLocaleDateString("pt-BR", { timeZone: 'UTC' })
-                    entrada_1 = array_registro['entrada_1'] != null ? new Date(array_registro['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    intervalo = array_registro['intervalo'] != null ? new Date(array_registro['intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    volta_intervalo = array_registro['volta_intervalo'] != null ? new Date(array_registro['volta_intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    saida_1 = array_registro['saida_1'] != null ? new Date(array_registro['saida_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    entrada_2 = array_registro['entrada_2'] != null ? new Date(array_registro['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
-                    saida_2 = array_registro['saida_2'] != null ? new Date(array_registro['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                        id_registro = array_registro['id_registro']
+                        data_referencia = new Date(array_registro['data_referencia']).toLocaleDateString("pt-BR", { timeZone: 'UTC' })
+                        entrada_1 = array_registro['entrada_1'] != null ? new Date(array_registro['entrada_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                        intervalo = array_registro['intervalo'] != null ? new Date(array_registro['intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                        volta_intervalo = array_registro['volta_intervalo'] != null ? new Date(array_registro['volta_intervalo']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                        saida_1 = array_registro['saida_1'] != null ? new Date(array_registro['saida_1']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                        entrada_2 = array_registro['entrada_2'] != null ? new Date(array_registro['entrada_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
+                        saida_2 = array_registro['saida_2'] != null ? new Date(array_registro['saida_2']).toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' }) : '--'
 
-                    if (array_registro['status_registro'] != 0) {
-                        status_registro = '<td class="badge text-bg-success">Aprovado</td>'
-                    } else {
-                        status_registro = status_registro = '<td class="badge text-bg-info text-white">Pendente</td>'
+                        if (array_registro['status_registro'] != 0) {
+                            status_registro = '<td class="badge text-bg-success">Aprovado</td>'
+                        } else {
+                            status_registro = status_registro = '<td class="badge text-bg-info text-white">Pendente</td>'
+                        }
+
+                        document.getElementById('corpo_registros_em_lote').innerHTML += `
+                        <tr>
+                            <td>` + data_referencia + `</td>
+                            <td>` + entrada_1 + `</td>
+                            <td>` + intervalo + `</td>
+                            <td>` + volta_intervalo + `</td>
+                            <td>` + saida_1 + `</td>
+                            <td>` + entrada_2 + `</td>
+                            <td>` + saida_2 + `</td>` +
+                            status_registro + `
+                            <td><input class='checkbox_registro' name='registro' value='` + id_registro + `' type="checkbox"></td>
+                        </tr>`
+
                     }
-
+                    $("#botao_aprovar_em_lote").prop("disabled", false);
+                } else {
                     document.getElementById('corpo_registros_em_lote').innerHTML += `
                     <tr>
-                        <td>` + data_referencia + `</td>
-                        <td>` + entrada_1 + `</td>
-                        <td>` + intervalo + `</td>
-                        <td>` + volta_intervalo + `</td>
-                        <td>` + saida_1 + `</td>
-                        <td>` + entrada_2 + `</td>
-                        <td>` + saida_2 + `</td>` +
-                        status_registro + `
-                        <td><input class='checkbox_registro' type="checkbox"></td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
                     </tr>`
+                    $("#botao_aprovar_em_lote").prop("disabled", true);
                 }
 
                 $('#historico_de_horarios_modal').modal('hide');
                 $('#registros_em_lote_modal').modal('show');
+
             } else {
                 sweetalert2('Falhou', response['retorno'], 'warning', 'Ok', false);
             }
@@ -438,14 +477,30 @@ function aprovar_em_lote_modal(id_aluno) {
     })
 }
 
-document.querySelector("input[name=all]").onclick = function () {
+$("#checkAll").click(function () {
+    $('input:checkbox').not(this).prop('checked', this.checked);
 
+});
 
-
-}
 function aprovar_frequencia_em_lote() {
-    sweetalert2('Sucesso', 'Tudo aprovado!', 'success', 'Ok', false);
+    checkboxes = document.querySelectorAll('input[name="registro"]:checked');
+    id_registros = Array.from(checkboxes).map(cb => cb.value);
+    console.log(id_registros);
 
+    // jQuery.ajax({
+    //     type: "POST",
+    //     url: "./model/controller/supervisor/alterar/aprovar_frequencia_em_lote",
+    //     data: { 'id_registros': id_registros },
+    //     dataType: 'json',
+    //     success: function (response) {
+    //         if (response['status'] == 1) {
+    //             sweetalert2('Sucesso', response['retorno'], 'success', 'Ok', false);
+                
+    //         } else {
+    //             sweetalert2('Falhou', response['retorno'], 'error', 'Ok', false);
+    //         }
+    //     }
+    // })
 }
 
 

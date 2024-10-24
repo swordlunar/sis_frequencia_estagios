@@ -261,29 +261,35 @@
                         <p id='periodo_letivo_l' class="h5">Frequência periodo letivo</p>
                     </div>
 
-                    <div class="row d-flex mt-2 text-center">
-                        <div class="col-4 d-flex justify-content-end">
-                            <label for="mes_pendentes" class="h4 form-label">Selecione o mês:</label>
-                        </div>
-                        <div class="col-4">
-                            <select id="mes_pendentes" class="form-select" name='mes_pendentes'>
-                                <option value='janeiro'>Janeiro</option>
-                                <option value='fevereiro'>Fevereiro</option>
-                                <option value='março'>Março</option>
-                                <option value='abril'>Abril</option>
-                                <option value='maio'>Maio</option>
-                                <option value='junho'>Junho</option>
-                                <option value='julho'>Julho</option>
-                                <option value='agosto'>Agosto</option>
-                                <option value='setembro'>Setembro</option>
-                                <option value='outubro'>Outubro</option>
-                                <option value='novembro'>Novembro</option>
-                                <option value='dezembro'>Dezembro</option>
-                            </select>
-
-                        </div>
-                        <div class="col-2 d-flex justify-content-start">
-                            <button type="button" class="btn btn-primary" onclick="filtrar_por_mes()">Filtrar</button>
+                    <div class="row mt-2 justify-content-center align-items-center text-center">
+                        <div class="col-6">
+                            <div class="row">
+                                <label for="mes_pendentes" class="h4 form-label">Selecione o mês:</label>
+                            </div>
+                            <div class="row justify-content-center align-items-center text-center">
+                                <div class="col-5">
+                                    <select id="mes_pendentes" class="form-select" name='mes_pendentes'>
+                                        <option selected value=''>Mês</option>
+                                        <option value='janeiro'>Janeiro</option>
+                                        <option value='fevereiro'>Fevereiro</option>
+                                        <option value='março'>Março</option>
+                                        <option value='abril'>Abril</option>
+                                        <option value='maio'>Maio</option>
+                                        <option value='junho'>Junho</option>
+                                        <option value='julho'>Julho</option>
+                                        <option value='agosto'>Agosto</option>
+                                        <option value='setembro'>Setembro</option>
+                                        <option value='outubro'>Outubro</option>
+                                        <option value='novembro'>Novembro</option>
+                                        <option value='dezembro'>Dezembro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-2 row justify-content-center align-items-center text-center">
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-primary" onclick="filtrar_por_mes()">Filtrar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -300,7 +306,7 @@
                                         <th>Segunda Entrada</th>
                                         <th>Segunda Saída</th>
                                         <th>Status</th>
-                                        <th><input name="all" type="checkbox"></th>
+                                        <th><input id="checkAll" name="all" type="checkbox"></th>
                                     </tr>
                                 </thead>
                                 <tbody id='corpo_registros_em_lote'>
@@ -311,8 +317,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="aprovar_frequencia_em_lote()">Aprovar</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sair</button>
+                    <button type="button" class="btn btn-primary" id='botao_aprovar_em_lote' onclick="aprovar_frequencia_em_lote()">Aprovar</button>
+                    <button type="button" class="btn btn-primary" id="botao_sair_frequencia_2" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>
@@ -425,7 +431,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id='botao_aprovar_frequencia' onclick="aprovar_frequencia(this.value)">Aprovar frequência</button>
                     <button type="button" class="btn btn-primary" id='botao_salvar_frequencia' value='' onclick="salvar_alteracoes(this.value)">Salvar</button>
-                    <button type="button" class="btn btn-primary botao_sair" id='botao_sair_frequencia' data-bs-dismiss="modal">Sair</button>
+                    <button type="button" class="btn btn-primary" id='botao_sair_frequencia' data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>

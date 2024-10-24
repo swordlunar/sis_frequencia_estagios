@@ -66,14 +66,13 @@ async function visualizar_frequencia_aluno(id_registro) {
                             document.getElementById('observacao_frequencia').value = ''
                         }
 
-
                         document.getElementById('botao_aprovar_frequencia').value = id_registro
                         document.getElementById('botao_salvar_frequencia').value = id_registro
 
                         ra_aluno = response['ra_aluno']
                         cod_curso = response['cod_curso']
-
-                        let sair_btn = document.getElementById('botao_sair_frequencia')
+                        
+                        sair_btn = document.getElementById('botao_sair_frequencia')
                         sair_btn.setAttribute("onclick", "visu_registros_aluno(" + ra_aluno + "," + cod_curso + ");");
 
                         $('#frequencia_de_horarios_modal').modal('show');
